@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,14 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.CargoDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.CargoService;
+import com.loja_airsoft.app.services.impl.CargoServiceImpl;
 
 @Controller
 public class CargoController {
 
+	@Autowired
 	CargoService cargoService;
 	
 	@GetMapping(path = {"/{id}"})

@@ -1,10 +1,11 @@
-package com.loja_airsoft.services.app.impl;
+package com.loja_airsoft.app.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.entities.Cargo;
@@ -14,8 +15,8 @@ import com.loja_airsoft.app.services.CargoService;
 
 @Service
 public class CargoServiceImpl implements CargoService{
-
-	Cargo cargo = new Cargo();
+	
+	@Autowired
 	CargoRepository cargoRepository;
 	
 	private static final Logger log = LoggerFactory.getLogger(CargoServiceImpl.class);
@@ -23,7 +24,7 @@ public class CargoServiceImpl implements CargoService{
 	@Override
 	public CargoDto save(CargoDto cargoDto) {
 		log.info("Salvando cargo");
-
+		Cargo cargo = new Cargo();
 		try {
 			cargo = this.cargoRepository.save(CargoDto.toEntity(cargoDto));
 			return  CargoDto.fromEntity(cargo);
