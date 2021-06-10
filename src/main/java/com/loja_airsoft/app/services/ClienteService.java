@@ -11,7 +11,7 @@ public interface ClienteService {
 
 	ClienteDto save(ClienteDto clienteDto);
 	
-	ClienteDto findById(Integer cpfCliente);
+	ClienteDto findById(Double cpfCliente);
 	
 	Boolean delete(ClienteDto clienteDto);
 	

@@ -17,7 +17,7 @@ public class Endereco {
 	private String endBairro;
 	private String endCidade;
 	private String endComplemento;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "end_id_endereco", nullable = false)
@@ -73,6 +73,5 @@ public class Endereco {
 	public void setEndComplemento(String endComplemento) {
 		this.endComplemento = endComplemento;
 	}
-	
 
 }

@@ -1,32 +1,37 @@
 package com.loja_airsoft.app.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
 public class Cliente {
-	private Integer cpfCliente;
+	private Double cpfCliente;
 	private String nmCliente;
 	private Date dtNasCliente;
 	private Integer rgCliente;
 	private Endereco endereco;
+	private List<Telefone> telefone;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cli_cpf", nullable = false)
-	public Integer getCpfCliente() {
+	public Double getCpfCliente() {
 		return cpfCliente;
 	}
 	
-	public void setCpfCliente(Integer cpfCliente) {
+	public void setCpfCliente(Double cpfCliente) {
 		this.cpfCliente = cpfCliente;
 	}
 	
@@ -57,14 +62,24 @@ public class Cliente {
 		this.rgCliente = rgCliente;
 	}
 	
-	@OneToOne
-	@Column(name = "end_id_endereco", nullable = false)
+	 @OneToOne
+	    @JoinColumn(name = "end_id_endereco", nullable = false)
 	public Endereco getEndereco() {
 		return endereco;
 	}
 	
-	public void SetEndereco(Endereco idEndereço) {
+	public void setEndereco(Endereco idEndereço) {
 		this.endereco = idEndereço;
 	}
 	
+	
+	@OneToMany
+	@JoinColumn(name = "cli_cpf")
+	public List<Telefone> getTelefone() {
+		return telefone;
+	}
+	
+	public void setTelefone(List<Telefone> telefone) {
+		this.telefone = telefone;
+	}
 }

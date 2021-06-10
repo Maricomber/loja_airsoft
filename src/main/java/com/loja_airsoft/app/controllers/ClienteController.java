@@ -25,7 +25,7 @@ public class ClienteController {
 	ClienteService clienteService;
 	
 	@GetMapping(path = {"cliente/{id}"})
-	public @ResponseBody ResponseEntity<Response<ClienteDto>> findById(@PathVariable int id){
+	public @ResponseBody ResponseEntity<Response<ClienteDto>> findById(@PathVariable double id){
 		
 		Response<ClienteDto>response = new Response<ClienteDto>();
 		ClienteDto clienteDto = new ClienteDto();

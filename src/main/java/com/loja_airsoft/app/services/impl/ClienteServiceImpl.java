@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.ClienteDto;
 import com.loja_airsoft.app.entities.Cliente;
+import com.loja_airsoft.app.entities.Endereco;
 import com.loja_airsoft.app.repositories.ClienteRepository;
+import com.loja_airsoft.app.repositories.EnderecoRepository;
 import com.loja_airsoft.app.services.ClienteService;
 
 @Service
@@ -18,6 +20,9 @@ public class ClienteServiceImpl implements ClienteService{
 
 	@Autowired
 	ClienteRepository clienteRepository;
+	
+	@Autowired
+	EnderecoRepository enderecoRepository;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 	
@@ -35,7 +40,7 @@ public class ClienteServiceImpl implements ClienteService{
 	}
 
 	@Override
-	public ClienteDto findById(Integer id_cliente) {
+	public ClienteDto findById(Double id_cliente) {
 		log.info("Buscando cliente.");
 		Cliente cliente = new Cliente();
 		try {

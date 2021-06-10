@@ -13,14 +13,12 @@ public class TelefoneDto {
 	public Integer idTelefone;
 	public Integer dddTelefone;
 	public Integer numTelefone;
-	public Cliente cliente;
 	
 	public static TelefoneDto fromEntity(Telefone telefone) {
 		TelefoneDto telefoneDto = new TelefoneDto();
 		telefoneDto.setIdTelefone(telefone.getIdTelefone());
 		telefoneDto.setDddTelefone(telefone.getDDDTelefone());
 		telefoneDto.setNumTelefone(telefone.getNumTelefone());
-		telefoneDto.setCliente(telefone.getCliente());
 		return telefoneDto;
 	}
 	
@@ -29,7 +27,6 @@ public class TelefoneDto {
 		telefone.setIdTelefone(telefoneDto.getIdTelefone());
 		telefone.setDDDTelefone(telefoneDto.getDddTelefone());
 		telefone.setNumTelefone(telefoneDto.getDddTelefone());
-		telefone.setCliente(telefoneDto.getCliente());
 		return telefone;
 	}
 }
