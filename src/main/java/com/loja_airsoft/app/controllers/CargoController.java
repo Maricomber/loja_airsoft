@@ -43,24 +43,15 @@ public class CargoController {
 		
 	}
 	
-	@PutMapping(path = {"/{id}"})
-	public @ResponseBody ResponseEntity<Response<CargoDto>> update(@PathVariable ("id") int id, 
-			@RequestBody CargoDto cargoDto){
+	@PutMapping("/updateCargos")
+	public @ResponseBody ResponseEntity<Response<CargoDto>> update(CargoDto cargoDto){
 		
 		Response<CargoDto>response = new Response<CargoDto>();
-		CargoDto cargoDtoVerific = new CargoDto();
 		
-		cargoDtoVerific = this.cargoService.findById(id);
-		
-		if(cargoDtoVerific.equals(null)) {
-			return ResponseEntity.badRequest().body(response);
-		}
-		else {
-			cargoDto = this.cargoService.save(cargoDto);
+		cargoDto = this.cargoService.save(cargoDto);
 			if(cargoDto.equals(null)) {
 				return ResponseEntity.badRequest().body(response);
 			}
-		}
 		response.setData(cargoDto);
 		return ResponseEntity.ok(response);
 		
@@ -75,12 +66,12 @@ public class CargoController {
 		if(cargosDto.equals(null)) {
 			return ResponseEntity.badRequest().body(response);
 		}
-		request.setAttribute("cargos", cargosDto);
+		response.setData(cargosDto);
 		return ResponseEntity.ok(response);
 		
 	}
 	
-	@PostMapping("/savecargo")
+	@PostMapping("/saveCargo")
 	public @ResponseBody ResponseEntity<Response<CargoDto>> saveCargo(CargoDto cargoDto) {
 		
 		Response<CargoDto> response = new Response<CargoDto>();
@@ -99,7 +90,7 @@ public class CargoController {
 		}
 	}
 	
-	@DeleteMapping("/deletecargo")
+	@DeleteMapping("/deleteCargo")
 	public @ResponseBody ResponseEntity<Response<CargoDto>> deleteCargo(CargoDto cargoDto) {
 		
 		Response<CargoDto> response = new Response<CargoDto>();
