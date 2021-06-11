@@ -16,7 +16,6 @@ public class Telefone {
 	public Integer idTelefone;
 	public Integer dddTelefone;
 	public Integer numTelefone;
-	public Cliente cliente;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

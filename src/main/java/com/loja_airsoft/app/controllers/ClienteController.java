@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class ClienteController {
 	ClienteService clienteService;
 	
 	@GetMapping(path = {"cliente/{id}"})
-	public @ResponseBody ResponseEntity<Response<ClienteDto>> findById(@PathVariable double id){
+	public @ResponseBody ResponseEntity<Response<ClienteDto>> findById(@PathVariable int id){
 		
 		Response<ClienteDto>response = new Response<ClienteDto>();
 		ClienteDto clienteDto = new ClienteDto();
@@ -40,21 +41,28 @@ public class ClienteController {
 		
 	}
 	
-	@PutMapping("/updateClientes")
+	@PutMapping("updateClientes")
 	public @ResponseBody ResponseEntity<Response<ClienteDto>> update(ClienteDto clienteDto){
+		List<String>erros = new ArrayList<String>();
 		
 		Response<ClienteDto>response = new Response<ClienteDto>();
-		
-		clienteDto = this.clienteService.save(clienteDto);
+		try {
+			clienteDto = this.clienteService.save(clienteDto);
 			if(clienteDto.equals(null)) {
 				return ResponseEntity.badRequest().body(response);
 			}
 		response.setData(clienteDto);
+		}
+		catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
+		}
 		return ResponseEntity.ok(response);
 		
 	}
 	
-	@GetMapping("/findClientes")
+	@GetMapping("findClientes")
 	public @ResponseBody ResponseEntity<Response<List<ClienteDto>>> findClientes(HttpServletRequest request) {
 		
 		Response<List<ClienteDto>> response = new Response<List<ClienteDto>>();
@@ -68,37 +76,42 @@ public class ClienteController {
 		
 	}
 	
-	@PostMapping("/saveCliente")
+	@PostMapping("saveCliente")
 	public @ResponseBody ResponseEntity<Response<ClienteDto>> saveCliente(ClienteDto clienteDto) {
 		
-		Response<ClienteDto> response = new Response<ClienteDto>();
+List<String>erros = new ArrayList<String>();
 		
-		if(clienteDto.getCpfCliente() != null) {
+		Response<ClienteDto>response = new Response<ClienteDto>();
+		try {
 			clienteDto = this.clienteService.save(clienteDto);
-			
-			if(clienteDto == null) {
+			if(clienteDto.equals(null)) {
 				return ResponseEntity.badRequest().body(response);
 			}
-			response.setData(clienteDto);
-			return ResponseEntity.ok(response);
+		response.setData(clienteDto);
 		}
-		else {
+		catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
+		return ResponseEntity.ok(response);
 	}
 	
-	@DeleteMapping("/deleteCliente")
-	public @ResponseBody ResponseEntity<Response<ClienteDto>> deleteCliente(ClienteDto clienteDto) {
+	@DeleteMapping("deleteCliente/{id}")
+	public @ResponseBody ResponseEntity<Response<ClienteDto>> deleteCliente(@PathVariable Integer id) {
 		
 		Response<ClienteDto> response = new Response<ClienteDto>();
 		
-		if(clienteDto.getCpfCliente() != null) {
+		ClienteDto clienteDto = new ClienteDto();
+		
+		if(id != null) {
+			clienteDto = this.clienteService.findById(id);
 			Boolean retorno = this.clienteService.delete(clienteDto);
 	
 			if(retorno == false || retorno == null) {
 				return ResponseEntity.badRequest().body(response);
 			}
-			response.setData(clienteDto);
+			
 			return ResponseEntity.ok(response);
 		}
 		else {

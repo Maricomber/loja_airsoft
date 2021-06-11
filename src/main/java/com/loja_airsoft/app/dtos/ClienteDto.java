@@ -13,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClienteDto {
+	private Integer idCliente;
 	private Double cpfCliente;
 	private String nmCliente;
 	private Date dtNasCliente;
@@ -22,6 +23,7 @@ public class ClienteDto {
 	
 	public static ClienteDto fromEntity(Cliente cliente) {
 		ClienteDto clienteDto = new ClienteDto();
+		clienteDto.setIdCliente(cliente.getIdCliente());
 		clienteDto.setCpfCliente(cliente.getCpfCliente());
 		clienteDto.setNmCliente(cliente.getNmCliente());
 		clienteDto.setDtNasCliente(cliente.getDtNascCliente());
@@ -33,6 +35,7 @@ public class ClienteDto {
 	
 	public static Cliente toEntity(ClienteDto clienteDto) {
 		Cliente cliente = new Cliente();
+		cliente.setIdCliente(clienteDto.getIdCliente());
 		cliente.setCpfCliente(clienteDto.getCpfCliente());
 		cliente.setNmCliente(clienteDto.getNmCliente());
 		cliente.setDtNascCliente(clienteDto.getDtNasCliente());

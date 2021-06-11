@@ -1,22 +1,27 @@
 package com.loja_airsoft.app.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
+	private Integer idCliente;
 	private Double cpfCliente;
 	private String nmCliente;
 	private Date dtNasCliente;
@@ -26,6 +31,16 @@ public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cli_id_cliente", nullable = false)
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+	
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
+	}
+	
+	
 	@Column(name = "cli_cpf", nullable = false)
 	public Double getCpfCliente() {
 		return cpfCliente;
@@ -62,8 +77,8 @@ public class Cliente {
 		this.rgCliente = rgCliente;
 	}
 	
-	 @OneToOne
-	    @JoinColumn(name = "end_id_endereco", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "end_id_endereco", nullable = true)
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -73,8 +88,8 @@ public class Cliente {
 	}
 	
 	
-	@OneToMany
-	@JoinColumn(name = "cli_cpf")
+	@ManyToMany
+	@JoinColumn(name = "cli_id_cliente", nullable = true)
 	public List<Telefone> getTelefone() {
 		return telefone;
 	}

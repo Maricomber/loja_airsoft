@@ -9,9 +9,9 @@ import com.loja_airsoft.app.dtos.ClienteDto;
 @Service
 public interface ClienteService {
 
-	ClienteDto save(ClienteDto clienteDto);
+	ClienteDto save(ClienteDto clienteDto) throws Exception;
 	
-	ClienteDto findById(Double cpfCliente);
+	ClienteDto findById(Integer cpfCliente);
 	
 	Boolean delete(ClienteDto clienteDto);
 	

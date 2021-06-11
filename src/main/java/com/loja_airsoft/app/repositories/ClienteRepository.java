@@ -10,5 +10,5 @@ import com.loja_airsoft.app.entities.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 
-	Cliente findByCpfCliente(Double cli_cpf);
+	Cliente findByIdCliente(Integer id_cliente);
 }

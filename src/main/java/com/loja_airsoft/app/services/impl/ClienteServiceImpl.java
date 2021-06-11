@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.ClienteDto;
 import com.loja_airsoft.app.entities.Cliente;
-import com.loja_airsoft.app.entities.Endereco;
 import com.loja_airsoft.app.repositories.ClienteRepository;
 import com.loja_airsoft.app.repositories.EnderecoRepository;
 import com.loja_airsoft.app.services.ClienteService;
@@ -27,7 +26,11 @@ public class ClienteServiceImpl implements ClienteService{
 	private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 	
 	@Override
-	public ClienteDto save(ClienteDto clienteDto) {
+	public ClienteDto save(ClienteDto clienteDto) throws Exception {
+		
+		if(clienteDto.equals(null)){
+			throw new Exception("Pesquisa em branco");
+		}
 		log.info("Salvando cliente");
 		Cliente cliente = new Cliente();
 		try {
@@ -40,11 +43,11 @@ public class ClienteServiceImpl implements ClienteService{
 	}
 
 	@Override
-	public ClienteDto findById(Double id_cliente) {
+	public ClienteDto findById(Integer id_cliente) {
 		log.info("Buscando cliente.");
 		Cliente cliente = new Cliente();
 		try {
-			cliente = this.clienteRepository.findByCpfCliente(id_cliente);
+			cliente = this.clienteRepository.findByIdCliente(id_cliente);
 			if(cliente == null) {
 				log.info("Sem resultados.");
 				return null;

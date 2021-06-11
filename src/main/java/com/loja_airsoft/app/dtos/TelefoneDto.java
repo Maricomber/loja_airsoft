@@ -1,6 +1,5 @@
 package com.loja_airsoft.app.dtos;
 
-import com.loja_airsoft.app.entities.Cliente;
 import com.loja_airsoft.app.entities.Telefone;
 
 import lombok.Getter;
