@@ -14,9 +14,10 @@ public class Telefone {
 	public Integer idTelefone;
 	public Integer dddTelefone;
 	public Integer numTelefone;
+	public Integer idCliente;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "tel_id_telefone")
 	public Integer getIdTelefone() {
 		return idTelefone;
@@ -44,4 +45,12 @@ public class Telefone {
 		this.numTelefone = numTelefone;
 	}
 	
+	@Column(name = "cli_id_cliente", nullable = false)
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
+	}
 }

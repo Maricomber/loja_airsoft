@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.ClienteDto;
 import com.loja_airsoft.app.dtos.EnderecoDto;
-import com.loja_airsoft.app.dtos.TelefoneDto;
 import com.loja_airsoft.app.entities.Cliente;
 import com.loja_airsoft.app.entities.Endereco;
 import com.loja_airsoft.app.repositories.ClienteRepository;
@@ -49,16 +48,17 @@ public class ClienteServiceImpl implements ClienteService{
 			endereco = this.enderecoRepository.save(EnderecoDto.toEntity(clienteDto.getEnderecoDto()));
 			}
 			
-			if(clienteDto.getTelefoneDto() != null) {
-				log.info("Salvando telefone");
-				this.telefoneRepository.saveAll(TelefoneDto.toEntity(clienteDto.getTelefoneDto()));
-			}
-			
 			cliente = ClienteDto.toEntity(clienteDto);
 			cliente.setEndereco(endereco);
 			
 			log.info("Salvando cliente");
 			cliente = this.clienteRepository.save(cliente);
+			
+			if(clienteDto.getTelefoneDto() != null) {
+				log.info("Salvando telefone");
+				this.telefoneRepository.saveAll(cliente.getTelefone());
+			}
+			
 			return  ClienteDto.fromEntity(cliente);
 		}catch (Exception e) {
 			log.info("Erro ao salvar cliente "+e.getMessage());

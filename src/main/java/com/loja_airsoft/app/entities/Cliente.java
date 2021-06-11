@@ -26,7 +26,7 @@ public class Cliente {
 	private List<Telefone> telefone;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cli_id_cliente", nullable = true)
 	public Integer getIdCliente() {
 		return idCliente;
@@ -82,7 +82,6 @@ public class Cliente {
 	public void setEndereco(Endereco idEndereço) {
 		this.endereco = idEndereço;
 	}
-	
 	
 	@OneToMany
 	@JoinColumn(name = "cli_id_cliente", nullable = true)
