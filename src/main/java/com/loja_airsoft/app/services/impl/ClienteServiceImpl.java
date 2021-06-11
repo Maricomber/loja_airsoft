@@ -3,15 +3,21 @@ package com.loja_airsoft.app.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.ClienteDto;
+import com.loja_airsoft.app.dtos.EnderecoDto;
+import com.loja_airsoft.app.dtos.TelefoneDto;
 import com.loja_airsoft.app.entities.Cliente;
+import com.loja_airsoft.app.entities.Endereco;
 import com.loja_airsoft.app.repositories.ClienteRepository;
 import com.loja_airsoft.app.repositories.EnderecoRepository;
+import com.loja_airsoft.app.repositories.TelefoneRepository;
 import com.loja_airsoft.app.services.ClienteService;
 
 @Service
@@ -23,27 +29,45 @@ public class ClienteServiceImpl implements ClienteService{
 	@Autowired
 	EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	TelefoneRepository telefoneRepository;
+	
 	private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 	
 	@Override
+	@Transactional
 	public ClienteDto save(ClienteDto clienteDto) throws Exception {
 		
+		Endereco endereco = new Endereco();
 		if(clienteDto.equals(null)){
 			throw new Exception("Pesquisa em branco");
 		}
-		log.info("Salvando cliente");
 		Cliente cliente = new Cliente();
 		try {
-			cliente = this.clienteRepository.save(ClienteDto.toEntity(clienteDto));
+			if(clienteDto.getEnderecoDto() != null) {
+			log.info("Salvando endereco");
+			endereco = this.enderecoRepository.save(EnderecoDto.toEntity(clienteDto.getEnderecoDto()));
+			}
+			
+			if(clienteDto.getTelefoneDto() != null) {
+				log.info("Salvando telefone");
+				this.telefoneRepository.saveAll(TelefoneDto.toEntity(clienteDto.getTelefoneDto()));
+			}
+			
+			cliente = ClienteDto.toEntity(clienteDto);
+			cliente.setEndereco(endereco);
+			
+			log.info("Salvando cliente");
+			cliente = this.clienteRepository.save(cliente);
 			return  ClienteDto.fromEntity(cliente);
 		}catch (Exception e) {
-			log.info("Erro ao salvar cliente");
+			log.info("Erro ao salvar cliente "+e.getMessage());
 			return null;
 		}
 	}
 
 	@Override
-	public ClienteDto findById(Integer id_cliente) {
+	public ClienteDto findById(Integer id_cliente) throws Exception {
 		log.info("Buscando cliente.");
 		Cliente cliente = new Cliente();
 		try {
@@ -55,21 +79,21 @@ public class ClienteServiceImpl implements ClienteService{
 			log.info("cliente encontrado.");
 			return ClienteDto.fromEntity(cliente);
 		}catch (Exception e) {
-			log.info("Erro ao buscar cliente.");
-			return null;
+			log.info("Erro ao buscar cliente. "+e.getMessage());
+			throw new Exception(e);
 		}
 	}
 
 	@Override
-	public Boolean delete(ClienteDto clienteDto) {
+	public Boolean delete(ClienteDto clienteDto) throws Exception {
 		log.info("Deletando cliente");
 		try{
 			this.clienteRepository.delete(ClienteDto.toEntity(clienteDto));
 			return true;
 		}catch (Exception e) {
-			log.info("cliente não pode ser deletado");
+			log.info("cliente não pode ser deletado "+e.getMessage());
+			throw new Exception(e);
 		}
-		return false;
 	}
 
 	@Override
@@ -86,7 +110,29 @@ public class ClienteServiceImpl implements ClienteService{
 			log.info("Busca realizada com sucesso");
 			return clientesRetorno;
 		}catch (Exception e) {
-			log.info("Erro ao buscar clientes");
+			log.info("Erro ao buscar clientes "+e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public ClienteDto update(ClienteDto clienteDto) throws Exception {
+		Endereco endereco = new Endereco();
+		
+		if(clienteDto.equals(null)){
+			throw new Exception("Pesquisa em branco");
+		}
+		log.info("Salvando cliente");
+		Cliente cliente = new Cliente();
+		try {
+			if(clienteDto.getEnderecoDto() != null)
+			endereco = this.enderecoRepository.save(EnderecoDto.toEntity(clienteDto.getEnderecoDto()));
+			cliente = ClienteDto.toEntity(clienteDto);
+			cliente.setEndereco(endereco);
+			cliente = this.clienteRepository.save(cliente);
+			return  ClienteDto.fromEntity(cliente);
+		}catch (Exception e) {
+			log.info("Erro ao salvar cliente "+e.getMessage());
 			return null;
 		}
 	}

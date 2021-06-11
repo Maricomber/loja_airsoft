@@ -18,23 +18,28 @@ public class EnderecoDto {
 	
 	public static EnderecoDto fromEntity(Endereco endereco) {
 		EnderecoDto enderecoDto = new EnderecoDto();
-		enderecoDto.setIdEndereco(endereco.getIdEndereco());
-		enderecoDto.setDsRua(endereco.getDsRua());
-		enderecoDto.setEndNumero(endereco.getEndNumero());
-		enderecoDto.setEndBairro(endereco.getEndBairro());
-		enderecoDto.setEndCidade(endereco.getEndCidade());
-		enderecoDto.setEndComplemento(endereco.getEndComplemento());
+		if(!(endereco == null)) {
+			enderecoDto.setIdEndereco(endereco.getIdEndereco());
+			enderecoDto.setDsRua(endereco.getDsRua());
+			enderecoDto.setEndNumero(endereco.getEndNumero());
+			enderecoDto.setEndBairro(endereco.getEndBairro());
+			enderecoDto.setEndCidade(endereco.getEndCidade());
+			enderecoDto.setEndComplemento(endereco.getEndComplemento());
+		}
 		return enderecoDto;
 	}
 	
 	public static Endereco toEntity(EnderecoDto enderecoDto) {
 		Endereco endereco = new Endereco();
-		endereco.setIdEndereco(enderecoDto.getIdEndereco());
-		endereco.setDsRua(enderecoDto.getDsRua());
-		endereco.setEndNumero(enderecoDto.getEndNumero());
-		endereco.setEndBairro(enderecoDto.getEndBairro());
-		endereco.setEndCidade(enderecoDto.getEndCidade());
-		endereco.setEndComplemento(enderecoDto.getEndComplemento());
+		if(!(endereco == null)) {
+			endereco.setIdEndereco(enderecoDto.getIdEndereco());
+			endereco.setDsRua(enderecoDto.getDsRua());
+			endereco.setEndNumero(enderecoDto.getEndNumero());
+			endereco.setEndBairro(enderecoDto.getEndBairro());
+			endereco.setEndCidade(enderecoDto.getEndCidade());
+			endereco.setEndComplemento(enderecoDto.getEndComplemento());
+		}
+		
 		return endereco;
 	}
 }

@@ -68,15 +68,11 @@ public class TelefoneServiceImpl implements TelefoneService{
 	public List<TelefoneDto> findTelefones() {
 		log.info("Buscando todos os telefones");
 		List<Telefone> telefones = new ArrayList<Telefone>();
-		List<TelefoneDto> telefonesRetorno = new ArrayList<TelefoneDto>();
 		
 		try {
 			telefones = this.telefoneRepository.findAll();
-			for(Telefone telefone: telefones) {
-				telefonesRetorno.add(TelefoneDto.fromEntity(telefone));
-			}
 			log.info("Busca realizada com sucesso");
-			return telefonesRetorno;
+			return TelefoneDto.fromEntity(telefones);
 		}catch (Exception e) {
 			log.info("Erro ao buscar telefones");
 			return null;

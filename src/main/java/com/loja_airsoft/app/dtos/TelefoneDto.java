@@ -1,5 +1,8 @@
 package com.loja_airsoft.app.dtos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.loja_airsoft.app.entities.Telefone;
 
 import lombok.Getter;
@@ -21,11 +24,31 @@ public class TelefoneDto {
 		return telefoneDto;
 	}
 	
+	public static List<TelefoneDto> fromEntity(List<Telefone> telefone) {
+		List<TelefoneDto>telefoneDto = new ArrayList<TelefoneDto>();
+		
+		for(Telefone telefoneUnid: telefone) {
+			telefoneDto.add(fromEntity(telefoneUnid));
+			
+		}
+		return telefoneDto;
+	}
+	
 	public static Telefone toEntity(TelefoneDto telefoneDto) {
 		Telefone telefone = new Telefone();
 		telefone.setIdTelefone(telefoneDto.getIdTelefone());
 		telefone.setDDDTelefone(telefoneDto.getDddTelefone());
 		telefone.setNumTelefone(telefoneDto.getDddTelefone());
+		return telefone;
+	}
+	
+	public static List<Telefone> toEntity(List<TelefoneDto> telefoneDto) {
+		List<Telefone>telefone = new ArrayList<Telefone>();
+		
+		for(TelefoneDto telefoneUnid: telefoneDto) {
+			telefone.add(toEntity(telefoneUnid));
+			
+		}
 		return telefone;
 	}
 }

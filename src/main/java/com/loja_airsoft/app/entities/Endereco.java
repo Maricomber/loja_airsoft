@@ -19,7 +19,7 @@ public class Endereco {
 	private String endComplemento;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "end_id_endereco", nullable = false)
 	public Integer getIdEndereco() {
 		return idEndereco;
