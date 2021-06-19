@@ -26,6 +26,7 @@ public class ClienteController {
 	@Autowired
 	ClienteService clienteService;
 	
+	
 	@GetMapping(path = {"/loja_airsoft/clientes/find/{id}"})
 	public @ResponseBody ResponseEntity<Response<ClienteDto>> findById(@PathVariable int id){
 		
@@ -33,11 +34,16 @@ public class ClienteController {
 		Response<ClienteDto>response = new Response<ClienteDto>();
 		
 		try {
+			
+			if(!(id > 1)) {
+				throw new Exception("Id do cliente em branco. ");
+			}
+			
 			ClienteDto clienteDto = new ClienteDto();
 			clienteDto= this.clienteService.findById(id);
 			
 			if(clienteDto == null) {
-				throw new Exception ("Cliente não encontrado");
+				throw new Exception ("Cliente não encontrado. ");
 			}
 			response.setData(clienteDto);
 		}catch (Exception e) {
@@ -50,15 +56,17 @@ public class ClienteController {
 	
 	@PutMapping("/loja_airsoft/clientes/update")
 	public @ResponseBody ResponseEntity<Response<ClienteDto>> update(@RequestBody ClienteDto clienteDto){
+		
 		List<String>erros = new ArrayList<String>();
 		Response<ClienteDto>response = new Response<ClienteDto>();
+		
 		try {
 			if(clienteDto == null) {
-				throw new Exception("Campos em branco");
+				throw new Exception("Campos em branco. ");
 			}
 			clienteDto = this.clienteService.save(clienteDto);
 			if(clienteDto.equals(null)) {
-				throw new Exception ("Cliente não encontrado");
+				throw new Exception ("Cliente não encontrado. ");
 			}
 		response.setData(clienteDto);
 		}
@@ -75,21 +83,29 @@ public class ClienteController {
 	public @ResponseBody ResponseEntity<Response<List<ClienteDto>>> findClientes(HttpServletRequest request) {
 		
 		Response<List<ClienteDto>> response = new Response<List<ClienteDto>>();
-		List<ClienteDto>clientesDto = this.clienteService.findClientes();
+		List<String>erros = new ArrayList<String>();
 		
-		if(clientesDto == null) {
+		try{
+			List<ClienteDto>clientesDto = this.clienteService.findClientes();
+			if(clientesDto == null) {
+				return ResponseEntity.badRequest().body(response);
+			}
+			response.setData(clientesDto);
+			return ResponseEntity.ok(response);
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		response.setData(clientesDto);
-		return ResponseEntity.ok(response);
-		
 	}
+		
 	
 	@PostMapping("/loja_airsoft/clientes/save")
 	public @ResponseBody ResponseEntity<Response<ClienteDto>> saveCliente(@RequestBody ClienteDto clienteDto) {
 		
-		List<String>erros = new ArrayList<String>();
 		Response<ClienteDto>response = new Response<ClienteDto>();
+		List<String>erros = new ArrayList<String>();
+		
 		try {
 			if(clienteDto == null) {
 				throw new Exception("Campos em branco");
@@ -112,14 +128,14 @@ public class ClienteController {
 	public @ResponseBody ResponseEntity<Response<ClienteDto>> deleteCliente(@PathVariable Integer id) {
 		List<String>erros = new ArrayList<String>();
 		Response<ClienteDto> response = new Response<ClienteDto>();
-		//ClienteDto clienteDto = new ClienteDto();
 		
 		try {
 			if(id == null) {
 				throw new Exception("Campos em branco");
 			}
-			//clienteDto = this.clienteService.findById(id);
+	
 			Boolean retorno = this.clienteService.delete(id);
+			
 			if(retorno == false || retorno == null) {
 				return ResponseEntity.badRequest().body(response);
 			}
