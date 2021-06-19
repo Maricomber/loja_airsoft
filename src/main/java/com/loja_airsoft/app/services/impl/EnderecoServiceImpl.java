@@ -19,53 +19,65 @@ public class EnderecoServiceImpl implements EnderecoService{
 	@Autowired
 	EnderecoRepository enderecoRepository;
 	
+	private String msgErro;
+	
 	private static final Logger log = LoggerFactory.getLogger(EnderecoServiceImpl.class);
 	
 	@Override
-	public EnderecoDto save(EnderecoDto enderecoDto) {
+	public EnderecoDto save(EnderecoDto enderecoDto) throws Exception {
 		log.info("Salvando endereco");
 		Endereco endereco = new Endereco();
+		
+		if(enderecoDto.equals(null)){
+			throw new Exception("Pesquisa em branco. ");
+		}
+		
 		try {
 			endereco = this.enderecoRepository.save(EnderecoDto.toEntity(enderecoDto));
 			return  EnderecoDto.fromEntity(endereco);
 		}catch (Exception e) {
-			log.info("Erro ao salvar endereco");
-			return null;
+			msgErro = "Erro ao salvar endereço. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
 	@Override
-	public EnderecoDto findById(Integer id_endereco) {
+	public EnderecoDto findById(Integer id_endereco) throws Exception {
 		log.info("Buscando endereco.");
 		Endereco endereco = new Endereco();
 		try {
 			endereco = this.enderecoRepository.findByidEndereco(id_endereco);
 			if(endereco == null) {
-				log.info("Sem resultados.");
-				return null;
+				throw new Exception("Sem resultados.");
 			}
 			log.info("endereco encontrado.");
 			return EnderecoDto.fromEntity(endereco);
 		}catch (Exception e) {
-			log.info("Erro ao buscar endereco.");
-			return null;
+			msgErro = "Erro ao buscar endereço. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
 	@Override
-	public Boolean delete(EnderecoDto enderecoDto) {
+	public Boolean delete(Integer id_endereco) throws Exception {
 		log.info("Deletando endereco");
+		Endereco endereco = new Endereco();
+		
 		try{
-			this.enderecoRepository.delete(EnderecoDto.toEntity(enderecoDto));
-			return true;
+			endereco = this.enderecoRepository.findByidEndereco(id_endereco);
+			this.enderecoRepository.delete(endereco);
 		}catch (Exception e) {
-			log.info("endereco não pode ser deletado");
+			msgErro = "Endereco não pode ser deletado. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
-		return false;
+		return true;
 	}
 
 	@Override
-	public List<EnderecoDto> findEnderecos() {
+	public List<EnderecoDto> findEnderecos() throws Exception {
 		log.info("Buscando todos os enderecos");
 		List<Endereco> enderecos = new ArrayList<Endereco>();
 		List<EnderecoDto> enderecosRetorno = new ArrayList<EnderecoDto>();
@@ -78,8 +90,9 @@ public class EnderecoServiceImpl implements EnderecoService{
 			log.info("Busca realizada com sucesso");
 			return enderecosRetorno;
 		}catch (Exception e) {
-			log.info("Erro ao buscar enderecos");
-			return null;
+			msgErro = "Erro ao buscar enderecos. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
