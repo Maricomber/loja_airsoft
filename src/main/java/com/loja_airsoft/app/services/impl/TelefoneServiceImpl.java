@@ -19,53 +19,65 @@ public class TelefoneServiceImpl implements TelefoneService{
 	@Autowired
 	TelefoneRepository telefoneRepository;
 	
+	private String msgErro;
+	
 	private static final Logger log = LoggerFactory.getLogger(CargoServiceImpl.class);
 	
 	@Override
-	public TelefoneDto save(TelefoneDto telefoneDto) {
+	public TelefoneDto save(TelefoneDto telefoneDto) throws Exception {
+		
 		log.info("Salvando telefone");
 		Telefone telefone = new Telefone();
+		
+		if(telefoneDto.equals(null)) {
+			throw new Exception("Pesquisa em branco. ");
+		}
 		try {
 			telefone = this.telefoneRepository.save(TelefoneDto.toEntity(telefoneDto));
 			return  TelefoneDto.fromEntity(telefone);
 		}catch (Exception e) {
-			log.info("Erro ao salvar telefone");
-			return null;
+			msgErro = "Erro ao salvar telefone. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
 	@Override
-	public TelefoneDto findById(Integer id_telefone) {
+	public TelefoneDto findById(Integer id_telefone) throws Exception {
 		log.info("Buscando telefone.");
 		Telefone telefone = new Telefone();
 		try {
 			telefone = this.telefoneRepository.findByidTelefone(id_telefone);
 			if(telefone == null) {
-				log.info("Sem resultados.");
-				return null;
+				throw new Exception("Sem resultados.");
 			}
 			log.info("telefone encontrado.");
 			return TelefoneDto.fromEntity(telefone);
 		}catch (Exception e) {
-			log.info("Erro ao buscar telefone.");
-			return null;
+			msgErro = "Erro ao buscar telefone."+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
 	@Override
-	public Boolean delete(TelefoneDto telefoneDto) {
+	public Boolean delete(Integer id_telefone) throws Exception {
+		Telefone telefone = new Telefone();
 		log.info("Deletando telefone");
+		
 		try{
-			this.telefoneRepository.delete(TelefoneDto.toEntity(telefoneDto));
-			return true;
+			telefone = this.telefoneRepository.findByidTelefone(id_telefone);
+			this.telefoneRepository.delete(telefone);
 		}catch (Exception e) {
-			log.info("telefone não pode ser deletado");
+			msgErro = "telefone não pode ser deletado. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
-		return false;
+		return true;
 	}
 
 	@Override
-	public List<TelefoneDto> findTelefones() {
+	public List<TelefoneDto> findTelefones() throws Exception {
 		log.info("Buscando todos os telefones");
 		List<Telefone> telefones = new ArrayList<Telefone>();
 		
@@ -74,8 +86,9 @@ public class TelefoneServiceImpl implements TelefoneService{
 			log.info("Busca realizada com sucesso");
 			return TelefoneDto.fromEntity(telefones);
 		}catch (Exception e) {
-			log.info("Erro ao buscar telefones");
-			return null;
+			msgErro = "Erro ao buscar telefones. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 

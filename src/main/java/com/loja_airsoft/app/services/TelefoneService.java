@@ -9,11 +9,11 @@ import com.loja_airsoft.app.dtos.TelefoneDto;
 @Service
 public interface TelefoneService {
 
-	TelefoneDto save(TelefoneDto telefoneDto);
+	TelefoneDto save(TelefoneDto telefoneDto) throws Exception;
 	
-	TelefoneDto findById(Integer idTelefone);
+	TelefoneDto findById(Integer idTelefone) throws Exception;
 	
-	Boolean delete(TelefoneDto TelefoneDto);
+	Boolean delete(Integer idTelefone) throws Exception;
 	
-	List<TelefoneDto>findTelefones();
+	List<TelefoneDto>findTelefones() throws Exception;
 }

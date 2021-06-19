@@ -19,55 +19,66 @@ public class CargoServiceImpl implements CargoService{
 	@Autowired
 	CargoRepository cargoRepository;
 	
+	private String msgErro;
+	
 	private static final Logger log = LoggerFactory.getLogger(CargoServiceImpl.class);
 	
 	@Override
-	public CargoDto save(CargoDto cargoDto) {
+	public CargoDto save(CargoDto cargoDto) throws Exception {
+		
+		if(cargoDto.equals(null)){
+			throw new Exception("Pesquisa em branco. ");
+		}
 		log.info("Salvando cargo");
 		Cargo cargo = new Cargo();
 		try {
 			cargo = this.cargoRepository.save(CargoDto.toEntity(cargoDto));
 			return  CargoDto.fromEntity(cargo);
 		}catch (Exception e) {
-			log.info("Erro ao salvar cargo");
-			return null;
+			msgErro = "Erro ao salvar cargo. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 	
-	
 
 	@Override
-	public CargoDto findById(Integer id_cargo) {
+	public CargoDto findById(Integer id_cargo) throws Exception {
 		log.info("Buscando cargo.");
 		Cargo cargo = new Cargo();
 		try {
 			cargo = this.cargoRepository.findByIdCargo(id_cargo);
 			if(cargo == null) {
-				log.info("Sem resultados.");
-				return null;
+				throw new Exception("Sem resultados.");
 			}
 			log.info("Cargo encontrado.");
 			return CargoDto.fromEntity(cargo);
 		}catch (Exception e) {
-			log.info("Erro ao buscar cargo.");
-			return null;
+			msgErro = "Erro ao buscar cargo. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
 	@Override
-	public Boolean delete(CargoDto cargoDto) {
-		log.info("Deletando cargo");
+	public Boolean delete(Integer id_cargo) throws Exception {
+		
+		Cargo cargo = new Cargo();
+		log.info("Deletando cargo ");
+		
 		try{
-			this.cargoRepository.delete(CargoDto.toEntity(cargoDto));
-			return true;
-		}catch (Exception e) {
-			log.info("Cargo não pode ser deletado");
+			cargo = this.cargoRepository.findByIdCargo(id_cargo);
+			this.cargoRepository.delete(cargo);
+		}catch (Exception e) {;
+			msgErro = "Erro cargo não pode ser deletado. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
-		return false;
+		return true;
 	}
 
 	@Override
-	public List<CargoDto> findCargos() {
+	public List<CargoDto> findCargos() throws Exception {
 		log.info("Buscando todos os cargos");
 		List<Cargo> cargos = new ArrayList<Cargo>();
 		List<CargoDto> cargosRetorno = new ArrayList<CargoDto>();
@@ -80,8 +91,9 @@ public class CargoServiceImpl implements CargoService{
 			log.info("Busca realizada com sucesso");
 			return cargosRetorno;
 		}catch (Exception e) {
-			log.info("Erro ao buscar cargos");
-			return null;
+			msgErro = "Erro ao buscar cargos. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 }

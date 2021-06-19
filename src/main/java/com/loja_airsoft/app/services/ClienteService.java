@@ -15,6 +15,6 @@ public interface ClienteService {
 	
 	Boolean delete(Integer idCliente) throws Exception;
 	
-	List<ClienteDto>findClientes();
+	List<ClienteDto>findClientes() throws Exception;
 	
 }

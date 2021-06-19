@@ -3,8 +3,6 @@ package com.loja_airsoft.app.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,6 @@ import com.loja_airsoft.app.dtos.ClienteDto;
 import com.loja_airsoft.app.entities.Cliente;
 import com.loja_airsoft.app.entities.Telefone;
 import com.loja_airsoft.app.repositories.ClienteRepository;
-import com.loja_airsoft.app.repositories.EnderecoRepository;
-import com.loja_airsoft.app.repositories.TelefoneRepository;
 import com.loja_airsoft.app.services.ClienteService;
 
 @Service
@@ -24,24 +20,15 @@ public class ClienteServiceImpl implements ClienteService{
 	@Autowired
 	ClienteRepository clienteRepository;
 	
-	@Autowired
-	EnderecoRepository enderecoRepository;
-	
-	@Autowired
-	TelefoneRepository telefoneRepository;
+	private String msgErro;
 	
 	private static final Logger log = LoggerFactory.getLogger(ClienteServiceImpl.class);
 	
 	@Override
-	@Transactional
 	public ClienteDto save(ClienteDto clienteDto) throws Exception {
 		
 		Cliente cliente = new Cliente();
 		List<Telefone> telefoneLst = new ArrayList<Telefone>();
-		
-		if(clienteDto.equals(null)){
-			throw new Exception("Pesquisa em branco");
-		}
 		
 		try {
 			cliente = ClienteDto.toEntity(clienteDto);
@@ -57,8 +44,9 @@ public class ClienteServiceImpl implements ClienteService{
 			
 			return clienteDto;
 		}catch (Exception e) {
-			log.info("Erro ao salvar cliente "+e.getMessage());
-			return null;
+			msgErro = "Erro ao salvar cliente "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
@@ -75,8 +63,9 @@ public class ClienteServiceImpl implements ClienteService{
 			log.info("cliente encontrado.");
 			return ClienteDto.fromEntity(cliente);
 		}catch (Exception e) {
-			log.info("Erro ao buscar cliente. "+e.getMessage());
-			throw new Exception(e);
+			msgErro = "Erro ao buscar cliente. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 
@@ -87,14 +76,15 @@ public class ClienteServiceImpl implements ClienteService{
 			Cliente cliente = this.clienteRepository.findByIdCliente(idCliente);
 			this.clienteRepository.delete(cliente);
 		}catch (Exception e) {
-			log.info("cliente não pode ser deletado "+e.getMessage());
-			throw new Exception(e);
+			msgErro = "cliente não pode ser deletado "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 		return true;
 	}
 
 	@Override
-	public List<ClienteDto> findClientes() {
+	public List<ClienteDto> findClientes() throws Exception {
 		log.info("Buscando todos os clientes");
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		List<ClienteDto> clientesRetorno = new ArrayList<ClienteDto>();
@@ -107,8 +97,9 @@ public class ClienteServiceImpl implements ClienteService{
 			log.info("Busca realizada com sucesso");
 			return clientesRetorno;
 		}catch (Exception e) {
-			log.info("Erro ao buscar clientes "+e.getMessage());
-			return null;
+			msgErro = "Erro ao buscar clientes "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
 		}
 	}
 

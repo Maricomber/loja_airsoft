@@ -9,12 +9,12 @@ import com.loja_airsoft.app.dtos.CargoDto;
 @Service
 public interface CargoService {
 
-	CargoDto save(CargoDto cargoDto);
+	CargoDto save(CargoDto cargoDto) throws Exception;
 	
-	CargoDto findById(Integer id_cargo);
+	CargoDto findById(Integer id_cargo) throws Exception;
 	
-	Boolean delete(CargoDto cargoDto);
+	Boolean delete(Integer id_cargo) throws Exception;
 	
-	List<CargoDto>findCargos();
+	List<CargoDto>findCargos() throws Exception;
 	
 }
