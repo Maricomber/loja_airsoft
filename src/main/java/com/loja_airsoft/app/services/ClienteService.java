@@ -11,11 +11,10 @@ public interface ClienteService {
 
 	ClienteDto save(ClienteDto clienteDto) throws Exception;
 	
-	ClienteDto findById(Integer cpfCliente) throws Exception;
+	ClienteDto findById(Integer idCliente) throws Exception;
 	
-	Boolean delete(ClienteDto clienteDto) throws Exception;
+	Boolean delete(Integer idCliente) throws Exception;
 	
 	List<ClienteDto>findClientes();
 	
-	ClienteDto update(ClienteDto clienteDto) throws Exception;
 }

@@ -3,6 +3,7 @@ package com.loja_airsoft.app.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,83 +14,38 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "cliente")
 public class Cliente {
-	private Integer idCliente;
-	private Double cpfCliente;
-	private String nmCliente;
-	private Date dtNasCliente;
-	private Integer rgCliente;
-	private Endereco endereco;
-	private List<Telefone> telefone;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cli_id_cliente", nullable = true)
-	public Integer getIdCliente() {
-		return idCliente;
-	}
-	
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
-	}
-	
+	private Integer idCliente;
 	
 	@Column(name = "cli_cpf", nullable = false)
-	public Double getCpfCliente() {
-		return cpfCliente;
-	}
-	
-	public void setCpfCliente(Double cpfCliente) {
-		this.cpfCliente = cpfCliente;
-	}
+	private Double cpfCliente;
 	
 	@Column(name = "cli_nome", nullable = false)
-	public String getNmCliente() {
-		return nmCliente;
-	}
-	
-	public void setNmCliente(String nmCliente) {
-		this.nmCliente = nmCliente;
-	}
+	private String nmCliente;
 	
 	@Column(name = "cli_dt_nascimento", nullable = false)
-	public Date getDtNascCliente() {
-		return dtNasCliente;
-	}
-	
-	public void setDtNascCliente(Date dtNasCliente) {
-		this.dtNasCliente = dtNasCliente;
-	}
+	private Date dtNascCliente;
 	
 	@Column(name = "cli_rg", nullable = false)
-	public Integer getRgCliente() {
-		return rgCliente;
-	}
+	private Integer rgCliente;
 	
-	public void setRgCliente(Integer rgCliente) {
-		this.rgCliente = rgCliente;
-	}
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "end_id_endereco")
+	private Endereco endereco;
 	
-	@OneToOne
-	@JoinColumn(name = "end_id_endereco", nullable = false)
-	public Endereco getEndereco() {
-		return endereco;
-	}
+	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
+	private List<Telefone> telefone;
 	
-	public void setEndereco(Endereco idEndereço) {
-		this.endereco = idEndereço;
-	}
-	
-	@OneToMany
-	@JoinColumn(name = "cli_id_cliente", nullable = true)
-	public List<Telefone> getTelefone() {
-		return telefone;
-	}
-	
-	public void setTelefone(List<Telefone> telefone) {
-		this.telefone = telefone;
-	}
 }

@@ -5,73 +5,39 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "endereco")
 public class Endereco {
 
-	private Integer idEndereco;
-	private String dsRua;
-	private Integer endNumero;
-	private String endBairro;
-	private String endCidade;
-	private String endComplemento;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "end_id_endereco", nullable = false)
-	public Integer getIdEndereco() {
-		return idEndereco;
-	}
-	
-	public void setIdEndereco(Integer idEndereco) {
-		this.idEndereco = idEndereco;
-	}
+	private Integer idEndereco;
 	
 	@Column(name = "end_rua", nullable = false)
-	public String getDsRua() {
-		return dsRua;
-	}
-	
-	public void setDsRua(String dsRua) {
-		this.dsRua = dsRua;
-	}
+	private String dsRua;
 	
 	@Column(name = "end_numero", nullable = false)
-	public Integer getEndNumero() {
-		return endNumero;
-	}
-	
-	public void setEndNumero(Integer endNumero) {
-		this.endNumero = endNumero;
-	}
+	private Integer endNumero;
 	
 	@Column(name = "end_bairro", nullable = false)
-	public String getEndBairro() {
-		return endBairro;
-	}
-	
-	public void setEndBairro(String endBairro) {
-		this.endBairro = endBairro;
-	}
+	private String endBairro;
 	
 	@Column(name = "end_cidade", nullable = false)
-	public String getEndCidade() {
-		return endCidade;
-	}
-	
-	public void setEndCidade(String endCidade) {
-		this.endCidade = endCidade;
-	}
+	private String endCidade;
 	
 	@Column(name = "end_complemento", nullable = true)
-	public String getEndComplemento() {
-		return endComplemento;
-	}
-	
-	public void setEndComplemento(String endComplemento) {
-		this.endComplemento = endComplemento;
-	}
+	private String endComplemento;
+		
+	@OneToOne(mappedBy = "endereco")
+	private Cliente cliente;
 
 }

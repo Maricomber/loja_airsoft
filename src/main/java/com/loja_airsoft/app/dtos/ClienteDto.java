@@ -31,14 +31,13 @@ public class ClienteDto {
 			clienteDto.setNmCliente(cliente.getNmCliente());
 			clienteDto.setDtNascCliente(cliente.getDtNascCliente());
 			clienteDto.setRgCliente(cliente.getRgCliente());
-			clienteDto.setEnderecoDto(EnderecoDto.fromEntity(cliente.getEndereco()));
-			
 			if(cliente.getTelefone() != null) {
 				for(Telefone telefone : cliente.getTelefone()) {
 					telefoneD.add(TelefoneDto.fromEntity(telefone));
 				}
 			}
 			clienteDto.setTelefoneDto(telefoneD);
+			clienteDto.setEnderecoDto(EnderecoDto.fromEntity(cliente.getEndereco()));
 		}
 		return clienteDto;
 	}
@@ -53,7 +52,6 @@ public class ClienteDto {
 			cliente.setNmCliente(clienteDto.getNmCliente());
 			cliente.setDtNascCliente(clienteDto.getDtNascCliente());
 			cliente.setRgCliente(clienteDto.getRgCliente());
-			cliente.setEndereco(EnderecoDto.toEntity(clienteDto.getEnderecoDto()));
 			
 			if(clienteDto.getTelefoneDto() != null) {
 				for(TelefoneDto telefoneDto : clienteDto.getTelefoneDto()) {
@@ -61,6 +59,8 @@ public class ClienteDto {
 				}
 				cliente.setTelefone(telefone);
 			}
+			cliente.setEndereco(EnderecoDto.toEntity(clienteDto.getEnderecoDto()));
+			
 		}
 		return cliente;
 	}

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -109,18 +108,18 @@ public class ClienteController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@DeleteMapping("/loja_airsoft/clientes/delete{id}")
+	@DeleteMapping("/loja_airsoft/clientes/delete/{id}")
 	public @ResponseBody ResponseEntity<Response<ClienteDto>> deleteCliente(@PathVariable Integer id) {
 		List<String>erros = new ArrayList<String>();
 		Response<ClienteDto> response = new Response<ClienteDto>();
-		ClienteDto clienteDto = new ClienteDto();
+		//ClienteDto clienteDto = new ClienteDto();
 		
 		try {
 			if(id == null) {
 				throw new Exception("Campos em branco");
 			}
-			clienteDto = this.clienteService.findById(id);
-			Boolean retorno = this.clienteService.delete(clienteDto);
+			//clienteDto = this.clienteService.findById(id);
+			Boolean retorno = this.clienteService.delete(id);
 			if(retorno == false || retorno == null) {
 				return ResponseEntity.badRequest().body(response);
 			}
