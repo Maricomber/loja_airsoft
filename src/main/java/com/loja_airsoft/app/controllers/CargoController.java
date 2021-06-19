@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.CargoDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.CargoService;
-import com.loja_airsoft.app.services.impl.CargoServiceImpl;
 
 @Controller
 public class CargoController {
@@ -27,7 +24,7 @@ public class CargoController {
 	@Autowired
 	CargoService cargoService;
 	
-	@GetMapping(path = {"/{id}"})
+	@GetMapping(path = {"cargo/{id}"})
 	public @ResponseBody ResponseEntity<Response<CargoDto>> findById(@PathVariable int id){
 		
 		Response<CargoDto>response = new Response<CargoDto>();
