@@ -106,7 +106,7 @@ public class CargoController {
 		
 		try {
 
-			if(cargoDto.getDsCargo() == null) {
+			if(cargoDto == null) {
 				throw new Exception("Campos vazios. ");
 			}
 			cargoDto = this.cargoService.save(cargoDto);
