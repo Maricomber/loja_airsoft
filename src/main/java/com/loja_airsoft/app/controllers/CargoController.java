@@ -28,13 +28,18 @@ public class CargoController {
 	
 	
 	@GetMapping(path = {"/loja_airsoft/cargo/find/{id}"})
-	public @ResponseBody ResponseEntity<Response<CargoDto>> findById(@PathVariable int id){
+	public @ResponseBody ResponseEntity<Response<CargoDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
 		Response<CargoDto>response = new Response<CargoDto>();
 		CargoDto cargoDto = new CargoDto();
 		
 		try {
+			
+			if(id == null) {
+				throw new Exception("Campos em branco");
+			}
+			
 			cargoDto= this.cargoService.findById(id);
 			
 			if(cargoDto.equals(null)) {
@@ -126,18 +131,13 @@ public class CargoController {
 			if(id == null) {
 				throw new Exception("Campos em branco. ");
 			}
-			Boolean retorno = this.cargoService.delete(id);
-			
-			if(retorno == false || retorno == null) {
-				return ResponseEntity.badRequest().body(response);
-			}
-			return ResponseEntity.ok(response);
+			this.cargoService.delete(id);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		
+		return ResponseEntity.ok(response);
 	}
 	
 }

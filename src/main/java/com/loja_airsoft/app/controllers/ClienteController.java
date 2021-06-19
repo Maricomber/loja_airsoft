@@ -35,10 +35,6 @@ public class ClienteController {
 		
 		try {
 			
-			if(!(id > 1)) {
-				throw new Exception("Id do cliente em branco. ");
-			}
-			
 			ClienteDto clienteDto = new ClienteDto();
 			clienteDto= this.clienteService.findById(id);
 			
@@ -134,11 +130,7 @@ public class ClienteController {
 				throw new Exception("Campos em branco");
 			}
 	
-			Boolean retorno = this.clienteService.delete(id);
-			
-			if(retorno == false || retorno == null) {
-				return ResponseEntity.badRequest().body(response);
-			}
+			this.clienteService.delete(id);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);

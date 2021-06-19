@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.loja_airsoft.app.dtos.TelefoneDto;
@@ -24,87 +26,109 @@ public class TelefoneController {
 	@Autowired
 	TelefoneService telefoneService;
 	
-	@GetMapping(path = {"telefone/{id}"})
+	@GetMapping(path = {"/loja_airsoft/telefone/find/{id}"})
 	public @ResponseBody ResponseEntity<Response<TelefoneDto>> findById(@PathVariable int id){
 		
 		Response<TelefoneDto>response = new Response<TelefoneDto>();
 		TelefoneDto telefoneDto = new TelefoneDto();
+		List<String>erros = new ArrayList<String>();
 		
-		telefoneDto= this.telefoneService.findById(id);
-		
-		if(telefoneDto.equals(null)) {
+		try {
+			telefoneDto= this.telefoneService.findById(id);
+			
+			if(telefoneDto.equals(null)) {
+				throw new Exception("Erro ao buscar telefone. ");
+			}
+			response.setData(telefoneDto);
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		response.setData(telefoneDto);
 		return ResponseEntity.ok(response);
 		
 	}
 	
-	@PutMapping("/updateTelefones")
-	public @ResponseBody ResponseEntity<Response<TelefoneDto>> update(TelefoneDto telefoneDto){
+	@PutMapping("/loja_airsoft/telefone/update")
+	public @ResponseBody ResponseEntity<Response<TelefoneDto>> update(@RequestBody TelefoneDto telefoneDto){
 		
 		Response<TelefoneDto>response = new Response<TelefoneDto>();
+		List<String>erros = new ArrayList<String>();
 		
-		telefoneDto = this.telefoneService.save(telefoneDto);
+		try {
+			telefoneDto = this.telefoneService.save(telefoneDto);
 			if(telefoneDto.equals(null)) {
-				return ResponseEntity.badRequest().body(response);
+				throw new Exception("Erro ao salvar telefone. ");
 			}
 		response.setData(telefoneDto);
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
+		}
 		return ResponseEntity.ok(response);
-		
 	}
 	
-	@GetMapping("/findTelefones")
+	@GetMapping("/loja_airsoft/telefone/find")
 	public @ResponseBody ResponseEntity<Response<List<TelefoneDto>>> findTelefones(HttpServletRequest request) {
 		
 		Response<List<TelefoneDto>> response = new Response<List<TelefoneDto>>();
-		List<TelefoneDto>telefonesDto = this.telefoneService.findTelefones();
+		List<String>erros = new ArrayList<String>();
 		
-		if(telefonesDto.equals(null)) {
+		try {
+			List<TelefoneDto>telefonesDto = this.telefoneService.findTelefones();
+			if(telefonesDto.equals(null)) {
+				throw new Exception("Nenhum telefone foi encontrado. ");
+			}
+			response.setData(telefonesDto);
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		response.setData(telefonesDto);
 		return ResponseEntity.ok(response);
 		
 	}
 	
-	@PostMapping("/saveTelefone")
-	public @ResponseBody ResponseEntity<Response<TelefoneDto>> saveTelefone(TelefoneDto telefoneDto) {
+	@PostMapping("/loja_airsoft/telefone/save")
+	public @ResponseBody ResponseEntity<Response<TelefoneDto>> saveTelefone(@RequestBody TelefoneDto telefoneDto) {
 		
 		Response<TelefoneDto> response = new Response<TelefoneDto>();
+		List<String>erros = new ArrayList<String>();
 		
-		if(telefoneDto.getIdTelefone() != null) {
+		try {
 			telefoneDto = this.telefoneService.save(telefoneDto);
 			
 			if(telefoneDto == null) {
 				return ResponseEntity.badRequest().body(response);
 			}
 			response.setData(telefoneDto);
-			return ResponseEntity.ok(response);
-		}
-		else {
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
+			
+		return ResponseEntity.ok(response);
 	}
 	
-	@DeleteMapping("/deleteTelefone")
-	public @ResponseBody ResponseEntity<Response<TelefoneDto>> deleteTelefone(TelefoneDto telefoneDto) {
+	@DeleteMapping("/loja_airsoft/telefone/delete/{id}")
+	public @ResponseBody ResponseEntity<Response<TelefoneDto>> deleteTelefone(@PathVariable Integer id) {
 		
 		Response<TelefoneDto> response = new Response<TelefoneDto>();
+		List<String>erros = new ArrayList<String>();
 		
-		if(telefoneDto.getIdTelefone() != null) {
-			Boolean retorno = this.telefoneService.delete(telefoneDto);
-	
-			if(retorno == false || retorno == null) {
-				return ResponseEntity.badRequest().body(response);
+		try {
+			if(id == null) {
+				throw new Exception("Campos em branco");
 			}
-			response.setData(telefoneDto);
-			return ResponseEntity.ok(response);
-		}
-		else {
+			this.telefoneService.delete(id);	
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
+		return ResponseEntity.ok(response);
 	}
-	
 	
 }
