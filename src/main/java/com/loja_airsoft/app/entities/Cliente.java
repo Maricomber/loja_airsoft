@@ -32,7 +32,7 @@ public class Cliente {
 	@Column(name = "cli_cpf", nullable = false)
 	private Double cpfCliente;
 	
-	@Column(name = "cli_nome", nullable = false)
+	@Column(name = "cli_nome", nullable = false, length = 200)
 	private String nmCliente;
 	
 	@Column(name = "cli_dt_nascimento", nullable = false)

@@ -22,7 +22,7 @@ public class Cargo {
 	@Column(name = "crg_id_cargo", nullable = false)
 	private Integer idCargo;
 	
-	@Column(name = "crg_ds_cargo", nullable = false)
+	@Column(name = "crg_ds_cargo", nullable = false, length = 100)
 	private String dsCargo;
 	
 
