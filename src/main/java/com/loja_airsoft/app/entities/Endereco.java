@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +20,7 @@ public class Endereco {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "end_id_endereco", nullable = false)
+	@Column(name = "end_id_endereco")
 	private Integer idEndereco;
 	
 	@Column(name = "end_rua", nullable = false, length = 255)

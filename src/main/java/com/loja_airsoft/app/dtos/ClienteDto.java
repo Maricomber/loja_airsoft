@@ -28,7 +28,7 @@ public class ClienteDto {
 	
 	public static ClienteDto fromEntity(Cliente cliente) {
 			
-			return fromEntity(cliente, false);
+			return fromEntity(cliente, true);
 	}
 	
 	public static ClienteDto fromEntity(Cliente cliente, Boolean isCliente) {
@@ -42,14 +42,14 @@ public class ClienteDto {
 			clienteDto.setDtNascCliente(cliente.getDtNascCliente());
 			clienteDto.setRgCliente(cliente.getRgCliente());
 			
-			if (isCliente.equals(false)) {
+			if (isCliente) {
 				if(cliente.getTelefone() != null) {
 					for(Telefone telefone : cliente.getTelefone()) {
-						telefoneD.add(TelefoneDto.fromEntity(telefone, true));
+						telefoneD.add(TelefoneDto.fromEntity(telefone, false));
 					}
 				}
 				clienteDto.setTelefoneDto(telefoneD);
-				clienteDto.setEnderecoDto(EnderecoDto.fromEntity(cliente.getEndereco(), true));
+				clienteDto.setEnderecoDto(EnderecoDto.fromEntity(cliente.getEndereco(), false));
 			}
 		}
 		return clienteDto;
@@ -57,7 +57,7 @@ public class ClienteDto {
 	
 	public static Cliente toEntity(ClienteDto clienteDto) {
 		
-		return toEntity(clienteDto, false);
+		return toEntity(clienteDto, true);
 	}
 
 	public static Cliente toEntity(ClienteDto clienteDto, Boolean isCliente) {
@@ -71,15 +71,15 @@ public class ClienteDto {
 			cliente.setDtNascCliente(clienteDto.getDtNascCliente());
 			cliente.setRgCliente(clienteDto.getRgCliente());
 			
-			if(isCliente.equals(true)){
+			if(isCliente){
 				if(clienteDto.getTelefoneDto() != null) {
 					for(TelefoneDto telefoneDto : clienteDto.getTelefoneDto()) {
-						telefone.add(TelefoneDto.toEntity(telefoneDto));
+						telefone.add(TelefoneDto.toEntity(telefoneDto, false));
 					}
 					cliente.setTelefone(telefone);
 				}
 				
-				cliente.setEndereco(EnderecoDto.toEntity(clienteDto.getEnderecoDto()));
+				cliente.setEndereco(EnderecoDto.toEntity(clienteDto.getEnderecoDto(), false));
 			}
 			
 		}
