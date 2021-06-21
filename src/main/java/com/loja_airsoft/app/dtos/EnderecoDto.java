@@ -15,6 +15,7 @@ public class EnderecoDto {
 	private String endBairro;
 	private String endCidade;
 	private String endComplemento;
+	private String endCep;
 	
 	public static EnderecoDto fromEntity(Endereco endereco) {
 		EnderecoDto enderecoDto = new EnderecoDto();
@@ -25,6 +26,7 @@ public class EnderecoDto {
 			enderecoDto.setEndBairro(endereco.getEndBairro());
 			enderecoDto.setEndCidade(endereco.getEndCidade());
 			enderecoDto.setEndComplemento(endereco.getEndComplemento());
+			enderecoDto.setEndCep(endereco.getEndCep());
 		}
 		return enderecoDto;
 	}
@@ -38,6 +40,7 @@ public class EnderecoDto {
 			endereco.setEndBairro(enderecoDto.getEndBairro());
 			endereco.setEndCidade(enderecoDto.getEndCidade());
 			endereco.setEndComplemento(enderecoDto.getEndComplemento());
+			endereco.setEndCep(enderecoDto.getEndCep());
 		}
 		
 		return endereco;

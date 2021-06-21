@@ -22,22 +22,27 @@ public class Endereco {
 	@Column(name = "end_id_endereco", nullable = false)
 	private Integer idEndereco;
 	
-	@Column(name = "end_rua", nullable = false)
+	@Column(name = "end_rua", nullable = false, length = 255)
 	private String dsRua;
 	
 	@Column(name = "end_numero", nullable = false)
 	private Integer endNumero;
 	
-	@Column(name = "end_bairro", nullable = false)
+	@Column(name = "end_bairro", nullable = false, length = 150)
 	private String endBairro;
 	
-	@Column(name = "end_cidade", nullable = false)
+	@Column(name = "end_cidade", nullable = false, length = 100)
 	private String endCidade;
 	
-	@Column(name = "end_complemento", nullable = true)
+	@Column(name = "end_complemento", nullable = true, length = 255)
 	private String endComplemento;
+	
+	@Column(name = "end_cep", nullable = false, length = 10)
+	private String endCep;
 		
 	@OneToOne(mappedBy = "endereco")
 	private Cliente cliente;
 
+	@OneToOne(mappedBy = "endereco")
+	private Fabricante fabricante;
 }
