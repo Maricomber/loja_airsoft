@@ -40,6 +40,7 @@ public class EnderecoDto {
 			
 			if(verCliente.equals(false)) {
 				enderecoDto.setClienteDto(ClienteDto.fromEntity(endereco.getCliente(), true));
+				enderecoDto.setFabricanteDto(FabricanteDto.fromEntity(endereco.getFabricante(), true));
 			}
 		}
 		return enderecoDto;
@@ -61,6 +62,7 @@ public class EnderecoDto {
 			endereco.setEndCep(enderecoDto.getEndCep());
 			
 			if(verEndereco.equals(false)) {
+				endereco.setFabricante(FabricanteDto.toEntity(enderecoDto.getFabricanteDto(), true));
 				endereco.setCliente(ClienteDto.toEntity(enderecoDto.getClienteDto(), true));
 			}
 		}
