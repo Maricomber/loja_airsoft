@@ -1,6 +1,5 @@
 package com.loja_airsoft.app.entities;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,35 +16,27 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Entity
-@Table(name = "cliente")
-public class Cliente {
-	
+@Table(name = "fabricante")
+public class Fabricante {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cli_id_cliente", nullable = true)
-	private Integer idCliente;
+	@Column(name = "fab_id_fabricante", nullable = true)
+	private Integer idFabricante;
 	
-	@Column(name = "cli_cpf", nullable = false)
-	private Double cpfCliente;
+	@Column(name = "fab_nm_fantasia", nullable = false, length = 255)
+	private String nmFantasiaFab;
 	
-	@Column(name = "cli_nome", nullable = false, length = 200)
-	private String nmCliente;
-	
-	@Column(name = "cli_dt_nascimento", nullable = false)
-	private Date dtNascCliente;
-	
-	@Column(name = "cli_rg", nullable = false)
-	private Integer rgCliente;
+	@Column(name = "fab_cnpj", nullable = false, length = 20)
+	private String cnpjFabricante;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "end_id_endereco")
 	private Endereco endereco;
 	
-	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
-	private List<Telefone> telefone;
-	
+	@OneToMany(mappedBy="fabricante", cascade = CascadeType.ALL)
+	private List<Produto> produto;
 }

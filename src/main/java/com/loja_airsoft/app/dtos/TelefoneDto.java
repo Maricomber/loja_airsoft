@@ -3,6 +3,7 @@ package com.loja_airsoft.app.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Telefone;
 
 import lombok.Getter;
@@ -12,15 +13,26 @@ import lombok.Setter;
 @Setter
 public class TelefoneDto {
 
-	public Integer idTelefone;
-	public Integer dddTelefone;
-	public Integer numTelefone;
+	private Integer idTelefone;
+	private Integer dddTelefone;
+	private Integer numTelefone;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private ClienteDto clienteDto;
 	
 	public static TelefoneDto fromEntity(Telefone telefone) {
+		return fromEntity(telefone, false);
+	}
+	
+	public static TelefoneDto fromEntity(Telefone telefone, Boolean verCliente) {
 		TelefoneDto telefoneDto = new TelefoneDto();
 		telefoneDto.setIdTelefone(telefone.getIdTelefone());
 		telefoneDto.setDddTelefone(telefone.getDddTelefone());
 		telefoneDto.setNumTelefone(telefone.getNumTelefone());
+		
+		if(verCliente.equals(false)) {
+			telefoneDto.setClienteDto(ClienteDto.fromEntity(telefone.getCliente(), true));
+		}
 		return telefoneDto;
 	}
 	
@@ -35,10 +47,17 @@ public class TelefoneDto {
 	}
 	
 	public static Telefone toEntity(TelefoneDto telefoneDto) {
+		return toEntity(telefoneDto, false);
+	}
+	public static Telefone toEntity(TelefoneDto telefoneDto, Boolean verCliente) {
 		Telefone telefone = new Telefone();
 		telefone.setIdTelefone(telefoneDto.getIdTelefone());
 		telefone.setDddTelefone(telefoneDto.getDddTelefone());
 		telefone.setNumTelefone(telefoneDto.getNumTelefone());
+		
+		if(verCliente.equals(false)) {
+			telefone.setCliente(ClienteDto.toEntity(telefoneDto.getClienteDto(), true));
+		}
 		return telefone;
 	}
 	
