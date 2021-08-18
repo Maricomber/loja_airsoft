@@ -17,125 +17,129 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loja_airsoft.app.dtos.EnderecoDto;
+import com.loja_airsoft.app.dtos.ProdutoDto;
 import com.loja_airsoft.app.response.Response;
-import com.loja_airsoft.app.services.EnderecoService;
+import com.loja_airsoft.app.services.ProdutoService;
 
 @RestController
-@RequestMapping(path = {"/loja_airsoft/endereco"})
-public class EnderecoController {
-	
+@RequestMapping(path = {"/loja_airsoft/produto"})
+public class ProdutoController {
+
 	@Autowired
-	EnderecoService enderecoService;
+	ProdutoService produtoService;
+	
 	
 	@GetMapping(path = {"/{id}"})
-	public @ResponseBody ResponseEntity<Response<EnderecoDto>> findById(@PathVariable int id){
+	public @ResponseBody ResponseEntity<Response<ProdutoDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
-		Response<EnderecoDto>response = new Response<EnderecoDto>();
-		EnderecoDto enderecoDto = new EnderecoDto();
+		Response<ProdutoDto>response = new Response<ProdutoDto>();
+		ProdutoDto produtoDto = new ProdutoDto();
 		
 		try {
-			enderecoDto= this.enderecoService.findById(id);
 			
-			if(enderecoDto.equals(null)) {
-				throw new Exception("Endereço não encontrado. ");
+			if(id == null) {
+				throw new Exception("Campos em branco");
 			}
-			response.setData(enderecoDto);
+			
+			produtoDto= this.produtoService.findById(id);
+			
+			if(produtoDto.equals(null)) {
+				throw new Exception("Produto não encontrado. ");
+			}
+			response.setData(produtoDto);
+			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		return ResponseEntity.ok(response);
+		
 	}
 	
 	@PutMapping
-	public @ResponseBody ResponseEntity<Response<EnderecoDto>> update(@RequestBody EnderecoDto enderecoDto){
+	public @ResponseBody ResponseEntity<Response<ProdutoDto>> update(@RequestBody ProdutoDto produtoDto){
 		
-		Response<EnderecoDto>response = new Response<EnderecoDto>();
 		List<String>erros = new ArrayList<String>();
+		Response<ProdutoDto>response = new Response<ProdutoDto>();
 		
 		try {
-			enderecoDto = this.enderecoService.save(enderecoDto);
-			if(enderecoDto.equals(null)) {
-				throw new Exception("Erro ao atualizar endereço. ");
+			produtoDto = this.produtoService.save(produtoDto);
+			if(produtoDto.equals(null)) {
+				return ResponseEntity.badRequest().body(response);
 			}
-		response.setData(enderecoDto);
+		response.setData(produtoDto);
+		return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		
-		return ResponseEntity.ok(response);
+
 	}
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<EnderecoDto>>> findEnderecos(HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<Response<List<ProdutoDto>>> findProdutos(HttpServletRequest request) {
 		
-		Response<List<EnderecoDto>> response = new Response<List<EnderecoDto>>();
+		Response<List<ProdutoDto>> response = new Response<List<ProdutoDto>>();
 		List<String>erros = new ArrayList<String>();
 		
-		try {
-			List<EnderecoDto>enderecosDto = this.enderecoService.findEnderecos();
+		try{
+			List<ProdutoDto>produtosDto = this.produtoService.findProdutos();
 			
-			if(enderecosDto.equals(null)) {
-				throw new Exception("Não foi encontrado nenhum endereço. ");
+			if(produtosDto.equals(null)) {
+				throw new Exception("Produto não encontrado");
 			}
-			response.setData(enderecosDto);
+			response.setData(produtosDto);
+			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		return ResponseEntity.ok(response);
+		
 	}
 	
 	@PostMapping
-	public @ResponseBody ResponseEntity<Response<EnderecoDto>> saveEndereco(@RequestBody EnderecoDto enderecoDto) {
+	public @ResponseBody ResponseEntity<Response<ProdutoDto>> saveProduto(@RequestBody ProdutoDto produtoDto) {
 		
-		Response<EnderecoDto> response = new Response<EnderecoDto>();
+		Response<ProdutoDto> response = new Response<ProdutoDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
-			if(enderecoDto == null) {
-				throw new Exception("Campos em branco. ");
+
+			if(produtoDto == null) {
+				throw new Exception("Campos vazios. ");
 			}
-			enderecoDto = this.enderecoService.save(enderecoDto);
+			produtoDto = this.produtoService.save(produtoDto);
+			response.setData(produtoDto);
+			return ResponseEntity.ok(response);
 			
-			if(enderecoDto == null) {
-				throw new Exception("Erro ao salvar endereço. ");
-			}
-			response.setData(enderecoDto);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
 		
-		return ResponseEntity.ok(response);
 	}
 	
 	@DeleteMapping("/{id}")
-	public @ResponseBody ResponseEntity<Response<EnderecoDto>> deleteEndereco(@PathVariable Integer id) {
+	public @ResponseBody ResponseEntity<Response<ProdutoDto>> deleteProduto(@PathVariable Integer id) {
 		
-		Response<EnderecoDto> response = new Response<EnderecoDto>();
+		Response<ProdutoDto> response = new Response<ProdutoDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
 			if(id == null) {
 				throw new Exception("Campos em branco. ");
 			}
-			this.enderecoService.delete(id);
+			this.produtoService.delete(id);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		
 		return ResponseEntity.ok(response);
 	}
-	
 	
 }

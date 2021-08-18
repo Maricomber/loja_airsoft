@@ -21,17 +21,17 @@ public class TelefoneDto {
 	private ClienteDto clienteDto;
 	
 	public static TelefoneDto fromEntity(Telefone telefone) {
-		return fromEntity(telefone, false);
+		return fromEntity(telefone, true);
 	}
 	
-	public static TelefoneDto fromEntity(Telefone telefone, Boolean verCliente) {
+	public static TelefoneDto fromEntity(Telefone telefone, Boolean isTelefone) {
 		TelefoneDto telefoneDto = new TelefoneDto();
 		telefoneDto.setIdTelefone(telefone.getIdTelefone());
 		telefoneDto.setDddTelefone(telefone.getDddTelefone());
 		telefoneDto.setNumTelefone(telefone.getNumTelefone());
 		
-		if(verCliente.equals(false)) {
-			telefoneDto.setClienteDto(ClienteDto.fromEntity(telefone.getCliente(), true));
+		if(isTelefone) {
+			telefoneDto.setClienteDto(new ClienteDto(telefone.getCliente()));
 		}
 		return telefoneDto;
 	}
@@ -46,17 +46,27 @@ public class TelefoneDto {
 		return telefoneDto;
 	}
 	
-	public static Telefone toEntity(TelefoneDto telefoneDto) {
-		return toEntity(telefoneDto, false);
+	public static List<TelefoneDto> fromEntity(List<Telefone> telefone, Boolean isTelefone) {
+		List<TelefoneDto>telefoneDto = new ArrayList<TelefoneDto>();
+		
+		for(Telefone telefoneUnid: telefone) {
+			telefoneDto.add(fromEntity(telefoneUnid, isTelefone));
+			
+		}
+		return telefoneDto;
 	}
-	public static Telefone toEntity(TelefoneDto telefoneDto, Boolean verCliente) {
+	public static Telefone toEntity(TelefoneDto telefoneDto) {
+		return toEntity(telefoneDto, true);
+	}
+	
+	public static Telefone toEntity(TelefoneDto telefoneDto, Boolean isTelefone) {
 		Telefone telefone = new Telefone();
 		telefone.setIdTelefone(telefoneDto.getIdTelefone());
 		telefone.setDddTelefone(telefoneDto.getDddTelefone());
 		telefone.setNumTelefone(telefoneDto.getNumTelefone());
 		
-		if(verCliente.equals(false)) {
-			telefone.setCliente(ClienteDto.toEntity(telefoneDto.getClienteDto(), true));
+		if(isTelefone) {
+			telefone.setCliente(ClienteDto.toEntity(telefoneDto.getClienteDto(), false));
 		}
 		return telefone;
 	}

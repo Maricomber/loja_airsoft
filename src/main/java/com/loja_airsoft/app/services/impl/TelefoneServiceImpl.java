@@ -21,7 +21,7 @@ public class TelefoneServiceImpl implements TelefoneService{
 	
 	private String msgErro;
 	
-	private static final Logger log = LoggerFactory.getLogger(CargoServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(TelefoneServiceImpl.class);
 	
 	@Override
 	public TelefoneDto save(TelefoneDto telefoneDto) throws Exception {

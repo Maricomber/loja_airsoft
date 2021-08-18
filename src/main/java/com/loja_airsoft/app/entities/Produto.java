@@ -16,25 +16,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "telefone")
-public class Telefone {
+@Table(name = "produto")
+public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "tel_id_telefone")
-	public Integer idTelefone;
+	@Column(name = "prd_id_produto")
+	private int idProduto;
 	
-	@Column(name = "tel_DDD", nullable = false)
-	public Integer dddTelefone;
+	@Column(name = "prd_ds_produto", nullable = false)
+	private String dsProduto;
 	
-	@Column(name = "num_telefone", nullable = false)
-	public Integer numTelefone;
+	@Column(name = "prd_preco", nullable = false)
+	private float vlPreco;
 	
-	@ManyToOne(cascade = CascadeType.ALL)  
-    @JoinColumn(name="cli_id_cliente")
-	private Cliente cliente;
+	@ManyToOne
+    @JoinColumn(name="fab_id_fabricante")
+	private Fabricante fabricante;
 	
-	@ManyToOne(cascade = CascadeType.ALL)  
-    @JoinColumn(name="funcionario")
-	private Funcionario funcionario;
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="pdt_id_produto_tipo")
+	private ProdutoTipo produtoTipo;
+	
+	
 }

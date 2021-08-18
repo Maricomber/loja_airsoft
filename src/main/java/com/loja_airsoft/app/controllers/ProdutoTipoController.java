@@ -17,25 +17,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loja_airsoft.app.dtos.CargoDto;
+import com.loja_airsoft.app.dtos.ProdutoTipoDto;
 import com.loja_airsoft.app.response.Response;
-import com.loja_airsoft.app.services.CargoService;
-
+import com.loja_airsoft.app.services.ProdutoTipoService;
 
 @RestController
-@RequestMapping(path = {"/loja_airsoft/cargo"})
-public class CargoController {
+@RequestMapping(path = {"/loja_airsoft/produto_tipo"})
+public class ProdutoTipoController {
 
 	@Autowired
-	CargoService cargoService;
+	ProdutoTipoService produtoTipoService;
 	
 	
 	@GetMapping(path = {"/{id}"})
-	public @ResponseBody ResponseEntity<Response<CargoDto>> findById(@PathVariable Integer id){
+	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
-		Response<CargoDto>response = new Response<CargoDto>();
-		CargoDto cargoDto = new CargoDto();
+		Response<ProdutoTipoDto>response = new Response<ProdutoTipoDto>();
+		ProdutoTipoDto produtoTipoDto = new ProdutoTipoDto();
 		
 		try {
 			
@@ -43,12 +42,12 @@ public class CargoController {
 				throw new Exception("Campos em branco");
 			}
 			
-			cargoDto= this.cargoService.findById(id);
+			produtoTipoDto= this.produtoTipoService.findById(id);
 			
-			if(cargoDto.equals(null)) {
-				throw new Exception("Cargo não encontrado. ");
+			if(produtoTipoDto.equals(null)) {
+				throw new Exception("ProdutoTipo não encontrado. ");
 			}
-			response.setData(cargoDto);
+			response.setData(produtoTipoDto);
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
@@ -59,17 +58,17 @@ public class CargoController {
 	}
 	
 	@PutMapping
-	public @ResponseBody ResponseEntity<Response<CargoDto>> update(@RequestBody CargoDto cargoDto){
+	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> update(@RequestBody ProdutoTipoDto produtoTipoDto){
 		
 		List<String>erros = new ArrayList<String>();
-		Response<CargoDto>response = new Response<CargoDto>();
+		Response<ProdutoTipoDto>response = new Response<ProdutoTipoDto>();
 		
 		try {
-			cargoDto = this.cargoService.save(cargoDto);
-			if(cargoDto.equals(null)) {
+			produtoTipoDto = this.produtoTipoService.save(produtoTipoDto);
+			if(produtoTipoDto.equals(null)) {
 				return ResponseEntity.badRequest().body(response);
 			}
-		response.setData(cargoDto);
+		response.setData(produtoTipoDto);
 		return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
@@ -80,18 +79,18 @@ public class CargoController {
 	}
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<CargoDto>>> findCargos(HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<Response<List<ProdutoTipoDto>>> findProdutoTipos(HttpServletRequest request) {
 		
-		Response<List<CargoDto>> response = new Response<List<CargoDto>>();
+		Response<List<ProdutoTipoDto>> response = new Response<List<ProdutoTipoDto>>();
 		List<String>erros = new ArrayList<String>();
 		
 		try{
-			List<CargoDto>cargosDto = this.cargoService.findCargos();
+			List<ProdutoTipoDto>produtoTiposDto = this.produtoTipoService.findProdutoTipos();
 			
-			if(cargosDto.equals(null)) {
-				throw new Exception("Cargo não encontrado");
+			if(produtoTiposDto.equals(null)) {
+				throw new Exception("ProdutoTipo não encontrado");
 			}
-			response.setData(cargosDto);
+			response.setData(produtoTiposDto);
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
@@ -102,18 +101,18 @@ public class CargoController {
 	}
 	
 	@PostMapping
-	public @ResponseBody ResponseEntity<Response<CargoDto>> saveCargo(@RequestBody CargoDto cargoDto) {
+	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> saveProdutoTipo(@RequestBody ProdutoTipoDto produtoTipoDto) {
 		
-		Response<CargoDto> response = new Response<CargoDto>();
+		Response<ProdutoTipoDto> response = new Response<ProdutoTipoDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
 
-			if(cargoDto == null) {
+			if(produtoTipoDto == null) {
 				throw new Exception("Campos vazios. ");
 			}
-			cargoDto = this.cargoService.save(cargoDto);
-			response.setData(cargoDto);
+			produtoTipoDto = this.produtoTipoService.save(produtoTipoDto);
+			response.setData(produtoTipoDto);
 			return ResponseEntity.ok(response);
 			
 		}catch (Exception e) {
@@ -125,16 +124,16 @@ public class CargoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public @ResponseBody ResponseEntity<Response<CargoDto>> deleteCargo(@PathVariable Integer id) {
+	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> deleteProdutoTipo(@PathVariable Integer id) {
 		
-		Response<CargoDto> response = new Response<CargoDto>();
+		Response<ProdutoTipoDto> response = new Response<ProdutoTipoDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
 			if(id == null) {
 				throw new Exception("Campos em branco. ");
 			}
-			this.cargoService.delete(id);
+			this.produtoTipoService.delete(id);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
