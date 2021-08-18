@@ -34,7 +34,6 @@ public class Venda {
     @JoinColumn(name = "prd_id_produto", nullable = false)
 	private Produto produto;
 	
-	
 	@ManyToOne(cascade = CascadeType.ALL)  
     @JoinColumn(name="cli_id_cliente")
 	private Cliente cliente;
