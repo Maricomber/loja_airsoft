@@ -1,9 +1,7 @@
 package com.loja_airsoft.app.dtos;
 
 import java.util.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.loja_airsoft.app.entities.Funcionario;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,14 +15,28 @@ public class FuncionarioDto {
 	private String nmFunc;
 	private Date dtContFunc;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private CargoDto cargo;
-
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private EnderecoDto enderecoDto;
+	public FuncionarioDto(Funcionario funcionario) {
+		this.cpfFunc = funcionario.getCpfFunc();
+		this.dtNascFun = funcionario.getDtNascFun();
+		this.nmFunc = funcionario.getNmFunc();
+		this.dtContFunc = funcionario.getDtContFunc();
+	}
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private List<TelefoneDto> telefoneDto;
+	public static Funcionario toEntity(FuncionarioDto funcionarioDto) {
+		Funcionario funcionario = new Funcionario();
+		funcionario.setCpfFunc(funcionarioDto.getCpfFunc());
+		funcionario.setDtNascFun(funcionarioDto.getDtNascFun());
+		funcionario.setNmFunc(funcionarioDto.getNmFunc());
+		funcionario.setDtContFunc(funcionarioDto.getDtContFunc());
+		return funcionario;
+	}
 	
-	
+	public Funcionario toEntity() {
+		Funcionario funcionario = new Funcionario();
+		funcionario.setCpfFunc(this.cpfFunc);
+		funcionario.setDtNascFun(this.dtNascFun);
+		funcionario.setNmFunc(this.nmFunc);
+		funcionario.setDtContFunc(this.dtContFunc);
+		return funcionario;
+	}
 }

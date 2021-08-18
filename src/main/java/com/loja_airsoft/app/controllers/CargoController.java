@@ -30,7 +30,7 @@ public class CargoController {
 	CargoService cargoService;
 	
 	
-	@GetMapping(path = {"/find/{id}"})
+	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<CargoDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
