@@ -7,27 +7,29 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.ProdutoDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.ProdutoService;
 
-@Controller
+@RestController
+@RequestMapping(path = {"/loja_airsoft/produto"})
 public class ProdutoController {
 
 	@Autowired
 	ProdutoService produtoService;
 	
 	
-	@GetMapping(path = {"/loja_airsoft/produto/find/{id}"})
+	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<ProdutoDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
@@ -55,7 +57,7 @@ public class ProdutoController {
 		
 	}
 	
-	@PutMapping("/loja_airsoft/produto/update")
+	@PutMapping
 	public @ResponseBody ResponseEntity<Response<ProdutoDto>> update(@RequestBody ProdutoDto produtoDto){
 		
 		List<String>erros = new ArrayList<String>();
@@ -76,7 +78,7 @@ public class ProdutoController {
 
 	}
 	
-	@GetMapping("/loja_airsoft/produto/find")
+	@GetMapping
 	public @ResponseBody ResponseEntity<Response<List<ProdutoDto>>> findProdutos(HttpServletRequest request) {
 		
 		Response<List<ProdutoDto>> response = new Response<List<ProdutoDto>>();
@@ -98,7 +100,7 @@ public class ProdutoController {
 		
 	}
 	
-	@PostMapping("/loja_airsoft/produto/save")
+	@PostMapping
 	public @ResponseBody ResponseEntity<Response<ProdutoDto>> saveProduto(@RequestBody ProdutoDto produtoDto) {
 		
 		Response<ProdutoDto> response = new Response<ProdutoDto>();
@@ -121,7 +123,7 @@ public class ProdutoController {
 		
 	}
 	
-	@DeleteMapping("/loja_airsoft/produto/delete/{id}")
+	@DeleteMapping("/{id}")
 	public @ResponseBody ResponseEntity<Response<ProdutoDto>> deleteProduto(@PathVariable Integer id) {
 		
 		Response<ProdutoDto> response = new Response<ProdutoDto>();

@@ -7,27 +7,30 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.CargoDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.CargoService;
 
-@Controller
+
+@RestController
+@RequestMapping(path = {"/loja_airsoft/cargo"})
 public class CargoController {
 
 	@Autowired
 	CargoService cargoService;
 	
 	
-	@GetMapping(path = {"/loja_airsoft/cargo/find/{id}"})
+	@GetMapping(path = {"/find/{id}"})
 	public @ResponseBody ResponseEntity<Response<CargoDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
@@ -55,7 +58,7 @@ public class CargoController {
 		
 	}
 	
-	@PutMapping("/loja_airsoft/cargo/update")
+	@PutMapping
 	public @ResponseBody ResponseEntity<Response<CargoDto>> update(@RequestBody CargoDto cargoDto){
 		
 		List<String>erros = new ArrayList<String>();
@@ -76,7 +79,7 @@ public class CargoController {
 
 	}
 	
-	@GetMapping("/loja_airsoft/cargo/find")
+	@GetMapping
 	public @ResponseBody ResponseEntity<Response<List<CargoDto>>> findCargos(HttpServletRequest request) {
 		
 		Response<List<CargoDto>> response = new Response<List<CargoDto>>();
@@ -98,7 +101,7 @@ public class CargoController {
 		
 	}
 	
-	@PostMapping("/loja_airsoft/cargo/save")
+	@PostMapping
 	public @ResponseBody ResponseEntity<Response<CargoDto>> saveCargo(@RequestBody CargoDto cargoDto) {
 		
 		Response<CargoDto> response = new Response<CargoDto>();
@@ -121,7 +124,7 @@ public class CargoController {
 		
 	}
 	
-	@DeleteMapping("/loja_airsoft/cargo/delete/{id}")
+	@DeleteMapping("/{id}")
 	public @ResponseBody ResponseEntity<Response<CargoDto>> deleteCargo(@PathVariable Integer id) {
 		
 		Response<CargoDto> response = new Response<CargoDto>();

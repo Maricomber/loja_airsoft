@@ -7,26 +7,28 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.EnderecoDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.EnderecoService;
 
-@Controller
+@RestController
+@RequestMapping(path = {"/loja_airsoft/endereco"})
 public class EnderecoController {
 	
 	@Autowired
 	EnderecoService enderecoService;
 	
-	@GetMapping(path = {"/loja_airsoft/endereco/find/{id}"})
+	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<EnderecoDto>> findById(@PathVariable int id){
 		
 		List<String>erros = new ArrayList<String>();
@@ -48,7 +50,7 @@ public class EnderecoController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@PutMapping("/loja_airsoft/endereco/update")
+	@PutMapping
 	public @ResponseBody ResponseEntity<Response<EnderecoDto>> update(@RequestBody EnderecoDto enderecoDto){
 		
 		Response<EnderecoDto>response = new Response<EnderecoDto>();
@@ -69,7 +71,7 @@ public class EnderecoController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@GetMapping("/loja_airsoft/endereco/find")
+	@GetMapping
 	public @ResponseBody ResponseEntity<Response<List<EnderecoDto>>> findEnderecos(HttpServletRequest request) {
 		
 		Response<List<EnderecoDto>> response = new Response<List<EnderecoDto>>();
@@ -90,7 +92,7 @@ public class EnderecoController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@PostMapping("/loja_airsoft/endereco/save")
+	@PostMapping
 	public @ResponseBody ResponseEntity<Response<EnderecoDto>> saveEndereco(@RequestBody EnderecoDto enderecoDto) {
 		
 		Response<EnderecoDto> response = new Response<EnderecoDto>();
@@ -115,7 +117,7 @@ public class EnderecoController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@DeleteMapping("/loja_airsoft/endereco/delete/{id}")
+	@DeleteMapping("/{id}")
 	public @ResponseBody ResponseEntity<Response<EnderecoDto>> deleteEndereco(@PathVariable Integer id) {
 		
 		Response<EnderecoDto> response = new Response<EnderecoDto>();

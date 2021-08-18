@@ -14,19 +14,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.TelefoneDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.TelefoneService;
 
-@Controller
+@RestController
+@RequestMapping(path = {"/loja_airsoft/telefone"})
 public class TelefoneController {
 
 	@Autowired
 	TelefoneService telefoneService;
 	
-	@GetMapping(path = {"/loja_airsoft/telefone/find/{id}"})
+	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<TelefoneDto>> findById(@PathVariable int id){
 		
 		Response<TelefoneDto>response = new Response<TelefoneDto>();
@@ -49,7 +52,7 @@ public class TelefoneController {
 		
 	}
 	
-	@PutMapping("/loja_airsoft/telefone/update")
+	@PutMapping
 	public @ResponseBody ResponseEntity<Response<TelefoneDto>> update(@RequestBody TelefoneDto telefoneDto){
 		
 		Response<TelefoneDto>response = new Response<TelefoneDto>();
@@ -69,7 +72,7 @@ public class TelefoneController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@GetMapping("/loja_airsoft/telefone/find")
+	@GetMapping
 	public @ResponseBody ResponseEntity<Response<List<TelefoneDto>>> findTelefones(HttpServletRequest request) {
 		
 		Response<List<TelefoneDto>> response = new Response<List<TelefoneDto>>();
@@ -90,7 +93,7 @@ public class TelefoneController {
 		
 	}
 	
-	@PostMapping("/loja_airsoft/telefone/save")
+	@PostMapping
 	public @ResponseBody ResponseEntity<Response<TelefoneDto>> saveTelefone(@RequestBody TelefoneDto telefoneDto) {
 		
 		Response<TelefoneDto> response = new Response<TelefoneDto>();
@@ -112,7 +115,7 @@ public class TelefoneController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@DeleteMapping("/loja_airsoft/telefone/delete/{id}")
+	@DeleteMapping("/{id}")
 	public @ResponseBody ResponseEntity<Response<TelefoneDto>> deleteTelefone(@PathVariable Integer id) {
 		
 		Response<TelefoneDto> response = new Response<TelefoneDto>();

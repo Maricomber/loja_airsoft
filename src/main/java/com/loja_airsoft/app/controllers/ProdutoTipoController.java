@@ -7,32 +7,29 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.loja_airsoft.app.dtos.CargoDto;
-import com.loja_airsoft.app.dtos.ProdutoDto;
 import com.loja_airsoft.app.dtos.ProdutoTipoDto;
 import com.loja_airsoft.app.response.Response;
-import com.loja_airsoft.app.services.CargoService;
-import com.loja_airsoft.app.services.ProdutoService;
 import com.loja_airsoft.app.services.ProdutoTipoService;
-import com.loja_airsoft.app.services.impl.ProdutoServiceImpl;
 
-@Controller
+@RestController
+@RequestMapping(path = {"/loja_airsoft/produto_tipo"})
 public class ProdutoTipoController {
 
 	@Autowired
 	ProdutoTipoService produtoTipoService;
 	
 	
-	@GetMapping(path = {"/loja_airsoft/produto_tipo/find/{id}"})
+	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
@@ -60,7 +57,7 @@ public class ProdutoTipoController {
 		
 	}
 	
-	@PutMapping("/loja_airsoft/produto_tipo/update")
+	@PutMapping
 	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> update(@RequestBody ProdutoTipoDto produtoTipoDto){
 		
 		List<String>erros = new ArrayList<String>();
@@ -81,7 +78,7 @@ public class ProdutoTipoController {
 
 	}
 	
-	@GetMapping("/loja_airsoft/produto_tipo/find")
+	@GetMapping
 	public @ResponseBody ResponseEntity<Response<List<ProdutoTipoDto>>> findProdutoTipos(HttpServletRequest request) {
 		
 		Response<List<ProdutoTipoDto>> response = new Response<List<ProdutoTipoDto>>();
@@ -103,7 +100,7 @@ public class ProdutoTipoController {
 		
 	}
 	
-	@PostMapping("/loja_airsoft/produto_tipo/save")
+	@PostMapping
 	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> saveProdutoTipo(@RequestBody ProdutoTipoDto produtoTipoDto) {
 		
 		Response<ProdutoTipoDto> response = new Response<ProdutoTipoDto>();
@@ -126,7 +123,7 @@ public class ProdutoTipoController {
 		
 	}
 	
-	@DeleteMapping("/loja_airsoft/produto_tipo/delete/{id}")
+	@DeleteMapping("/{id}")
 	public @ResponseBody ResponseEntity<Response<ProdutoTipoDto>> deleteProdutoTipo(@PathVariable Integer id) {
 		
 		Response<ProdutoTipoDto> response = new Response<ProdutoTipoDto>();

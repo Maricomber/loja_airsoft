@@ -3,7 +3,6 @@ package com.loja_airsoft.app.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,4 +34,7 @@ public class Telefone {
     @JoinColumn(name="cli_id_cliente")
 	private Cliente cliente;
 	
+	@ManyToOne(cascade = CascadeType.ALL)  
+    @JoinColumn(name="funcionario")
+	private Funcionario funcionario;
 }

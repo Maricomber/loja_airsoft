@@ -39,8 +39,12 @@ public class EnderecoDto {
 			enderecoDto.setEndCep(endereco.getEndCep());
 			
 			if(isEndereco) {
-				enderecoDto.setClienteDto(ClienteDto.fromEntity(endereco.getCliente(), false));
-				enderecoDto.setFabricanteDto(FabricanteDto.fromEntity(endereco.getFabricante(), false));
+				if(!(endereco.getCliente()== null)) {
+					enderecoDto.setClienteDto(ClienteDto.fromEntity(endereco.getCliente(), false));
+				}
+				else if (!(endereco.getFabricante()== null)) {
+					enderecoDto.setFabricanteDto(FabricanteDto.fromEntity(endereco.getFabricante(), false));
+				}
 			}
 		}
 		return enderecoDto;
