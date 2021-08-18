@@ -26,34 +26,19 @@ public class ClienteDto {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private List<TelefoneDto> telefoneDto;
 	
-	public static ClienteDto fromEntity(Cliente cliente) {
-			
-			return fromEntity(cliente, true);
+	public ClienteDto(){
+		
 	}
 	
-	public static ClienteDto fromEntity(Cliente cliente, Boolean isCliente) {
-		List<TelefoneDto> telefoneD = new ArrayList<TelefoneDto>();
-		ClienteDto clienteDto = new ClienteDto();
-		
-		if(!(cliente == null)) {
-			clienteDto.setIdCliente(cliente.getIdCliente());
-			clienteDto.setCpfCliente(cliente.getCpfCliente());
-			clienteDto.setNmCliente(cliente.getNmCliente());
-			clienteDto.setDtNascCliente(cliente.getDtNascCliente());
-			clienteDto.setRgCliente(cliente.getRgCliente());
-			
-			if (isCliente) {
-				if(cliente.getTelefone() != null) {
-					for(Telefone telefone : cliente.getTelefone()) {
-						telefoneD.add(TelefoneDto.fromEntity(telefone, false));
-					}
-				}
-				clienteDto.setTelefoneDto(telefoneD);
-				clienteDto.setEnderecoDto(EnderecoDto.fromEntity(cliente.getEndereco(), false));
-			}
-		}
-		return clienteDto;
-	}
+	public ClienteDto(Cliente cliente) {				
+		this.idCliente = cliente.getIdCliente();
+		this.cpfCliente = cliente.getCpfCliente();
+		this.nmCliente = cliente.getNmCliente();
+		this.dtNascCliente = cliente.getDtNascCliente();
+		this.rgCliente = cliente.getRgCliente();
+		this.enderecoDto = EnderecoDto.fromEntity(cliente.getEndereco(), false);
+		this.telefoneDto = TelefoneDto.fromEntity(cliente.getTelefone(), false);
+	}	
 	
 	public static Cliente toEntity(ClienteDto clienteDto) {
 		
@@ -85,4 +70,5 @@ public class ClienteDto {
 		}
 		return cliente;
 	}
+	
 }

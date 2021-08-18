@@ -40,9 +40,7 @@ public class ClienteServiceImpl implements ClienteService{
 			
 			log.info("Salvando cliente");
 			cliente = this.clienteRepository.save(cliente);
-			clienteDto = ClienteDto.fromEntity(cliente);
-			
-			return clienteDto;
+			return new ClienteDto(cliente);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar cliente "+e.getMessage();
 			log.info(msgErro);
@@ -61,7 +59,7 @@ public class ClienteServiceImpl implements ClienteService{
 				return null;
 			}
 			log.info("cliente encontrado.");
-			return ClienteDto.fromEntity(cliente);
+			return new ClienteDto(cliente);
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar cliente. "+e.getMessage();
 			log.info(msgErro);
@@ -92,7 +90,7 @@ public class ClienteServiceImpl implements ClienteService{
 		try {
 			clientes = this.clienteRepository.findAll();
 			for(Cliente cliente: clientes) {
-				clientesRetorno.add(ClienteDto.fromEntity(cliente));
+				clientesRetorno.add(new ClienteDto(cliente));
 			}
 			log.info("Busca realizada com sucesso");
 			return clientesRetorno;

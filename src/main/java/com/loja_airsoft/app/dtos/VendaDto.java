@@ -22,7 +22,7 @@ public class VendaDto {
 		this.dtVenda = venda.getDtVenda();
 		this.produto = ProdutoDto.fromEntity(venda.getProduto(), false);
 				//venda.getProduto();
-		this.cliente = ClienteDto.fromEntity(venda.getCliente(), false);
+		this.cliente = new ClienteDto(venda.getCliente());
 		this.funcionario = new FuncionarioDto(venda.getFuncionario());
 	}
 	

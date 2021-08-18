@@ -31,7 +31,7 @@ public class TelefoneDto {
 		telefoneDto.setNumTelefone(telefone.getNumTelefone());
 		
 		if(isTelefone) {
-			telefoneDto.setClienteDto(ClienteDto.fromEntity(telefone.getCliente(), false));
+			telefoneDto.setClienteDto(new ClienteDto(telefone.getCliente()));
 		}
 		return telefoneDto;
 	}
@@ -46,6 +46,15 @@ public class TelefoneDto {
 		return telefoneDto;
 	}
 	
+	public static List<TelefoneDto> fromEntity(List<Telefone> telefone, Boolean isTelefone) {
+		List<TelefoneDto>telefoneDto = new ArrayList<TelefoneDto>();
+		
+		for(Telefone telefoneUnid: telefone) {
+			telefoneDto.add(fromEntity(telefoneUnid, isTelefone));
+			
+		}
+		return telefoneDto;
+	}
 	public static Telefone toEntity(TelefoneDto telefoneDto) {
 		return toEntity(telefoneDto, true);
 	}

@@ -40,7 +40,7 @@ public class EnderecoDto {
 			
 			if(isEndereco) {
 				if(!(endereco.getCliente()== null)) {
-					enderecoDto.setClienteDto(ClienteDto.fromEntity(endereco.getCliente(), false));
+					enderecoDto.setClienteDto(new ClienteDto(endereco.getCliente()));
 				}
 				else if (!(endereco.getFabricante()== null)) {
 					enderecoDto.setFabricanteDto(FabricanteDto.fromEntity(endereco.getFabricante(), false));
