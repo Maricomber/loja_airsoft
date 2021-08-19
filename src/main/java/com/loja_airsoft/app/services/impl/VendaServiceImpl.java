@@ -33,6 +33,7 @@ public class VendaServiceImpl implements VendaService{
 			throw new Exception("Pesquisa em branco. ");
 		}
 		try {
+			
 			venda = this.vendaRepository.save(vendaDto.toEntity());
 			return new VendaDto(venda);
 		}catch (Exception e) {

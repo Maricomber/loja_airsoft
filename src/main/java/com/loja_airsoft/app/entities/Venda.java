@@ -1,6 +1,7 @@
 package com.loja_airsoft.app.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -30,9 +31,8 @@ public class Venda {
 	@Column(name = "ven_dt_venda", nullable = false)
 	private Date dtVenda;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "prd_id_produto", nullable = false)
-	private Produto produto;
+	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
+	private List<Produto> produto;
 	
 	@ManyToOne(cascade = CascadeType.ALL)  
     @JoinColumn(name="cli_id_cliente")

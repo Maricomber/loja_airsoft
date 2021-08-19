@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Cliente;
 import com.loja_airsoft.app.entities.Telefone;
+import com.loja_airsoft.app.entities.Venda;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,9 @@ public class ClienteDto {
 	private String nmCliente;
 	private Date dtNascCliente;
 	private Integer rgCliente;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private List<VendaDto> vendaDto;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private EnderecoDto enderecoDto;
@@ -47,6 +51,11 @@ public class ClienteDto {
 			this.telefoneDto = telefones;
 		}
 		
+		if(!(cliente.getVenda()== null)) {
+			List<VendaDto>vendas = new ArrayList<VendaDto>();
+			cliente.getVenda().forEach(venda -> vendas.add(new VendaDto(venda)));
+			this.vendaDto = vendas;
+		}
 	}	
 	
 	public Cliente toEntity() {
@@ -66,6 +75,12 @@ public class ClienteDto {
 			List<Telefone>telefones = new ArrayList<Telefone>();
 			this.telefoneDto.forEach(telefone -> telefones.add(telefone.toEntity()));
 			cliente.setTelefone(telefones);
+		}
+		
+		if(!(this.vendaDto == null)) {
+			List<Venda>vendas = new ArrayList<Venda>();
+			this.vendaDto.forEach(venda -> vendas.add(venda.toEntity()));
+			cliente.setVenda(vendas);
 		}
 		
 		return cliente;

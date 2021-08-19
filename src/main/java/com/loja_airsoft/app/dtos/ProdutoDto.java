@@ -22,6 +22,9 @@ public class ProdutoDto {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private ProdutoTipoDto produtoTipoDto;
 	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private VendaDto vendaDto;
+	
 	public ProdutoDto() {
 		
 	}
@@ -32,6 +35,7 @@ public class ProdutoDto {
 		this.vlPreco = produto.getVlPreco();
 		this.fabricanteDto = new FabricanteDto(produto.getFabricante());
 		this.produtoTipoDto = new ProdutoTipoDto(produto.getProdutoTipo());
+		this.vendaDto = new VendaDto(produto.getVenda());
 	}
 	
 	public Produto toEntity() {
@@ -41,6 +45,7 @@ public class ProdutoDto {
 		produto.setVlPreco(this.vlPreco);
 		produto.setFabricante(this.fabricanteDto.toEntity());
 		produto.setProdutoTipo(this.produtoTipoDto.toEntity());
+		produto.setVenda(this.vendaDto.toEntity());
 		
 		return produto;
 	}

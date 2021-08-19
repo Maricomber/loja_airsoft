@@ -48,4 +48,6 @@ public class Cliente {
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Telefone> telefone;
 	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Venda> venda;
 }
