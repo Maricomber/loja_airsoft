@@ -1,16 +1,14 @@
 package com.loja_airsoft.app.repositories;
 
-import java.math.BigInteger;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.loja_airsoft.app.entities.Funcionario;
+import com.loja_airsoft.app.entities.Documento;
 
 @Transactional(readOnly = true)
 @Repository
-public interface FuncionarioRepository extends JpaRepository<Funcionario, BigInteger>{
+public interface DocumentoRepository extends JpaRepository<Documento, Integer>  {
 
-	Funcionario findByCpfFunc(BigInteger cpfFunc);
+	Documento findByIdDocumento(Integer id_documento);
 }

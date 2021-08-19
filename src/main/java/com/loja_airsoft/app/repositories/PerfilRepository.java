@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.loja_airsoft.app.entities.Cliente;
+import com.loja_airsoft.app.entities.Perfil;
 
 @Transactional(readOnly = true)
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
+public interface PerfilRepository extends JpaRepository<Perfil, Integer> {
 
-	Cliente findByIdCliente(Integer cli_id_cliente);
+	Perfil findByIdPerfil(Integer id_Perfil);
 }

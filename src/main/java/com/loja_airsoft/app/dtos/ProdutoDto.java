@@ -17,7 +17,7 @@ public class ProdutoDto {
 	private float vlPreco;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private FabricanteDto fabricanteDto;
+	private UsuarioDto fabricante;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private ProdutoTipoDto produtoTipoDto;
@@ -33,7 +33,7 @@ public class ProdutoDto {
 		this.idProduto = produto.getIdProduto();
 		this.dsProduto = produto.getDsProduto();
 		this.vlPreco = produto.getVlPreco();
-		this.fabricanteDto = new FabricanteDto(produto.getFabricante());
+		this.fabricante = new UsuarioDto(produto.getFabProduto());
 		this.produtoTipoDto = new ProdutoTipoDto(produto.getProdutoTipo());
 		this.vendaDto = new VendaDto(produto.getVenda());
 	}
@@ -43,7 +43,7 @@ public class ProdutoDto {
 		produto.setIdProduto(this.idProduto);
 		produto.setDsProduto(this.dsProduto);
 		produto.setVlPreco(this.vlPreco);
-		produto.setFabricante(this.fabricanteDto.toEntity());
+		//produto.setFabProduto(this.usuarioDto.toEntity());
 		produto.setProdutoTipo(this.produtoTipoDto.toEntity());
 		produto.setVenda(this.vendaDto.toEntity());
 		

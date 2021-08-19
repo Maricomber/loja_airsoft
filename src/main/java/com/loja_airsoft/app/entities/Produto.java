@@ -3,11 +3,15 @@ package com.loja_airsoft.app.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -30,15 +34,17 @@ public class Produto {
 	@Column(name = "prd_preco", nullable = false)
 	private float vlPreco;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="fab_id_fabricante")
-	private Fabricante fabricante;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="pdt_id_produto_tipo")
-	private ProdutoTipo produtoTipo;
+	@OneToMany
+	@Column(name = "prd_id_fabricante", nullable = false)
+	private Usuario fabProduto;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="ven_id_venda")
 	private Venda venda;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "venda_produto",joinColumns = 
+		{@JoinColumn(name = "prd_id_produto")}, inverseJoinColumns = 
+		{@JoinColumn(name = "ven_id_venda")})
+	private ProdutoTipo produtoTipo;
 }

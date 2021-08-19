@@ -29,5 +29,5 @@ public class Cargo {
 	private String dsCargo;
 	
 	@OneToMany(mappedBy="cargo")
-	private List<Funcionario> funcionario;
+	private List<Usuario> usuario;
 }

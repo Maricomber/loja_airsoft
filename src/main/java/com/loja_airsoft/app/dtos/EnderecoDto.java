@@ -19,10 +19,7 @@ public class EnderecoDto {
 	private String endCep;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private ClienteDto clienteDto;
-	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private FabricanteDto fabricanteDto;
+	private UsuarioDto usuarioDto;
 
 	public EnderecoDto() {
 		
@@ -36,6 +33,7 @@ public class EnderecoDto {
 		this.endCidade = endereco.getEndCidade();
 		this.endComplemento = endereco.getEndComplemento();
 		this.endCep = endereco.getEndCep();
+
 	}
 	
 	public Endereco toEntity() {
@@ -49,12 +47,8 @@ public class EnderecoDto {
 		endereco.setEndComplemento(this.endComplemento);
 		endereco.setEndCep(this.endCep);
 		
-		if(!(this.clienteDto == null)) {
-			endereco.setCliente(this.clienteDto.toEntity());
-		}
-		
-		if(!(this.fabricanteDto == null)) {
-			endereco.setFabricante(this.fabricanteDto.toEntity());
+		if(!(this.usuarioDto == null)) {
+			//endereco.setCliente(this.usuarioDto.toEntity());
 		}
 		
 		return endereco;

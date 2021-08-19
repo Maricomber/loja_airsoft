@@ -14,8 +14,10 @@ public class VendaDto {
 
 	public Integer idVenda;
 	public Date dtVenda;
-	public ClienteDto cliente;
-	public FuncionarioDto funcionario;
+	private Float vlDesconto;
+	private Float vlTotal;
+	public UsuarioDto cliente;
+	public UsuarioDto vendedor;
 	public List<ProdutoDto> produtoDto;
 	
 	public VendaDto() {
@@ -23,13 +25,15 @@ public class VendaDto {
 	}
 	
 	public VendaDto(Venda venda) {
-		venda.getProduto().forEach(produto-> this.produtoDto.add(
-				new ProdutoDto(produto)));
 		this.idVenda = venda.getIdVenda();
 		this.dtVenda = venda.getDtVenda();
+		this.vlDesconto = venda.getVlDesconto();
+		this.vlTotal = venda.getVlTotal();
 		venda.getCliente().setVenda(null);
-		this.cliente = new ClienteDto(venda.getCliente());
-		this.funcionario = new FuncionarioDto(venda.getFuncionario());
+		this.cliente = new UsuarioDto(venda.getCliente());
+		this.vendedor = new UsuarioDto(venda.getVendedor());
+		venda.getProduto().forEach(produto-> this.produtoDto.add(
+				new ProdutoDto(produto)));
 	}
 	
 	public Venda toEntity() {
@@ -37,8 +41,8 @@ public class VendaDto {
 		Venda venda = new Venda();
 		venda.setIdVenda(this.idVenda);
 		venda.setDtVenda(this.dtVenda);
-		venda.setCliente(this.cliente.toEntity());
-		venda.setFuncionario(this.funcionario.toEntity());
+		//venda.setCliente(this.cliente.toEntity());
+		//venda.setFuncionario(this.funcionario.toEntity());
 		this.produtoDto.forEach(produto -> venda.getProduto().add(produto.toEntity()));
 		return venda;
 	}

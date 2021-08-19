@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.loja_airsoft.app.dtos.EnderecoDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -43,8 +44,20 @@ public class Endereco {
 	private String endCep;
 	
 	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
-	private Cliente cliente;
+	private Usuario usuario;
 
-	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
-	private Fabricante fabricante;
+	public Endereco() {
+		
+	}
+	
+	public Endereco(EnderecoDto enderecoDto) {
+		this.idEndereco = enderecoDto.getIdEndereco();
+		this.dsRua = enderecoDto.getDsRua();
+		this.endNumero = enderecoDto.getEndNumero();
+		this.endBairro = enderecoDto.getEndBairro();
+		this.endCidade = enderecoDto.getEndCidade();
+		this.endComplemento = enderecoDto.getEndComplemento();
+		this.endCep = enderecoDto.getEndCep();
+		this.usuario = new Usuario(enderecoDto.getUsuarioDto());
+	}
 }

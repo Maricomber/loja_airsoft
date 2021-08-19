@@ -1,6 +1,5 @@
 package com.loja_airsoft.app.controllers;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,24 +17,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loja_airsoft.app.dtos.FuncionarioDto;
+import com.loja_airsoft.app.dtos.UsuarioDto;
 import com.loja_airsoft.app.response.Response;
-import com.loja_airsoft.app.services.FuncionarioService;
+import com.loja_airsoft.app.services.UsuarioService;
 
 @RestController
-@RequestMapping(path = {"/loja_airsoft/funcionario"})
-public class FuncionarioController {
+@RequestMapping(path = {"/loja_airsoft/usuario"})
+public class UsuarioController {
 
 	@Autowired
-	FuncionarioService funcionarioService;
+	UsuarioService usuarioService;
 	
 	
 	@GetMapping(path = {"/{id}"})
-	public @ResponseBody ResponseEntity<Response<FuncionarioDto>> findById(@PathVariable BigInteger id){
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> findById(@PathVariable Integer id){
 		
 		List<String>erros = new ArrayList<String>();
-		Response<FuncionarioDto>response = new Response<FuncionarioDto>();
-		FuncionarioDto funcionarioDto;
+		Response<UsuarioDto>response = new Response<UsuarioDto>();
+		UsuarioDto usuarioDto;
 		
 		try {
 			
@@ -43,12 +42,12 @@ public class FuncionarioController {
 				throw new Exception("Campos em branco");
 			}
 			
-			funcionarioDto= this.funcionarioService.findById(id);
+			usuarioDto= this.usuarioService.findById(id);
 			
-			if(funcionarioDto.equals(null)) {
-				throw new Exception("Funcionario não encontrado. ");
+			if(usuarioDto.equals(null)) {
+				throw new Exception("Usuario não encontrado. ");
 			}
-			response.setData(funcionarioDto);
+			response.setData(usuarioDto);
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
@@ -59,17 +58,17 @@ public class FuncionarioController {
 	}
 	
 	@PutMapping
-	public @ResponseBody ResponseEntity<Response<FuncionarioDto>> update(@RequestBody FuncionarioDto funcionarioDto){
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> update(@RequestBody UsuarioDto usuarioDto){
 		
 		List<String>erros = new ArrayList<String>();
-		Response<FuncionarioDto>response = new Response<FuncionarioDto>();
+		Response<UsuarioDto>response = new Response<UsuarioDto>();
 		
 		try {
-			funcionarioDto = this.funcionarioService.save(funcionarioDto);
-			if(funcionarioDto.equals(null)) {
+			usuarioDto = this.usuarioService.save(usuarioDto);
+			if(usuarioDto.equals(null)) {
 				return ResponseEntity.badRequest().body(response);
 			}
-		response.setData(funcionarioDto);
+		response.setData(usuarioDto);
 		return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
@@ -80,18 +79,18 @@ public class FuncionarioController {
 	}
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<FuncionarioDto>>> findFuncionarios(HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<Response<List<UsuarioDto>>> findUsuarios(HttpServletRequest request) {
 		
-		Response<List<FuncionarioDto>> response = new Response<List<FuncionarioDto>>();
+		Response<List<UsuarioDto>> response = new Response<List<UsuarioDto>>();
 		List<String>erros = new ArrayList<String>();
 		
 		try{
-			List<FuncionarioDto>funcionariosDto = this.funcionarioService.findFuncionarios();
+			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios();
 			
-			if(funcionariosDto.equals(null)) {
-				throw new Exception("Funcionario não encontrado");
+			if(usuariosDto.equals(null)) {
+				throw new Exception("Usuario não encontrado");
 			}
-			response.setData(funcionariosDto);
+			response.setData(usuariosDto);
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
@@ -102,18 +101,18 @@ public class FuncionarioController {
 	}
 	
 	@PostMapping
-	public @ResponseBody ResponseEntity<Response<FuncionarioDto>> saveFuncionario(@RequestBody FuncionarioDto funcionarioDto) {
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> saveUsuario(@RequestBody UsuarioDto usuarioDto) {
 		
-		Response<FuncionarioDto> response = new Response<FuncionarioDto>();
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
 
-			if(funcionarioDto == null) {
+			if(usuarioDto == null) {
 				throw new Exception("Campos vazios. ");
 			}
-			funcionarioDto = this.funcionarioService.save(funcionarioDto);
-			response.setData(funcionarioDto);
+			usuarioDto = this.usuarioService.save(usuarioDto);
+			response.setData(usuarioDto);
 			return ResponseEntity.ok(response);
 			
 		}catch (Exception e) {
@@ -125,16 +124,16 @@ public class FuncionarioController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public @ResponseBody ResponseEntity<Response<FuncionarioDto>> deleteFuncionario(@PathVariable BigInteger id) {
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> deleteUsuario(@PathVariable Integer id) {
 		
-		Response<FuncionarioDto> response = new Response<FuncionarioDto>();
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
 			if(id == null) {
 				throw new Exception("Campos em branco. ");
 			}
-			this.funcionarioService.delete(id);
+			this.usuarioService.delete(id);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
@@ -142,5 +141,5 @@ public class FuncionarioController {
 		}
 		return ResponseEntity.ok(response);
 	}
-		
+	
 }
