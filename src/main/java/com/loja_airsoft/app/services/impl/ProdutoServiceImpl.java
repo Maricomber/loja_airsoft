@@ -32,8 +32,8 @@ public class ProdutoServiceImpl implements ProdutoService{
 		log.info("Salvando produto");
 		Produto produto = new Produto();
 		try {
-			produto = this.produtoRepository.save(ProdutoDto.toEntity(produtoDto));
-			return  ProdutoDto.fromEntity(produto);
+			produto = this.produtoRepository.save(produtoDto.toEntity());
+			return new ProdutoDto(produto);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar produto. "+e.getMessage();
 			log.info(msgErro);
@@ -52,7 +52,7 @@ public class ProdutoServiceImpl implements ProdutoService{
 				throw new Exception("Sem resultados.");
 			}
 			log.info("Produto encontrado.");
-			return ProdutoDto.fromEntity(produto);
+			return new ProdutoDto(produto);
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar produto. "+e.getMessage();
 			log.info(msgErro);
@@ -86,7 +86,7 @@ public class ProdutoServiceImpl implements ProdutoService{
 		try {
 			produtos = this.produtoRepository.findAll();
 			for(Produto produto: produtos) {
-				produtosRetorno.add(ProdutoDto.fromEntity(produto));
+				produtosRetorno.add(new ProdutoDto(produto));
 			}
 			log.info("Busca realizada com sucesso");
 			return produtosRetorno;

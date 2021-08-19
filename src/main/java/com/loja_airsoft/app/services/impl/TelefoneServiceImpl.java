@@ -33,8 +33,8 @@ public class TelefoneServiceImpl implements TelefoneService{
 			throw new Exception("Pesquisa em branco. ");
 		}
 		try {
-			telefone = this.telefoneRepository.save(TelefoneDto.toEntity(telefoneDto));
-			return  TelefoneDto.fromEntity(telefone);
+			telefone = this.telefoneRepository.save(telefoneDto.toEntity());
+			return new TelefoneDto(telefone);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar telefone. "+e.getMessage();
 			log.info(msgErro);
@@ -52,7 +52,7 @@ public class TelefoneServiceImpl implements TelefoneService{
 				throw new Exception("Sem resultados.");
 			}
 			log.info("telefone encontrado.");
-			return TelefoneDto.fromEntity(telefone);
+			return new TelefoneDto(telefone);
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar telefone."+e.getMessage();
 			log.info(msgErro);
@@ -80,11 +80,14 @@ public class TelefoneServiceImpl implements TelefoneService{
 	public List<TelefoneDto> findTelefones() throws Exception {
 		log.info("Buscando todos os telefones");
 		List<Telefone> telefones = new ArrayList<Telefone>();
+		List<TelefoneDto> telefonesDto = new ArrayList<TelefoneDto>();
 		
 		try {
 			telefones = this.telefoneRepository.findAll();
 			log.info("Busca realizada com sucesso");
-			return TelefoneDto.fromEntity(telefones);
+			
+			telefones.forEach(telefone -> telefonesDto.add(new TelefoneDto(telefone)));
+			return telefonesDto;
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar telefones. "+e.getMessage();
 			log.info(msgErro);

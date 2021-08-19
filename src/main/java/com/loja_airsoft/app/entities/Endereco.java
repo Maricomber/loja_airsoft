@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,9 +42,9 @@ public class Endereco {
 	@Column(name = "end_cep", nullable = false, length = 10)
 	private String endCep;
 	
-	@OneToOne(mappedBy = "endereco")
+	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
 	private Cliente cliente;
 
-	@OneToOne(mappedBy = "endereco")
+	@OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL)
 	private Fabricante fabricante;
 }

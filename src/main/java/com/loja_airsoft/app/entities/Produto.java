@@ -30,7 +30,7 @@ public class Produto {
 	@Column(name = "prd_preco", nullable = false)
 	private float vlPreco;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="fab_id_fabricante")
 	private Fabricante fabricante;
 	
@@ -38,5 +38,7 @@ public class Produto {
     @JoinColumn(name="pdt_id_produto_tipo")
 	private ProdutoTipo produtoTipo;
 	
-	
+	@ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="ven_id_venda")
+	private Venda venda;
 }

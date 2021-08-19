@@ -33,7 +33,7 @@ public class EnderecoController {
 		
 		List<String>erros = new ArrayList<String>();
 		Response<EnderecoDto>response = new Response<EnderecoDto>();
-		EnderecoDto enderecoDto = new EnderecoDto();
+		EnderecoDto enderecoDto;
 		
 		try {
 			enderecoDto= this.enderecoService.findById(id);

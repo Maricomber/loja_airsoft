@@ -42,10 +42,12 @@ public class Cliente {
 	private Integer rgCliente;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "end_id_endereco")
+    @JoinColumn(name = "end_id_endereco", referencedColumnName = "end_id_endereco")
 	private Endereco endereco;
 	
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Telefone> telefone;
 	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Venda> venda;
 }

@@ -17,33 +17,23 @@ public class FabricanteDto {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private EnderecoDto enderecoDto;
 	
-	public static FabricanteDto fromEntity(Fabricante fabricante) {
-		return fromEntity(fabricante, true);
-	}
-	
-	public static FabricanteDto fromEntity(Fabricante fabricante, Boolean isFabricante) {
-		FabricanteDto fabricanteDto = new FabricanteDto();
-		fabricanteDto.setIdFabricante(fabricante.getIdFabricante());
-		fabricanteDto.setNmFantasiaFab(fabricante.getNmFantasiaFab());
-		fabricanteDto.setCnpjFabricante(fabricante.getCnpjFabricante());
+	public FabricanteDto() {
 		
-		if(isFabricante) {
-			fabricanteDto.setEnderecoDto(EnderecoDto.fromEntity(fabricante.getEndereco(), false));
-		}
-		return fabricanteDto;
 	}
-	
-	public static Fabricante toEntity(FabricanteDto fabricanteDto) {
-		return toEntity(fabricanteDto, true);
+	public FabricanteDto(Fabricante fabricante) {
+		this.idFabricante = fabricante.getIdFabricante();
+		this.nmFantasiaFab = fabricante.getNmFantasiaFab();
+		this.cnpjFabricante = fabricante.getCnpjFabricante();
+		this.enderecoDto = new EnderecoDto(fabricante.getEndereco());
 	}
-	public static Fabricante toEntity(FabricanteDto fabricanteDto, Boolean isFabricante) {
+		
+	public Fabricante toEntity() {
 		Fabricante fabricante = new Fabricante();
-		fabricante.setIdFabricante(fabricanteDto.getIdFabricante());
-		fabricante.setNmFantasiaFab(fabricanteDto.getNmFantasiaFab());
-		fabricante.setCnpjFabricante(fabricanteDto.getCnpjFabricante());
-		if(isFabricante) {
-			fabricante.setEndereco(EnderecoDto.toEntity(fabricanteDto.getEnderecoDto(), false));
-		}
+		fabricante.setIdFabricante(this.idFabricante);
+		fabricante.setNmFantasiaFab(this.nmFantasiaFab);
+		fabricante.setCnpjFabricante(this.cnpjFabricante);
+		fabricante.setEndereco(this.enderecoDto.toEntity());
+		
 		return fabricante;
 	}
 	

@@ -32,8 +32,8 @@ public class ProdutoTipoServiceImpl implements ProdutoTipoService{
 		log.info("Salvando produtoTipo");
 		ProdutoTipo produtoTipo = new ProdutoTipo();
 		try {
-			produtoTipo = this.produtoTipoRepository.save(ProdutoTipoDto.toEntity(produtoTipoDto));
-			return  ProdutoTipoDto.fromEntity(produtoTipo);
+			produtoTipo = this.produtoTipoRepository.save(produtoTipoDto.toEntity());
+			return new ProdutoTipoDto(produtoTipo);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar produtoTipo. "+e.getMessage();
 			log.info(msgErro);
@@ -52,7 +52,7 @@ public class ProdutoTipoServiceImpl implements ProdutoTipoService{
 				throw new Exception("Sem resultados.");
 			}
 			log.info("ProdutoTipo encontrado.");
-			return ProdutoTipoDto.fromEntity(produtoTipo);
+			return new ProdutoTipoDto(produtoTipo);
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar produtoTipo. "+e.getMessage();
 			log.info(msgErro);
@@ -86,7 +86,7 @@ public class ProdutoTipoServiceImpl implements ProdutoTipoService{
 		try {
 			produtoTipos = this.produtoTipoRepository.findAll();
 			for(ProdutoTipo produtoTipo: produtoTipos) {
-				produtoTiposRetorno.add(ProdutoTipoDto.fromEntity(produtoTipo));
+				produtoTiposRetorno.add(new ProdutoTipoDto(produtoTipo));
 			}
 			log.info("Busca realizada com sucesso");
 			return produtoTiposRetorno;
