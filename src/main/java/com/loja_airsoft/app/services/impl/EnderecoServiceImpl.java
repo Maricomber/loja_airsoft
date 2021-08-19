@@ -33,8 +33,10 @@ public class EnderecoServiceImpl implements EnderecoService{
 		}
 		
 		try {
-			endereco = this.enderecoRepository.save(enderecoDto.toEntity());
-			return  new EnderecoDto(endereco);
+			endereco = enderecoDto.toEntity();
+			endereco.getCliente().setEndereco(endereco);
+
+			return  new EnderecoDto(this.enderecoRepository.save(endereco));
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar endereço. "+e.getMessage();
 			log.info(msgErro);

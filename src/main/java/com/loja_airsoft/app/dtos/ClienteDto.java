@@ -31,30 +31,42 @@ public class ClienteDto {
 	}
 	
 	public ClienteDto(Cliente cliente) {			
-		List<TelefoneDto>telefones = new ArrayList<TelefoneDto>();
-		cliente.getTelefone().forEach(telefone -> telefones.add(new TelefoneDto(telefone)));
 		
 		this.idCliente = cliente.getIdCliente();
 		this.cpfCliente = cliente.getCpfCliente();
 		this.nmCliente = cliente.getNmCliente();
 		this.dtNascCliente = cliente.getDtNascCliente();
 		this.rgCliente = cliente.getRgCliente();
-		this.enderecoDto = new EnderecoDto(cliente.getEndereco());
-		this.telefoneDto = telefones;
+		
+		if(!(cliente.getEndereco() == null)) {
+			this.enderecoDto = new EnderecoDto(cliente.getEndereco());
+		}
+		if(!(cliente.getTelefone() == null)) {
+			List<TelefoneDto>telefones = new ArrayList<TelefoneDto>();
+			cliente.getTelefone().forEach(telefone -> telefones.add(new TelefoneDto(telefone)));
+			this.telefoneDto = telefones;
+		}
+		
 	}	
 	
 	public Cliente toEntity() {
 		Cliente cliente = new Cliente();
-		List<Telefone>telefones = new ArrayList<Telefone>();
-		this.telefoneDto.forEach(telefone -> telefones.add(telefone.toEntity()));
 		
 		cliente.setIdCliente(this.idCliente);
 		cliente.setCpfCliente(this.cpfCliente);
 		cliente.setNmCliente(this.nmCliente);
 		cliente.setDtNascCliente(this.dtNascCliente);
 		cliente.setRgCliente(this.rgCliente);
-		cliente.setEndereco(this.enderecoDto.toEntity());
-		cliente.setTelefone(telefones);
+		
+		if(!(this.enderecoDto == null)) {
+			cliente.setEndereco(this.enderecoDto.toEntity());
+		}
+		
+		if(!(this.telefoneDto == null)) {
+			List<Telefone>telefones = new ArrayList<Telefone>();
+			this.telefoneDto.forEach(telefone -> telefones.add(telefone.toEntity()));
+			cliente.setTelefone(telefones);
+		}
 		
 		return cliente;
 	}

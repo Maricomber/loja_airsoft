@@ -49,6 +49,14 @@ public class EnderecoDto {
 		endereco.setEndComplemento(this.endComplemento);
 		endereco.setEndCep(this.endCep);
 		
+		if(!(this.clienteDto == null)) {
+			endereco.setCliente(this.clienteDto.toEntity());
+		}
+		
+		if(!(this.fabricanteDto == null)) {
+			endereco.setFabricante(this.fabricanteDto.toEntity());
+		}
+		
 		return endereco;
 	}
 
