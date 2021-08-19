@@ -30,6 +30,8 @@ public class ProdutoDto {
 		this.idProduto = produto.getIdProduto();
 		this.dsProduto = produto.getDsProduto();
 		this.vlPreco = produto.getVlPreco();
+		this.fabricanteDto = new FabricanteDto(produto.getFabricante());
+		this.produtoTipoDto = new ProdutoTipoDto(produto.getProdutoTipo());
 	}
 	
 	public Produto toEntity() {
@@ -37,6 +39,8 @@ public class ProdutoDto {
 		produto.setIdProduto(this.idProduto);
 		produto.setDsProduto(this.dsProduto);
 		produto.setVlPreco(this.vlPreco);
+		produto.setFabricante(this.fabricanteDto.toEntity());
+		produto.setProdutoTipo(this.produtoTipoDto.toEntity());
 		
 		return produto;
 	}
