@@ -34,7 +34,13 @@ public class EnderecoServiceImpl implements EnderecoService{
 		
 		try {
 			endereco = enderecoDto.toEntity();
-			endereco.getCliente().setEndereco(endereco);
+			
+			if(!(endereco.getCliente() == null)) {
+				endereco.getCliente().setEndereco(endereco);
+			}
+			else if (!(endereco.getFabricante() == null)) {
+				endereco.getFabricante().setEndereco(endereco);
+			}	
 
 			return  new EnderecoDto(this.enderecoRepository.save(endereco));
 		}catch (Exception e) {
