@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.entities;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Funcionario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "fun_cpf_vendedor", nullable = true)
-	private Double cpfFunc;
+	private BigInteger cpfFunc;
 	
 	@Column(name = "fun_dt_nascimento", nullable = false)
 	private Date dtNascFun;

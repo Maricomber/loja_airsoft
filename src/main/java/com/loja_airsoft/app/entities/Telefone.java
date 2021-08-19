@@ -31,10 +31,10 @@ public class Telefone {
 	public Integer numTelefone;
 	
 	@ManyToOne(cascade = CascadeType.ALL)  
-    @JoinColumn(name="cli_id_cliente")
+    @JoinColumn(name="cli_id_cliente", nullable = true)
 	private Cliente cliente;
 	
 	@ManyToOne(cascade = CascadeType.ALL)  
-    @JoinColumn(name="funcionario")
+    @JoinColumn(name="fun_cpf_vendedor", nullable = true)
 	private Funcionario funcionario;
 }

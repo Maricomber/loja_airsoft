@@ -32,8 +32,8 @@ public class FabricanteServiceImpl implements FabricanteService{
 		log.info("Salvando fabricante");
 		Fabricante fabricante = new Fabricante();
 		try {
-			fabricante = this.fabricanteRepository.save(FabricanteDto.toEntity(fabricanteDto));
-			return  FabricanteDto.fromEntity(fabricante);
+			fabricante = this.fabricanteRepository.save(fabricanteDto.toEntity());
+			return  new FabricanteDto(fabricante);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar fabricante. "+e.getMessage();
 			log.info(msgErro);
@@ -52,7 +52,7 @@ public class FabricanteServiceImpl implements FabricanteService{
 				throw new Exception("Sem resultados.");
 			}
 			log.info("Fabricante encontrado.");
-			return FabricanteDto.fromEntity(fabricante);
+			return new FabricanteDto(fabricante);
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar fabricante. "+e.getMessage();
 			log.info(msgErro);
@@ -86,7 +86,7 @@ public class FabricanteServiceImpl implements FabricanteService{
 		try {
 			fabricantes = this.fabricanteRepository.findAll();
 			for(Fabricante fabricante: fabricantes) {
-				fabricantesRetorno.add(FabricanteDto.fromEntity(fabricante));
+				fabricantesRetorno.add(new FabricanteDto(fabricante));
 			}
 			log.info("Busca realizada com sucesso");
 			return fabricantesRetorno;

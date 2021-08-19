@@ -35,7 +35,7 @@ public class CargoController {
 		
 		List<String>erros = new ArrayList<String>();
 		Response<CargoDto>response = new Response<CargoDto>();
-		CargoDto cargoDto = new CargoDto();
+		CargoDto cargoDto;
 		
 		try {
 			

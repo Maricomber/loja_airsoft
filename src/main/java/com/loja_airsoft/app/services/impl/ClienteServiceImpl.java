@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.ClienteDto;
 import com.loja_airsoft.app.entities.Cliente;
-import com.loja_airsoft.app.entities.Telefone;
 import com.loja_airsoft.app.repositories.ClienteRepository;
 import com.loja_airsoft.app.services.ClienteService;
 
@@ -27,20 +26,13 @@ public class ClienteServiceImpl implements ClienteService{
 	@Override
 	public ClienteDto save(ClienteDto clienteDto) throws Exception {
 		
-		Cliente cliente = new Cliente();
-		List<Telefone> telefoneLst = new ArrayList<Telefone>();
-		
 		try {
-			cliente = ClienteDto.toEntity(clienteDto);
-			for(Telefone telefone: cliente.getTelefone()) {
-				telefone.setCliente(cliente);
-				telefoneLst.add(telefone);
-			}
-			cliente.setTelefone(telefoneLst);
+			Cliente cliente = clienteDto.toEntity();
+			cliente.getTelefone().forEach(telefone -> telefone.setCliente(cliente));
 			
 			log.info("Salvando cliente");
-			cliente = this.clienteRepository.save(cliente);
-			return new ClienteDto(cliente);
+			
+			return new ClienteDto(this.clienteRepository.save(cliente));
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar cliente "+e.getMessage();
 			log.info(msgErro);

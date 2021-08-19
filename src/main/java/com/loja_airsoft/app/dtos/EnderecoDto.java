@@ -23,54 +23,33 @@ public class EnderecoDto {
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private FabricanteDto fabricanteDto;
-	
-	public static EnderecoDto fromEntity(Endereco endereco) {
-		return fromEntity(endereco, true);
-	}
-	public static EnderecoDto fromEntity(Endereco endereco, Boolean isEndereco) {
-		EnderecoDto enderecoDto = new EnderecoDto();
-		if(!(endereco == null)) {
-			enderecoDto.setIdEndereco(endereco.getIdEndereco());
-			enderecoDto.setDsRua(endereco.getDsRua());
-			enderecoDto.setEndNumero(endereco.getEndNumero());
-			enderecoDto.setEndBairro(endereco.getEndBairro());
-			enderecoDto.setEndCidade(endereco.getEndCidade());
-			enderecoDto.setEndComplemento(endereco.getEndComplemento());
-			enderecoDto.setEndCep(endereco.getEndCep());
-			
-			if(isEndereco) {
-				if(!(endereco.getCliente()== null)) {
-					enderecoDto.setClienteDto(new ClienteDto(endereco.getCliente()));
-				}
-				else if (!(endereco.getFabricante()== null)) {
-					enderecoDto.setFabricanteDto(FabricanteDto.fromEntity(endereco.getFabricante(), false));
-				}
-			}
-		}
-		return enderecoDto;
+
+	public EnderecoDto() {
+		
 	}
 	
-	public static Endereco toEntity(EnderecoDto enderecoDto) {
-		return toEntity(enderecoDto, true);
+	public EnderecoDto (Endereco endereco) {
+		this.idEndereco = endereco.getIdEndereco();
+		this.dsRua = endereco.getDsRua();
+		this.endNumero = endereco.getEndNumero();
+		this.endBairro = endereco.getEndBairro();
+		this.endCidade = endereco.getEndCidade();
+		this.endComplemento = endereco.getEndComplemento();
+		this.endCep = endereco.getEndCep();
 	}
 	
-	public static Endereco toEntity(EnderecoDto enderecoDto, Boolean verEndereco) {
+	public Endereco toEntity() {
 		Endereco endereco = new Endereco();
-		if(!(endereco == null)) {
-			endereco.setIdEndereco(enderecoDto.getIdEndereco());
-			endereco.setDsRua(enderecoDto.getDsRua());
-			endereco.setEndNumero(enderecoDto.getEndNumero());
-			endereco.setEndBairro(enderecoDto.getEndBairro());
-			endereco.setEndCidade(enderecoDto.getEndCidade());
-			endereco.setEndComplemento(enderecoDto.getEndComplemento());
-			endereco.setEndCep(enderecoDto.getEndCep());
-			
-			if(verEndereco) {
-				endereco.setFabricante(FabricanteDto.toEntity(enderecoDto.getFabricanteDto(), false));
-				endereco.setCliente(ClienteDto.toEntity(enderecoDto.getClienteDto(), false));
-			}
-		}
+		
+		endereco.setIdEndereco(this.idEndereco);
+		endereco.setDsRua(this.dsRua);
+		endereco.setEndNumero(this.endNumero);
+		endereco.setEndBairro(this.endBairro);
+		endereco.setEndCidade(this.endCidade);
+		endereco.setEndComplemento(this.endComplemento);
+		endereco.setEndCep(this.endCep);
 		
 		return endereco;
 	}
+
 }

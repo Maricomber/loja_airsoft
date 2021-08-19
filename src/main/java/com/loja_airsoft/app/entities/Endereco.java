@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +42,7 @@ public class Endereco {
 	@Column(name = "end_cep", nullable = false, length = 10)
 	private String endCep;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "endereco")
 	private Cliente cliente;
 

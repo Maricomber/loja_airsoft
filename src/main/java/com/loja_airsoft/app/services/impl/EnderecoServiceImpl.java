@@ -33,8 +33,8 @@ public class EnderecoServiceImpl implements EnderecoService{
 		}
 		
 		try {
-			endereco = this.enderecoRepository.save(EnderecoDto.toEntity(enderecoDto));
-			return  EnderecoDto.fromEntity(endereco);
+			endereco = this.enderecoRepository.save(enderecoDto.toEntity());
+			return  new EnderecoDto(endereco);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar endereço. "+e.getMessage();
 			log.info(msgErro);
@@ -52,7 +52,7 @@ public class EnderecoServiceImpl implements EnderecoService{
 				throw new Exception("Sem resultados.");
 			}
 			log.info("endereco encontrado.");
-			return EnderecoDto.fromEntity(endereco);
+			return new EnderecoDto(endereco);
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar endereço. "+e.getMessage();
 			log.info(msgErro);
@@ -85,7 +85,7 @@ public class EnderecoServiceImpl implements EnderecoService{
 		try {
 			enderecos = this.enderecoRepository.findAll();
 			for(Endereco endereco: enderecos) {
-				enderecosRetorno.add(EnderecoDto.fromEntity(endereco));
+				enderecosRetorno.add(new EnderecoDto(endereco));
 			}
 			log.info("Busca realizada com sucesso");
 			return enderecosRetorno;

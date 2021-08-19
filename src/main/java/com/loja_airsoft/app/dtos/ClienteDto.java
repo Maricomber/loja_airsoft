@@ -30,45 +30,32 @@ public class ClienteDto {
 		
 	}
 	
-	public ClienteDto(Cliente cliente) {				
+	public ClienteDto(Cliente cliente) {			
+		List<TelefoneDto>telefones = new ArrayList<TelefoneDto>();
+		cliente.getTelefone().forEach(telefone -> telefones.add(new TelefoneDto(telefone)));
+		
 		this.idCliente = cliente.getIdCliente();
 		this.cpfCliente = cliente.getCpfCliente();
 		this.nmCliente = cliente.getNmCliente();
 		this.dtNascCliente = cliente.getDtNascCliente();
 		this.rgCliente = cliente.getRgCliente();
-		this.enderecoDto = EnderecoDto.fromEntity(cliente.getEndereco(), false);
-		this.telefoneDto = TelefoneDto.fromEntity(cliente.getTelefone(), false);
+		this.enderecoDto = new EnderecoDto(cliente.getEndereco());
+		this.telefoneDto = telefones;
 	}	
 	
-	public static Cliente toEntity(ClienteDto clienteDto) {
-		
-		return toEntity(clienteDto, true);
-	}
-
-	public static Cliente toEntity(ClienteDto clienteDto, Boolean isCliente) {
-		List<Telefone>telefone = new ArrayList<Telefone>();
+	public Cliente toEntity() {
 		Cliente cliente = new Cliente();
+		List<Telefone>telefones = new ArrayList<Telefone>();
+		this.telefoneDto.forEach(telefone -> telefones.add(telefone.toEntity()));
 		
-		if(!(cliente == null))  {
-			cliente.setIdCliente(clienteDto.getIdCliente());
-			cliente.setCpfCliente(clienteDto.getCpfCliente());
-			cliente.setNmCliente(clienteDto.getNmCliente());
-			cliente.setDtNascCliente(clienteDto.getDtNascCliente());
-			cliente.setRgCliente(clienteDto.getRgCliente());
-			
-			if(isCliente){
-				if(clienteDto.getTelefoneDto() != null) {
-					for(TelefoneDto telefoneDto : clienteDto.getTelefoneDto()) {
-						telefone.add(TelefoneDto.toEntity(telefoneDto, false));
-					}
-					cliente.setTelefone(telefone);
-				}
-				
-				cliente.setEndereco(EnderecoDto.toEntity(clienteDto.getEnderecoDto(), false));
-			}
-			
-		}
+		cliente.setIdCliente(this.idCliente);
+		cliente.setCpfCliente(this.cpfCliente);
+		cliente.setNmCliente(this.nmCliente);
+		cliente.setDtNascCliente(this.dtNascCliente);
+		cliente.setRgCliente(this.rgCliente);
+		cliente.setEndereco(this.enderecoDto.toEntity());
+		cliente.setTelefone(telefones);
+		
 		return cliente;
 	}
-	
 }

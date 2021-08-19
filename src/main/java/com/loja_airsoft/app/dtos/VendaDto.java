@@ -20,19 +20,18 @@ public class VendaDto {
 	public VendaDto(Venda venda) {
 		this.idVenda = venda.getIdVenda();
 		this.dtVenda = venda.getDtVenda();
-		this.produto = ProdutoDto.fromEntity(venda.getProduto(), false);
-				//venda.getProduto();
+		this.produto = new ProdutoDto(venda.getProduto());
 		this.cliente = new ClienteDto(venda.getCliente());
 		this.funcionario = new FuncionarioDto(venda.getFuncionario());
 	}
 	
-	public static Venda toEntity(VendaDto vendaDto) {
+	public Venda toEntity() {
 		Venda venda = new Venda();
-		venda.setIdVenda(vendaDto.getIdVenda());
-		venda.setDtVenda(vendaDto.getDtVenda());
-		venda.setProduto(ProdutoDto.toEntity(vendaDto.getProduto()));
-		venda.setCliente(ClienteDto.toEntity(vendaDto.getCliente()));
-		venda.setFuncionario(vendaDto.funcionario.toEntity());
+		venda.setIdVenda(this.idVenda);
+		venda.setDtVenda(this.dtVenda);
+		venda.setProduto(this.produto.toEntity());
+		venda.setCliente(this.cliente.toEntity());
+		venda.setFuncionario(this.funcionario.toEntity());
 		return venda;
 	}
 }
