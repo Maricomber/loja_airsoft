@@ -42,7 +42,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 	}
 	
-
 	@Override
 	public UsuarioDto findById(Integer id_usuario) throws Exception {
 		log.info("Buscando usuario.");
