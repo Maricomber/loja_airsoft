@@ -10,5 +10,5 @@ import com.loja_airsoft.app.entities.TipoDocumento;
 @Repository
 public interface TipoDocumentoRepository extends JpaRepository<TipoDocumento, Integer>{
 
-	 TipoDocumento findByIdTipoDocumento(Integer id_documento);
+	 TipoDocumento findByIdTpDocumento(Integer id_documento);
 }

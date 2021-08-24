@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -42,17 +43,21 @@ public class Usuario {
     @JoinColumn(name = "end_id_endereco", referencedColumnName = "end_id_endereco")
 	private Endereco endereco;
 	
+	@ManyToOne
+	private Cargo cargo;
+	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Documento> documento;
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Telefone> telefone;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
 	private List<Venda> venda;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "fabProduto", cascade = CascadeType.ALL)
 	private List<Produto> produto;
+	
 	
 	@ManyToMany
 	@JoinTable(name = "usuario_perfil", joinColumns = 
@@ -69,5 +74,6 @@ public class Usuario {
 		this.dtNascCliente = usuarioDto.getDtNascCliente();
 		this.nmUsuario = usuarioDto.getNmUsuario();
 		this.endereco = new Endereco(usuarioDto.getEndereco());
+		this.cargo = new Cargo(usuarioDto.getCargoDto());
 	}
 }

@@ -6,12 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.TipoDocumentoDto;
 import com.loja_airsoft.app.entities.TipoDocumento;
 import com.loja_airsoft.app.repositories.TipoDocumentoRepository;
 import com.loja_airsoft.app.services.TipoDocumentoService;
 
+@Service
 public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 
 	@Autowired
@@ -46,7 +48,7 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 		log.info("Buscando tipoDocumento.");
 		TipoDocumento tipoDocumento = new TipoDocumento();
 		try {
-			tipoDocumento = this.tipoDocumentoRepository.findByIdTipoDocumento(id_tipoDocumento);
+			tipoDocumento = this.tipoDocumentoRepository.findByIdTpDocumento(id_tipoDocumento);
 			if(tipoDocumento == null) {
 				throw new Exception("Sem resultados.");
 			}
@@ -66,7 +68,7 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService{
 		log.info("Deletando tipoDocumento ");
 		
 		try{
-			tipoDocumento = this.tipoDocumentoRepository.findByIdTipoDocumento(id_tipoDocumento);
+			tipoDocumento = this.tipoDocumentoRepository.findByIdTpDocumento(id_tipoDocumento);
 			this.tipoDocumentoRepository.delete(tipoDocumento);
 		}catch (Exception e) {;
 			msgErro = "Erro tipoDocumento não pode ser deletado. "+e.getMessage();

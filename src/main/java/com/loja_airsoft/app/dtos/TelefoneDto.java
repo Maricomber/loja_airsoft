@@ -23,13 +23,5 @@ public class TelefoneDto {
 		this.dddTelefone = telefone.getDddTelefone();
 		this.numTelefone = telefone.getNumTelefone();
 	}
-	
-	public Telefone toEntity() {
-		Telefone telefone = new Telefone();
-		telefone.setIdTelefone(this.idTelefone);
-		telefone.setDddTelefone(this.dddTelefone);
-		telefone.setNumTelefone(this.numTelefone);
-		
-		return telefone;
-	}
+
 }

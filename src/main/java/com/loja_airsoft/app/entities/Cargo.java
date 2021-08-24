@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.loja_airsoft.app.dtos.CargoDto;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,4 +32,14 @@ public class Cargo {
 	
 	@OneToMany(mappedBy="cargo")
 	private List<Usuario> usuario;
+	
+	public Cargo(){
+		
+	}
+	
+	public Cargo(CargoDto cargoDto) {
+		this.idCargo = cargoDto.getIdCargo();
+		this.dsCargo = cargoDto.getDsCargo();
+		
+	}
 }

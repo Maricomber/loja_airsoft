@@ -58,6 +58,6 @@ public class Endereco {
 		this.endCidade = enderecoDto.getEndCidade();
 		this.endComplemento = enderecoDto.getEndComplemento();
 		this.endCep = enderecoDto.getEndCep();
-		this.usuario = new Usuario(enderecoDto.getUsuarioDto());
+		//this.usuario = new Usuario(enderecoDto.getUsuarioDto());
 	}
 }

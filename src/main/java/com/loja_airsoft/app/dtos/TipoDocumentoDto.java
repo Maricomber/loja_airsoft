@@ -12,8 +12,8 @@ import lombok.Setter;
 @Setter
 public class TipoDocumentoDto {
 
-	public int idDocumento;
-	private String dsDocumento;
+	public int idTpDocumento;
+	private String dsTpDocumento;
 	private List<Documento> documento;
 	
 	public TipoDocumentoDto() {
@@ -21,8 +21,8 @@ public class TipoDocumentoDto {
 	}
 	
 	public TipoDocumentoDto(TipoDocumento tipoDocumento) {
-		this.idDocumento = tipoDocumento.idDocumento;
-		this.dsDocumento = tipoDocumento.getDsDocumento();
+		this.idTpDocumento = tipoDocumento.idTpDocumento;
+		this.dsTpDocumento = tipoDocumento.getDsTpDocumento();
 		tipoDocumento.getDocumento().forEach(documento -> this.documento.add(documento));
 	}
 }

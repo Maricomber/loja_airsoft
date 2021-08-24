@@ -24,12 +24,12 @@ public class TipoDocumento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "tip_id_doc", nullable = false)
-	public int idDocumento;
+	public int idTpDocumento;
 	
 	@Column(name = "tip_ds_doc", nullable = false, length = 100)
-	private String dsDocumento;
+	private String dsTpDocumento;
 	
-	@OneToMany(mappedBy="documento")
+	@OneToMany(mappedBy="tipoDocumento")
 	private List<Documento> documento;
 	
 	public TipoDocumento() {
@@ -37,8 +37,8 @@ public class TipoDocumento {
 	}
 	
 	public TipoDocumento(TipoDocumentoDto tipoDocumentoDto) {
-		this.idDocumento = tipoDocumentoDto.getIdDocumento();
-		this.dsDocumento = tipoDocumentoDto.getDsDocumento();
+		this.idTpDocumento = tipoDocumentoDto.getIdTpDocumento();
+		this.dsTpDocumento = tipoDocumentoDto.getDsTpDocumento();
 		tipoDocumentoDto.getDocumento().forEach(documento -> this.documento.add(documento));
 	}
 	

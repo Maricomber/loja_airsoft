@@ -6,12 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.UsuarioDto;
 import com.loja_airsoft.app.entities.Usuario;
 import com.loja_airsoft.app.repositories.UsuarioRepository;
 import com.loja_airsoft.app.services.UsuarioService;
 
+@Service
 public class UsuarioServiceImpl implements UsuarioService{
 
 	@Autowired

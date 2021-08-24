@@ -35,23 +35,5 @@ public class EnderecoDto {
 		this.endCep = endereco.getEndCep();
 
 	}
-	
-	public Endereco toEntity() {
-		Endereco endereco = new Endereco();
-		
-		endereco.setIdEndereco(this.idEndereco);
-		endereco.setDsRua(this.dsRua);
-		endereco.setEndNumero(this.endNumero);
-		endereco.setEndBairro(this.endBairro);
-		endereco.setEndCidade(this.endCidade);
-		endereco.setEndComplemento(this.endComplemento);
-		endereco.setEndCep(this.endCep);
-		
-		if(!(this.usuarioDto == null)) {
-			//endereco.setCliente(this.usuarioDto.toEntity());
-		}
-		
-		return endereco;
-	}
 
 }

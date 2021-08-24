@@ -27,11 +27,4 @@ public class ProdutoTipoDto {
 		this.dsProdutoTp = produtoTipo.getDsProdutoTp();
 	}
 	
-	public ProdutoTipo toEntity() {
-		ProdutoTipo produtoTipo = new ProdutoTipo();
-		produtoTipo.setIdProdutoTp(this.idProdutoTp);
-		produtoTipo.setDsProdutoTp(this.dsProdutoTp);
-		
-		return produtoTipo;
-	}
 }

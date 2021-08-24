@@ -23,10 +23,10 @@ public class Documento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "tip_id_doc", nullable = false)
+	@Column(name = "doc_id_doc", nullable = false)
 	private int idDocumento;
 	
-	@Column(name = "tip_ds_doc", nullable = false)
+	@Column(name = "doc_ds_doc", nullable = false)
 	private String dsDocumento;
 	
 	@ManyToOne(cascade = CascadeType.ALL)  
@@ -45,7 +45,7 @@ public class Documento {
 		
 		this.idDocumento = documentoDto.getIdDocumento();
 		this.dsDocumento = documentoDto.getDsDocumento();
-		this.usuario = new Usuario(documentoDto.getUsuario());
+		//this.usuario = new Usuario(documentoDto.getUsuario());
 		this.tipoDocumento = new TipoDocumento(documentoDto.getTipoDocumento());
 		
 	}

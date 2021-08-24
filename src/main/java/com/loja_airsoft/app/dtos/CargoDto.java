@@ -22,11 +22,4 @@ public class CargoDto {
 		this.dsCargo = cargo.getDsCargo();
 	}
 	
-	public Cargo toEntity() {
-		Cargo cargo = new Cargo();
-		cargo.setIdCargo(this.idCargo);
-		cargo.setDsCargo(this.dsCargo);
-		return cargo;
-	}
-	
 }

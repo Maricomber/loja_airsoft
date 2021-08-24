@@ -3,6 +3,7 @@ package com.loja_airsoft.app.dtos;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Usuario;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +18,13 @@ public class UsuarioDto {
 	private EnderecoDto endereco;
 	private List<DocumentoDto> documento;
 	private List<TelefoneDto> telefone;
-	private List<VendaDto> venda;
 	private List<PerfilDto> perfil;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private List<VendaDto> venda;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private CargoDto cargoDto;
 	
 	public UsuarioDto() {
 		

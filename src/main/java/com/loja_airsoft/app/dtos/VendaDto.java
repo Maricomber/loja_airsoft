@@ -36,14 +36,4 @@ public class VendaDto {
 				new ProdutoDto(produto)));
 	}
 	
-	public Venda toEntity() {
-		
-		Venda venda = new Venda();
-		venda.setIdVenda(this.idVenda);
-		venda.setDtVenda(this.dtVenda);
-		//venda.setCliente(this.cliente.toEntity());
-		//venda.setFuncionario(this.funcionario.toEntity());
-		this.produtoDto.forEach(produto -> venda.getProduto().add(produto.toEntity()));
-		return venda;
-	}
 }

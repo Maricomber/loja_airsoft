@@ -26,14 +26,14 @@ public class EnderecoServiceImpl implements EnderecoService{
 	@Override
 	public EnderecoDto save(EnderecoDto enderecoDto) throws Exception {
 		log.info("Salvando endereco");
-		Endereco endereco = new Endereco();
+		Endereco endereco;
 		
 		if(enderecoDto.equals(null)){
 			throw new Exception("Pesquisa em branco. ");
 		}
 		
 		try {
-			endereco = enderecoDto.toEntity();
+			endereco = new Endereco(enderecoDto);
 			
 			if(!(endereco.getUsuario() == null)) {
 				endereco.getUsuario().setEndereco(endereco);

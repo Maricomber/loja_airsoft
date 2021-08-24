@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.loja_airsoft.app.dtos.VendaDto;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +26,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "venda")
 public class Venda {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ven_id_venda")
@@ -52,4 +54,19 @@ public class Venda {
 		{@JoinColumn(name = "ven_id_venda")}, inverseJoinColumns = 
 		{@JoinColumn(name = "prd_id_produto")})
 	private List<Produto> produto;
+	
+	public Venda() {
+		
+	}
+	
+	public Venda(VendaDto venda) {
+		this.idVenda = venda.getIdVenda();
+		this.dtVenda = venda.getDtVenda();
+		this.vlDesconto = venda.getVlDesconto();
+		this.vlTotal = venda.getVlTotal();
+		this.cliente = new Usuario(venda.getCliente());
+		this.vendedor = new Usuario(venda.getVendedor());
+		venda.getProdutoDto().forEach(produto -> this.produto.add(new Produto(produto)));
+		
+	}
 }
