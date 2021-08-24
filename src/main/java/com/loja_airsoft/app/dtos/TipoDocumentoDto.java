@@ -2,7 +2,7 @@ package com.loja_airsoft.app.dtos;
 
 import java.util.List;
 
-import com.loja_airsoft.app.entities.Documento;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.TipoDocumento;
 
 import lombok.Getter;
@@ -14,7 +14,9 @@ public class TipoDocumentoDto {
 
 	public int idTpDocumento;
 	private String dsTpDocumento;
-	private List<Documento> documento;
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private List<DocumentoDto>documento;
 	
 	public TipoDocumentoDto() {
 		
@@ -23,6 +25,5 @@ public class TipoDocumentoDto {
 	public TipoDocumentoDto(TipoDocumento tipoDocumento) {
 		this.idTpDocumento = tipoDocumento.idTpDocumento;
 		this.dsTpDocumento = tipoDocumento.getDsTpDocumento();
-		tipoDocumento.getDocumento().forEach(documento -> this.documento.add(documento));
 	}
 }

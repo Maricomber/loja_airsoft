@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -37,7 +38,7 @@ public class Perfil {
 	@JoinTable(name = "usuario_perfil",joinColumns = 
 		{@JoinColumn(name = "pef_id_perfil")}, inverseJoinColumns = 
 		{@JoinColumn(name = "usu_id_usuario")})
-	private List<Usuario> usuario;
+	private List<Usuario> usuario = new ArrayList<Usuario>();
 	
 	public Perfil() {
 		
@@ -46,5 +47,6 @@ public class Perfil {
 	public Perfil(PerfilDto perfilDto) {
 		this.idPerfil = perfilDto.getIdPerfil();
 		this.dsPerfil = perfilDto.getDsPerfil();				
+		perfilDto.getUsuario().forEach(perfil -> this.usuario.add(perfil));
 	}
 }

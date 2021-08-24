@@ -1,7 +1,9 @@
 package com.loja_airsoft.app.dtos;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Perfil;
 import com.loja_airsoft.app.entities.Usuario;
 
@@ -14,7 +16,9 @@ public class PerfilDto {
 
 	private int idPerfil;
 	private String dsPerfil;
-	private List<Usuario> usuario;
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private List<Usuario> usuario = new ArrayList<Usuario>();
 	
 	public PerfilDto() {
 		
@@ -23,6 +27,5 @@ public class PerfilDto {
 	public PerfilDto(Perfil perfil) {
 		this.idPerfil = perfil.getIdPerfil();
 		this.dsPerfil = perfil.getDsPerfil();
-		perfil.getUsuario().forEach(usuario -> this.usuario.add(usuario));
 	}
 }

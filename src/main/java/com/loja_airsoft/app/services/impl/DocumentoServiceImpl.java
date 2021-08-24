@@ -33,6 +33,7 @@ public class DocumentoServiceImpl implements DocumentoService {
 		Documento documento = new Documento(documentoDto);
 		
 		try {
+			//documento.getTipoDocumento().getDocumento().add(documento);
 			documento = this.documentoRepository.save(documento);
 			return new DocumentoDto(documento);
 		}catch (Exception e) {

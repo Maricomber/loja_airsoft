@@ -29,12 +29,11 @@ public class Documento {
 	@Column(name = "doc_ds_doc", nullable = false)
 	private String dsDocumento;
 	
-	@ManyToOne(cascade = CascadeType.ALL)  
+	@ManyToOne(cascade = CascadeType.MERGE)  
     @JoinColumn(name="usu_id_usuario", nullable = true)
 	private Usuario usuario;
 	
-	@ManyToOne(cascade = CascadeType.ALL)  
-    @JoinColumn(name="tip_id_doc", nullable = true)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	private TipoDocumento tipoDocumento;
 	
 	public Documento() {
@@ -45,7 +44,7 @@ public class Documento {
 		
 		this.idDocumento = documentoDto.getIdDocumento();
 		this.dsDocumento = documentoDto.getDsDocumento();
-		//this.usuario = new Usuario(documentoDto.getUsuario());
+		this.usuario = new Usuario(documentoDto.getUsuario());
 		this.tipoDocumento = new TipoDocumento(documentoDto.getTipoDocumento());
 		
 	}

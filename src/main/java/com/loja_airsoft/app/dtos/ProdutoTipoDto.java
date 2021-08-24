@@ -15,7 +15,7 @@ public class ProdutoTipoDto {
 	private int idProdutoTp;
 	private String dsProdutoTp;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<ProdutoDto> produtoDto;
 	
 	public ProdutoTipoDto() {

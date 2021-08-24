@@ -1,6 +1,7 @@
 package com.loja_airsoft.app.dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Documento;
 
 import lombok.Getter;
@@ -12,8 +13,11 @@ public class DocumentoDto {
 
 	private int idDocumento;
 	private String dsDocumento;
-	private UsuarioDto usuario;
+
 	private TipoDocumentoDto tipoDocumento;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private UsuarioDto usuario;
 	
 	public DocumentoDto() {
 		
@@ -21,8 +25,8 @@ public class DocumentoDto {
 	
 	public DocumentoDto(Documento documento) {
 		this.idDocumento = documento.getIdDocumento();
-		this.dsDocumento = documento.getDsDocumento();
-		this.usuario = new UsuarioDto(documento.getUsuario());
+		//this.usuario = new UsuarioDto(documento.getUsuario());
 		this.tipoDocumento = new TipoDocumentoDto(documento.getTipoDocumento());
+		this.dsDocumento = documento.getDsDocumento();
 	}
 }

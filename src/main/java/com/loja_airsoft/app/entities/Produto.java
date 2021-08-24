@@ -48,7 +48,7 @@ public class Produto {
 	private List<Venda> venda;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="pdt_id_produto_tipo")
+    //@JoinColumn(name="pdt_id_produto_tipo")
 	private ProdutoTipo produtoTipo;
 	
 	public Produto() {

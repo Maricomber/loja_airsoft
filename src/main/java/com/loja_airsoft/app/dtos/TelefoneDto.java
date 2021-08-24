@@ -13,6 +13,7 @@ public class TelefoneDto {
 	private Integer idTelefone;
 	private Integer dddTelefone;
 	private Integer numTelefone;
+	private UsuarioDto usuario;
 	
 	public TelefoneDto() {
 		

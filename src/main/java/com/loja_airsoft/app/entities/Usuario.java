@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,27 +44,27 @@ public class Usuario {
     @JoinColumn(name = "end_id_endereco", referencedColumnName = "end_id_endereco")
 	private Endereco endereco;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Cargo cargo;
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-	private List<Documento> documento;
+	private List<Documento> documento = new ArrayList<Documento>();
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-	private List<Telefone> telefone;
+	private List<Telefone> telefone = new ArrayList<Telefone>();
 	
 	@OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
-	private List<Venda> venda;
+	private List<Venda> venda = new ArrayList<Venda>();
 	
 	@OneToMany(mappedBy = "fabProduto", cascade = CascadeType.ALL)
-	private List<Produto> produto;
+	private List<Produto> produto = new ArrayList<Produto>();
 	
 	
 	@ManyToMany
 	@JoinTable(name = "usuario_perfil", joinColumns = 
 	{@JoinColumn(name = "usu_id_usuario")}, inverseJoinColumns  =
 	{@JoinColumn(name = "pef_id_perfil")})
-	private List<Perfil> perfil;
+	private List<Perfil> perfil = new ArrayList<Perfil>();
 	
 	public Usuario() {
 		
@@ -74,6 +75,13 @@ public class Usuario {
 		this.dtNascCliente = usuarioDto.getDtNascCliente();
 		this.nmUsuario = usuarioDto.getNmUsuario();
 		this.endereco = new Endereco(usuarioDto.getEndereco());
-		this.cargo = new Cargo(usuarioDto.getCargoDto());
+		if(!(usuarioDto.getCargoDto() == null)) {
+			this.cargo = new Cargo(usuarioDto.getCargoDto());
+		}
+		usuarioDto.getDocumento().forEach(documento -> this.documento.add(new Documento(documento)));
+		//telefone
+		//venda
+		//produto
+		usuarioDto.getPerfil().forEach(perfil -> this.perfil.add(new Perfil(perfil)));
 	}
 }

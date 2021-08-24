@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.dtos;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,14 +17,16 @@ public class UsuarioDto {
 	private Date dtNascCliente;
 	private String nmUsuario;
 	private EnderecoDto endereco;
-	private List<DocumentoDto> documento;
-	private List<TelefoneDto> telefone;
-	private List<PerfilDto> perfil;
+	private List<DocumentoDto> documento = new ArrayList<DocumentoDto>();
+	private List<TelefoneDto> telefone = new ArrayList<TelefoneDto>();
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private List<VendaDto> venda;
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private List<PerfilDto> perfil = new ArrayList<PerfilDto>();
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private List<VendaDto> venda = new ArrayList<VendaDto>();;
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private CargoDto cargoDto;
 	
 	public UsuarioDto() {

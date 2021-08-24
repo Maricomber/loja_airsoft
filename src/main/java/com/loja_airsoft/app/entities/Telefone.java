@@ -44,6 +44,7 @@ public class Telefone {
 		this.idTelefone = telefoneDto.getIdTelefone();
 		this.dddTelefone = telefoneDto.getDddTelefone();
 		this.numTelefone = telefoneDto.getNumTelefone();
+		this.usuario = new Usuario(telefoneDto.getUsuario());
 	}
 	
 }
