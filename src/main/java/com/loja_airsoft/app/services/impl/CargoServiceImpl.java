@@ -32,8 +32,8 @@ public class CargoServiceImpl implements CargoService{
 		log.info("Salvando cargo");
 		Cargo cargo = new Cargo();
 		try {
-			cargo = this.cargoRepository.save(CargoDto.toEntity(cargoDto));
-			return  CargoDto.fromEntity(cargo);
+			cargo = this.cargoRepository.save(cargoDto.toEntity());
+			return new CargoDto(cargo);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar cargo. "+e.getMessage();
 			log.info(msgErro);
@@ -52,7 +52,7 @@ public class CargoServiceImpl implements CargoService{
 				throw new Exception("Sem resultados.");
 			}
 			log.info("Cargo encontrado.");
-			return CargoDto.fromEntity(cargo);
+			return new CargoDto(cargo);
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar cargo. "+e.getMessage();
 			log.info(msgErro);
@@ -86,7 +86,7 @@ public class CargoServiceImpl implements CargoService{
 		try {
 			cargos = this.cargoRepository.findAll();
 			for(Cargo cargo: cargos) {
-				cargosRetorno.add(CargoDto.fromEntity(cargo));
+				cargosRetorno.add(new CargoDto(cargo));
 			}
 			log.info("Busca realizada com sucesso");
 			return cargosRetorno;

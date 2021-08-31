@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Cliente;
 import com.loja_airsoft.app.entities.Telefone;
+import com.loja_airsoft.app.entities.Venda;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,50 +20,69 @@ public class ClienteDto {
 	private String nmCliente;
 	private Date dtNascCliente;
 	private Integer rgCliente;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private List<VendaDto> vendaDto;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private EnderecoDto enderecoDto;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private List<TelefoneDto> telefoneDto;
 	
-	public static ClienteDto fromEntity(Cliente cliente) {
-		List<TelefoneDto> telefoneD = new ArrayList<TelefoneDto>();
-		ClienteDto clienteDto = new ClienteDto();
+	public ClienteDto(){
 		
-		if(!(cliente == null)) {
-			clienteDto.setIdCliente(cliente.getIdCliente());
-			clienteDto.setCpfCliente(cliente.getCpfCliente());
-			clienteDto.setNmCliente(cliente.getNmCliente());
-			clienteDto.setDtNascCliente(cliente.getDtNascCliente());
-			clienteDto.setRgCliente(cliente.getRgCliente());
-			if(cliente.getTelefone() != null) {
-				for(Telefone telefone : cliente.getTelefone()) {
-					telefoneD.add(TelefoneDto.fromEntity(telefone));
-				}
-			}
-			clienteDto.setTelefoneDto(telefoneD);
-			clienteDto.setEnderecoDto(EnderecoDto.fromEntity(cliente.getEndereco()));
-		}
-		return clienteDto;
 	}
 	
-	public static Cliente toEntity(ClienteDto clienteDto) {
-		List<Telefone>telefone = new ArrayList<Telefone>();
+	public ClienteDto(Cliente cliente) {			
+		
+		this.idCliente = cliente.getIdCliente();
+		this.cpfCliente = cliente.getCpfCliente();
+		this.nmCliente = cliente.getNmCliente();
+		this.dtNascCliente = cliente.getDtNascCliente();
+		this.rgCliente = cliente.getRgCliente();
+		
+		if(!(cliente.getEndereco() == null)) {
+			this.enderecoDto = new EnderecoDto(cliente.getEndereco());
+		}
+		if(!(cliente.getTelefone() == null)) {
+			List<TelefoneDto>telefones = new ArrayList<TelefoneDto>();
+			cliente.getTelefone().forEach(telefone -> telefones.add(new TelefoneDto(telefone)));
+			this.telefoneDto = telefones;
+		}
+		
+		if(!(cliente.getVenda()== null)) {
+			List<VendaDto>vendas = new ArrayList<VendaDto>();
+			cliente.getVenda().forEach(venda -> vendas.add(new VendaDto(venda)));
+			this.vendaDto = vendas;
+		}
+	}	
+	
+	public Cliente toEntity() {
 		Cliente cliente = new Cliente();
 		
-		if(!(cliente == null))  {
-			cliente.setIdCliente(clienteDto.getIdCliente());
-			cliente.setCpfCliente(clienteDto.getCpfCliente());
-			cliente.setNmCliente(clienteDto.getNmCliente());
-			cliente.setDtNascCliente(clienteDto.getDtNascCliente());
-			cliente.setRgCliente(clienteDto.getRgCliente());
-			
-			if(clienteDto.getTelefoneDto() != null) {
-				for(TelefoneDto telefoneDto : clienteDto.getTelefoneDto()) {
-					telefone.add(TelefoneDto.toEntity(telefoneDto));
-				}
-				cliente.setTelefone(telefone);
-			}
-			cliente.setEndereco(EnderecoDto.toEntity(clienteDto.getEnderecoDto()));
-			
+		cliente.setIdCliente(this.idCliente);
+		cliente.setCpfCliente(this.cpfCliente);
+		cliente.setNmCliente(this.nmCliente);
+		cliente.setDtNascCliente(this.dtNascCliente);
+		cliente.setRgCliente(this.rgCliente);
+		
+		if(!(this.enderecoDto == null)) {
+			cliente.setEndereco(this.enderecoDto.toEntity());
 		}
+		
+		if(!(this.telefoneDto == null)) {
+			List<Telefone>telefones = new ArrayList<Telefone>();
+			this.telefoneDto.forEach(telefone -> telefones.add(telefone.toEntity()));
+			cliente.setTelefone(telefones);
+		}
+		
+		if(!(this.vendaDto == null)) {
+			List<Venda>vendas = new ArrayList<Venda>();
+			this.vendaDto.forEach(venda -> vendas.add(venda.toEntity()));
+			cliente.setVenda(vendas);
+		}
+		
 		return cliente;
 	}
 }

@@ -13,17 +13,19 @@ public class CargoDto {
 	private Integer idCargo;
 	private String dsCargo;
 
-	public static CargoDto fromEntity(Cargo cargo) {
-		CargoDto cargoDto = new CargoDto();
-		cargoDto.setIdCargo(cargo.getIdCargo());
-		cargoDto.setDsCargo(cargo.getDsCargo());
-		return cargoDto;
+	public CargoDto(){
+		
 	}
 	
-	public static Cargo toEntity(CargoDto cargoDto) {
+	public CargoDto(Cargo cargo) {
+		this.idCargo = cargo.getIdCargo();
+		this.dsCargo = cargo.getDsCargo();
+	}
+	
+	public Cargo toEntity() {
 		Cargo cargo = new Cargo();
-		cargo.setIdCargo(cargoDto.getIdCargo());
-		cargo.setDsCargo(cargoDto.getDsCargo());
+		cargo.setIdCargo(this.idCargo);
+		cargo.setDsCargo(this.dsCargo);
 		return cargo;
 	}
 	

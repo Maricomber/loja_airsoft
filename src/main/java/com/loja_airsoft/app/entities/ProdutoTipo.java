@@ -1,6 +1,5 @@
 package com.loja_airsoft.app.entities;
 
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,20 +13,21 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Entity
-@Table(name = "cargo")
-public class Cargo {
+@Table(name = "produto_tipo")
+public class ProdutoTipo {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "crg_id_cargo", nullable = false)
-	private Integer idCargo;
+	@Column(name = "pdt_id_produto_tipo")
+	private int idProdutoTp;
 	
-	@Column(name = "crg_ds_cargo", nullable = false, length = 100)
-	private String dsCargo;
+	@Column(name = "pdt_ds_produto_tipo", nullable = false)
+	private String dsProdutoTp;
 	
-	@OneToMany(mappedBy="cargo")
-	private List<Funcionario> funcionario;
+	@OneToMany(mappedBy="produtoTipo")
+	private List<Produto> produto;
+	
 }

@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Endereco;
 
 import lombok.Getter;
@@ -15,31 +16,48 @@ public class EnderecoDto {
 	private String endBairro;
 	private String endCidade;
 	private String endComplemento;
+	private String endCep;
 	
-	public static EnderecoDto fromEntity(Endereco endereco) {
-		EnderecoDto enderecoDto = new EnderecoDto();
-		if(!(endereco == null)) {
-			enderecoDto.setIdEndereco(endereco.getIdEndereco());
-			enderecoDto.setDsRua(endereco.getDsRua());
-			enderecoDto.setEndNumero(endereco.getEndNumero());
-			enderecoDto.setEndBairro(endereco.getEndBairro());
-			enderecoDto.setEndCidade(endereco.getEndCidade());
-			enderecoDto.setEndComplemento(endereco.getEndComplemento());
-		}
-		return enderecoDto;
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private ClienteDto clienteDto;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private FabricanteDto fabricanteDto;
+
+	public EnderecoDto() {
+		
 	}
 	
-	public static Endereco toEntity(EnderecoDto enderecoDto) {
+	public EnderecoDto (Endereco endereco) {
+		this.idEndereco = endereco.getIdEndereco();
+		this.dsRua = endereco.getDsRua();
+		this.endNumero = endereco.getEndNumero();
+		this.endBairro = endereco.getEndBairro();
+		this.endCidade = endereco.getEndCidade();
+		this.endComplemento = endereco.getEndComplemento();
+		this.endCep = endereco.getEndCep();
+	}
+	
+	public Endereco toEntity() {
 		Endereco endereco = new Endereco();
-		if(!(endereco == null)) {
-			endereco.setIdEndereco(enderecoDto.getIdEndereco());
-			endereco.setDsRua(enderecoDto.getDsRua());
-			endereco.setEndNumero(enderecoDto.getEndNumero());
-			endereco.setEndBairro(enderecoDto.getEndBairro());
-			endereco.setEndCidade(enderecoDto.getEndCidade());
-			endereco.setEndComplemento(enderecoDto.getEndComplemento());
+		
+		endereco.setIdEndereco(this.idEndereco);
+		endereco.setDsRua(this.dsRua);
+		endereco.setEndNumero(this.endNumero);
+		endereco.setEndBairro(this.endBairro);
+		endereco.setEndCidade(this.endCidade);
+		endereco.setEndComplemento(this.endComplemento);
+		endereco.setEndCep(this.endCep);
+		
+		if(!(this.clienteDto == null)) {
+			endereco.setCliente(this.clienteDto.toEntity());
+		}
+		
+		if(!(this.fabricanteDto == null)) {
+			endereco.setFabricante(this.fabricanteDto.toEntity());
 		}
 		
 		return endereco;
 	}
+
 }

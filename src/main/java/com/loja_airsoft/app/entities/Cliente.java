@@ -32,7 +32,7 @@ public class Cliente {
 	@Column(name = "cli_cpf", nullable = false)
 	private Double cpfCliente;
 	
-	@Column(name = "cli_nome", nullable = false)
+	@Column(name = "cli_nome", nullable = false, length = 200)
 	private String nmCliente;
 	
 	@Column(name = "cli_dt_nascimento", nullable = false)
@@ -42,10 +42,12 @@ public class Cliente {
 	private Integer rgCliente;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "end_id_endereco")
+    @JoinColumn(name = "end_id_endereco", referencedColumnName = "end_id_endereco")
 	private Endereco endereco;
 	
-	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Telefone> telefone;
 	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Venda> venda;
 }

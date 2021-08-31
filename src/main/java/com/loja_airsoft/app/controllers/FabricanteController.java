@@ -17,33 +17,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loja_airsoft.app.dtos.ClienteDto;
+import com.loja_airsoft.app.dtos.FabricanteDto;
 import com.loja_airsoft.app.response.Response;
-import com.loja_airsoft.app.services.ClienteService;
+import com.loja_airsoft.app.services.FabricanteService;
 
 @RestController
-@RequestMapping(path = {"/loja_airsoft/cliente"})
-public class ClienteController {
+@RequestMapping(path = {"/loja_airsoft/fabricante"})
+public class FabricanteController {
 	
 	@Autowired
-	ClienteService clienteService;
+	FabricanteService fabricanteService;
 	
 	
 	@GetMapping(path = {"/{id}"})
-	public @ResponseBody ResponseEntity<Response<ClienteDto>> findById(@PathVariable int id){
+	public @ResponseBody ResponseEntity<Response<FabricanteDto>> findById(@PathVariable int id){
 		
 		List<String>erros = new ArrayList<String>();
-		Response<ClienteDto>response = new Response<ClienteDto>();
+		Response<FabricanteDto>response = new Response<FabricanteDto>();
 		
 		try {
 			
-			ClienteDto clienteDto = new ClienteDto();
-			clienteDto= this.clienteService.findById(id);
+			FabricanteDto fabricanteDto = new FabricanteDto();
+			fabricanteDto= this.fabricanteService.findById(id);
 			
-			if(clienteDto == null) {
-				throw new Exception ("Cliente não encontrado. ");
+			if(fabricanteDto == null) {
+				throw new Exception ("Fabricante não encontrado. ");
 			}
-			response.setData(clienteDto);
+			response.setData(fabricanteDto);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
@@ -53,20 +53,20 @@ public class ClienteController {
 	}
 	
 	@PutMapping
-	public @ResponseBody ResponseEntity<Response<ClienteDto>> update(@RequestBody ClienteDto clienteDto){
+	public @ResponseBody ResponseEntity<Response<FabricanteDto>> update(@RequestBody FabricanteDto fabricanteDto){
 		
 		List<String>erros = new ArrayList<String>();
-		Response<ClienteDto>response = new Response<ClienteDto>();
+		Response<FabricanteDto>response = new Response<FabricanteDto>();
 		
 		try {
-			if(clienteDto == null) {
+			if(fabricanteDto == null) {
 				throw new Exception("Campos em branco. ");
 			}
-			clienteDto = this.clienteService.save(clienteDto);
-			if(clienteDto.equals(null)) {
-				throw new Exception ("Cliente não encontrado. ");
+			fabricanteDto = this.fabricanteService.save(fabricanteDto);
+			if(fabricanteDto.equals(null)) {
+				throw new Exception ("Fabricante não encontrado. ");
 			}
-		response.setData(clienteDto);
+		response.setData(fabricanteDto);
 		}
 		catch (Exception e) {
 			erros.add(e.getMessage());
@@ -78,17 +78,17 @@ public class ClienteController {
 	}
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<ClienteDto>>> findClientes(HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<Response<List<FabricanteDto>>> findFabricantes(HttpServletRequest request) {
 		
-		Response<List<ClienteDto>> response = new Response<List<ClienteDto>>();
+		Response<List<FabricanteDto>> response = new Response<List<FabricanteDto>>();
 		List<String>erros = new ArrayList<String>();
 		
 		try{
-			List<ClienteDto>clientesDto = this.clienteService.findClientes();
-			if(clientesDto == null) {
+			List<FabricanteDto>fabricanteDto = this.fabricanteService.findFabricantes();
+			if(fabricanteDto == null) {
 				return ResponseEntity.badRequest().body(response);
 			}
-			response.setData(clientesDto);
+			response.setData(fabricanteDto);
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
@@ -99,20 +99,20 @@ public class ClienteController {
 		
 	
 	@PostMapping
-	public @ResponseBody ResponseEntity<Response<ClienteDto>> saveCliente(@RequestBody ClienteDto clienteDto) {
+	public @ResponseBody ResponseEntity<Response<FabricanteDto>> saveFabricante(@RequestBody FabricanteDto fabricanteDto) {
 		
-		Response<ClienteDto>response = new Response<ClienteDto>();
+		Response<FabricanteDto>response = new Response<FabricanteDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
-			if(clienteDto == null) {
+			if(fabricanteDto == null) {
 				throw new Exception("Campos em branco");
 			}
-			clienteDto = this.clienteService.save(clienteDto);
-			if(clienteDto == null) {
+			fabricanteDto = this.fabricanteService.save(fabricanteDto);
+			if(fabricanteDto == null) {
 				return ResponseEntity.badRequest().body(response);
 			}
-		response.setData(clienteDto);
+		response.setData(fabricanteDto);
 		}
 		catch (Exception e) {
 			erros.add(e.getMessage());
@@ -123,16 +123,16 @@ public class ClienteController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public @ResponseBody ResponseEntity<Response<ClienteDto>> deleteCliente(@PathVariable Integer id) {
+	public @ResponseBody ResponseEntity<Response<FabricanteDto>> deleteFabricante(@PathVariable Integer id) {
 		List<String>erros = new ArrayList<String>();
-		Response<ClienteDto> response = new Response<ClienteDto>();
+		Response<FabricanteDto> response = new Response<FabricanteDto>();
 		
 		try {
 			if(id == null) {
 				throw new Exception("Campos em branco");
 			}
 	
-			this.clienteService.delete(id);
+			this.fabricanteService.delete(id);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);

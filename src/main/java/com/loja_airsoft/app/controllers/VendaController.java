@@ -17,114 +17,123 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loja_airsoft.app.dtos.TelefoneDto;
+import com.loja_airsoft.app.dtos.VendaDto;
 import com.loja_airsoft.app.response.Response;
-import com.loja_airsoft.app.services.TelefoneService;
+import com.loja_airsoft.app.services.VendaService;
 
 @RestController
-@RequestMapping(path = {"/loja_airsoft/telefone"})
-public class TelefoneController {
+@RequestMapping(path = {"/loja_airsoft/venda"})
+public class VendaController {
 
 	@Autowired
-	TelefoneService telefoneService;
+	VendaService vendaService;
+	
 	
 	@GetMapping(path = {"/{id}"})
-	public @ResponseBody ResponseEntity<Response<TelefoneDto>> findById(@PathVariable int id){
+	public @ResponseBody ResponseEntity<Response<VendaDto>> findById(@PathVariable Integer id){
 		
-		Response<TelefoneDto>response = new Response<TelefoneDto>();
-		TelefoneDto telefoneDto = new TelefoneDto();
 		List<String>erros = new ArrayList<String>();
+		Response<VendaDto>response = new Response<VendaDto>();
+		VendaDto vendaDto;
 		
 		try {
-			telefoneDto= this.telefoneService.findById(id);
 			
-			if(telefoneDto.equals(null)) {
-				throw new Exception("Erro ao buscar telefone. ");
+			if(id == null) {
+				throw new Exception("Campos em branco");
 			}
-			response.setData(telefoneDto);
+			
+			vendaDto= this.vendaService.findById(id);
+			
+			if(vendaDto.equals(null)) {
+				throw new Exception("Venda não encontrado. ");
+			}
+			response.setData(vendaDto);
+			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		return ResponseEntity.ok(response);
 		
 	}
 	
 	@PutMapping
-	public @ResponseBody ResponseEntity<Response<TelefoneDto>> update(@RequestBody TelefoneDto telefoneDto){
+	public @ResponseBody ResponseEntity<Response<VendaDto>> update(@RequestBody VendaDto vendaDto){
 		
-		Response<TelefoneDto>response = new Response<TelefoneDto>();
 		List<String>erros = new ArrayList<String>();
+		Response<VendaDto>response = new Response<VendaDto>();
 		
 		try {
-			telefoneDto = this.telefoneService.save(telefoneDto);
-			if(telefoneDto.equals(null)) {
-				throw new Exception("Erro ao salvar telefone. ");
+			vendaDto = this.vendaService.save(vendaDto);
+			if(vendaDto.equals(null)) {
+				return ResponseEntity.badRequest().body(response);
 			}
-		response.setData(telefoneDto);
+		response.setData(vendaDto);
+		return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		return ResponseEntity.ok(response);
+
 	}
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<TelefoneDto>>> findTelefones(HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<Response<List<VendaDto>>> findVendas(HttpServletRequest request) {
 		
-		Response<List<TelefoneDto>> response = new Response<List<TelefoneDto>>();
+		Response<List<VendaDto>> response = new Response<List<VendaDto>>();
 		List<String>erros = new ArrayList<String>();
 		
-		try {
-			List<TelefoneDto>telefonesDto = this.telefoneService.findTelefones();
-			if(telefonesDto.equals(null)) {
-				throw new Exception("Nenhum telefone foi encontrado. ");
+		try{
+			List<VendaDto>vendasDto = this.vendaService.findVendas();
+			
+			if(vendasDto.equals(null)) {
+				throw new Exception("Venda não encontrado");
 			}
-			response.setData(telefonesDto);
+			response.setData(vendasDto);
+			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-		return ResponseEntity.ok(response);
 		
 	}
 	
 	@PostMapping
-	public @ResponseBody ResponseEntity<Response<TelefoneDto>> saveTelefone(@RequestBody TelefoneDto telefoneDto) {
+	public @ResponseBody ResponseEntity<Response<VendaDto>> saveVenda(@RequestBody VendaDto vendaDto) {
 		
-		Response<TelefoneDto> response = new Response<TelefoneDto>();
+		Response<VendaDto> response = new Response<VendaDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
-			telefoneDto = this.telefoneService.save(telefoneDto);
-			
-			if(telefoneDto == null) {
-				return ResponseEntity.badRequest().body(response);
+
+			if(vendaDto == null) {
+				throw new Exception("Campos vazios. ");
 			}
-			response.setData(telefoneDto);
+			vendaDto = this.vendaService.save(vendaDto);
+			response.setData(vendaDto);
+			return ResponseEntity.ok(response);
+			
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
 			return ResponseEntity.badRequest().body(response);
 		}
-			
-		return ResponseEntity.ok(response);
+		
 	}
 	
 	@DeleteMapping("/{id}")
-	public @ResponseBody ResponseEntity<Response<TelefoneDto>> deleteTelefone(@PathVariable Integer id) {
+	public @ResponseBody ResponseEntity<Response<VendaDto>> deleteVenda(@PathVariable Integer id) {
 		
-		Response<TelefoneDto> response = new Response<TelefoneDto>();
+		Response<VendaDto> response = new Response<VendaDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
 			if(id == null) {
-				throw new Exception("Campos em branco");
+				throw new Exception("Campos em branco. ");
 			}
-			this.telefoneService.delete(id);	
+			this.vendaService.delete(id);
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
@@ -134,3 +143,4 @@ public class TelefoneController {
 	}
 	
 }
+
