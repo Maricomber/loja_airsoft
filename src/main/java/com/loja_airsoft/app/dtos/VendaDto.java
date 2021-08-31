@@ -3,6 +3,7 @@ package com.loja_airsoft.app.dtos;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Venda;
 
 import lombok.Getter;
@@ -16,8 +17,13 @@ public class VendaDto {
 	public Date dtVenda;
 	private Float vlDesconto;
 	private Float vlTotal;
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	public UsuarioDto cliente;
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	public UsuarioDto vendedor;
+	
 	public List<ProdutoDto> produtoDto;
 	
 	public VendaDto() {
@@ -29,7 +35,6 @@ public class VendaDto {
 		this.dtVenda = venda.getDtVenda();
 		this.vlDesconto = venda.getVlDesconto();
 		this.vlTotal = venda.getVlTotal();
-		venda.getCliente().setVenda(null);
 		this.cliente = new UsuarioDto(venda.getCliente());
 		this.vendedor = new UsuarioDto(venda.getVendedor());
 		venda.getProduto().forEach(produto-> this.produtoDto.add(

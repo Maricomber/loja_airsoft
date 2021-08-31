@@ -24,7 +24,10 @@ public class UsuarioDto {
 	private List<PerfilDto> perfil = new ArrayList<PerfilDto>();
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private List<VendaDto> venda = new ArrayList<VendaDto>();;
+	private List<VendaDto> vendedor = new ArrayList<VendaDto>();
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private List<VendaDto> cliente = new ArrayList<VendaDto>();
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private CargoDto cargo;
@@ -43,7 +46,8 @@ public class UsuarioDto {
 		}
 		usuario.getDocumento().forEach(documento -> this.documento.add(new DocumentoDto(documento)));
 		usuario.getTelefone().forEach(telefone -> this.telefone.add(new TelefoneDto(telefone)));
-		usuario.getVenda().forEach(venda -> this.venda.add(new VendaDto(venda)));
+//		usuario.getCliente().forEach(venda -> this.cliente.add(new VendaDto(venda)));
+//		usuario.getVendedor().forEach(venda -> this.vendedor.add(new VendaDto(venda)));
 		usuario.getPerfil().forEach(perfil -> this.perfil.add(new PerfilDto(perfil)));
 	}
 

@@ -64,8 +64,13 @@ public class Venda {
 		this.dtVenda = venda.getDtVenda();
 		this.vlDesconto = venda.getVlDesconto();
 		this.vlTotal = venda.getVlTotal();
-		this.cliente = new Usuario(venda.getCliente());
-		this.vendedor = new Usuario(venda.getVendedor());
+		
+		if(!(venda.getCliente()== null)) {
+			this.cliente = new Usuario(venda.getCliente());
+		}
+		if(!(venda.getVendedor() == null)) {
+			this.vendedor = new Usuario(venda.getVendedor());
+		}
 		venda.getProdutoDto().forEach(produto -> this.produto.add(new Produto(produto)));
 		
 	}

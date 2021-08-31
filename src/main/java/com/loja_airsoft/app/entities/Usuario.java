@@ -53,8 +53,11 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Telefone> telefone = new ArrayList<Telefone>();
 	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Venda> cliente = new ArrayList<Venda>();
+	
 	@OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL)
-	private List<Venda> venda = new ArrayList<Venda>();
+	private List<Venda> vendedor = new ArrayList<Venda>();
 	
 	@OneToMany(mappedBy = "fabProduto", cascade = CascadeType.ALL)
 	private List<Produto> produto = new ArrayList<Produto>();
@@ -85,9 +88,11 @@ public class Usuario {
 		if(!(usuarioDto.getTelefone()== null)) {
 			usuarioDto.getTelefone().forEach(telefone -> this.telefone.add(new Telefone(telefone)));
 		}
-		if(!(usuarioDto.getVenda()== null)) {
-			usuarioDto.getVenda().forEach(venda -> this.venda.add(new Venda(venda)));
-			
+		if(!(usuarioDto.getVendedor()== null)) {
+			usuarioDto.getVendedor().forEach(venda -> this.vendedor.add(new Venda(venda)));	
+		}
+		if(!(usuarioDto.getCliente()== null)) {
+			usuarioDto.getCliente().forEach(venda -> this.cliente.add(new Venda(venda)));	
 		}
 		if(!(usuarioDto.getPerfil()== null)) {
 			usuarioDto.getPerfil().forEach(perfil -> this.perfil.add(new Perfil(perfil)));
