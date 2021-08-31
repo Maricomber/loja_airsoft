@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.loja_airsoft.app.dtos.VendaDto;
@@ -49,11 +51,8 @@ public class Venda {
     @JoinColumn(name="usu_id_vendedor")
 	private Usuario vendedor;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "venda_produto",joinColumns = 
-		{@JoinColumn(name = "ven_id_venda")}, inverseJoinColumns = 
-		{@JoinColumn(name = "prd_id_produto")})
-	private List<Produto> produto;
+	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
+	private List<Produto> produto = new ArrayList<Produto>();
 	
 	public Venda() {
 		

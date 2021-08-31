@@ -31,11 +31,14 @@ public class ProdutoDto {
 		this.idProduto = produto.getIdProduto();
 		this.dsProduto = produto.getDsProduto();
 		this.vlPreco = produto.getVlPreco();
-		this.fabricante = new UsuarioDto(produto.getFabProduto());
-		this.produtoTipoDto = new ProdutoTipoDto(produto.getProdutoTipo());
-		if(!(produto.getVenda() == null)) {
-			this.vendaDto = new VendaDto(produto.getVenda());
+		
+		if(!(produto.getFabProduto()==null)) {
+			this.fabricante = new UsuarioDto(produto.getFabProduto());
 		}
+		this.produtoTipoDto = new ProdutoTipoDto(produto.getProdutoTipo());
+//		if(!(produto.getVenda() == null)) {
+//			this.vendaDto = new VendaDto(produto.getVenda());
+//		}
 	}
 	
 }

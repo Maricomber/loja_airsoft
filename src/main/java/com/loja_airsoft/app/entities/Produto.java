@@ -33,7 +33,7 @@ public class Produto {
 	private float vlPreco;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)  
-    @JoinColumn(name="usu_id_usuario", nullable = true)
+    @JoinColumn(name="prd_fabricante", nullable = true)
 	private Usuario fabProduto;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)

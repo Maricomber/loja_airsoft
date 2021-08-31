@@ -1,5 +1,6 @@
 package com.loja_airsoft.app.dtos;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class VendaDto {
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	public UsuarioDto vendedor;
 	
-	public List<ProdutoDto> produtoDto;
+	public List<ProdutoDto> produtoDto = new ArrayList<ProdutoDto>();
 	
 	public VendaDto() {
 		
