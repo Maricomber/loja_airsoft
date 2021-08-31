@@ -1,17 +1,12 @@
 package com.loja_airsoft.app.entities;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -37,18 +32,15 @@ public class Produto {
 	@Column(name = "prd_preco", nullable = false)
 	private float vlPreco;
 	
-	@ManyToOne(cascade = CascadeType.ALL)  
+	@ManyToOne(cascade = CascadeType.MERGE)  
     @JoinColumn(name="usu_id_usuario", nullable = true)
 	private Usuario fabProduto;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "venda_produto",joinColumns = 
-		{@JoinColumn(name = "prd_id_produto")}, inverseJoinColumns = 
-		{@JoinColumn(name = "ven_id_venda")})
-	private List<Venda> venda;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	private Venda venda;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name="pdt_id_produto_tipo")
+	@ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="pdt_id_produto_tipo")
 	private ProdutoTipo produtoTipo;
 	
 	public Produto() {
@@ -60,6 +52,11 @@ public class Produto {
 		this.dsProduto = produtoDto.getDsProduto();
 		this.vlPreco = produtoDto.getVlPreco();
 		this.fabProduto = new Usuario(produtoDto.getFabricante());
-		produtoDto.getVendaDto().forEach(venda -> this.venda.add(new Venda(venda)));
+		this.produtoTipo = new ProdutoTipo(produtoDto.getProdutoTipoDto());
+		
+		if(!(produtoDto.getVendaDto() == null)) {
+			this.venda = new Venda(produtoDto.getVendaDto());
+		}
 	}
+	
 }

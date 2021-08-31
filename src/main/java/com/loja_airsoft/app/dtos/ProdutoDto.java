@@ -1,9 +1,5 @@
 package com.loja_airsoft.app.dtos;
 
-
-
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Produto;
 
@@ -25,7 +21,7 @@ public class ProdutoDto {
 	private ProdutoTipoDto produtoTipoDto;
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private List<VendaDto> vendaDto;
+	private VendaDto vendaDto;
 	
 	public ProdutoDto() {
 		
@@ -37,7 +33,9 @@ public class ProdutoDto {
 		this.vlPreco = produto.getVlPreco();
 		this.fabricante = new UsuarioDto(produto.getFabProduto());
 		this.produtoTipoDto = new ProdutoTipoDto(produto.getProdutoTipo());
-		produto.getVenda().forEach(venda -> this.vendaDto.add(new VendaDto(venda)));
+		if(!(produto.getVenda() == null)) {
+			this.vendaDto = new VendaDto(produto.getVenda());
+		}
 	}
 	
 }

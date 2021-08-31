@@ -78,10 +78,19 @@ public class Usuario {
 		if(!(usuarioDto.getCargoDto() == null)) {
 			this.cargo = new Cargo(usuarioDto.getCargoDto());
 		}
-		usuarioDto.getDocumento().forEach(documento -> this.documento.add(new Documento(documento)));
-		//telefone
-		//venda
-		//produto
-		usuarioDto.getPerfil().forEach(perfil -> this.perfil.add(new Perfil(perfil)));
+		
+		if(!(usuarioDto.getDocumento()== null)) {
+			usuarioDto.getDocumento().forEach(documento -> this.documento.add(new Documento(documento)));
+		}
+		if(!(usuarioDto.getTelefone()== null)) {
+			usuarioDto.getTelefone().forEach(telefone -> this.telefone.add(new Telefone(telefone)));
+		}
+		if(!(usuarioDto.getVenda()== null)) {
+			usuarioDto.getVenda().forEach(venda -> this.venda.add(new Venda(venda)));
+			
+		}
+		if(!(usuarioDto.getPerfil()== null)) {
+			usuarioDto.getPerfil().forEach(perfil -> this.perfil.add(new Perfil(perfil)));
+		}
 	}
 }
