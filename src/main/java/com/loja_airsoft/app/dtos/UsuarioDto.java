@@ -27,7 +27,7 @@ public class UsuarioDto {
 	private List<VendaDto> venda = new ArrayList<VendaDto>();;
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private CargoDto cargoDto;
+	private CargoDto cargo;
 	
 	public UsuarioDto() {
 		
@@ -38,6 +38,9 @@ public class UsuarioDto {
 		this.dtNascCliente = usuario.getDtNascCliente();
 		this.nmUsuario = usuario.getNmUsuario();
 		this.endereco = new EnderecoDto(usuario.getEndereco());
+		if(!(usuario.getCargo() == null)) {
+			this.cargo = new CargoDto(usuario.getCargo());
+		}
 		usuario.getDocumento().forEach(documento -> this.documento.add(new DocumentoDto(documento)));
 		usuario.getTelefone().forEach(telefone -> this.telefone.add(new TelefoneDto(telefone)));
 		usuario.getVenda().forEach(venda -> this.venda.add(new VendaDto(venda)));

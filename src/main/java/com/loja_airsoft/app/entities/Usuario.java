@@ -75,8 +75,8 @@ public class Usuario {
 		this.dtNascCliente = usuarioDto.getDtNascCliente();
 		this.nmUsuario = usuarioDto.getNmUsuario();
 		this.endereco = new Endereco(usuarioDto.getEndereco());
-		if(!(usuarioDto.getCargoDto() == null)) {
-			this.cargo = new Cargo(usuarioDto.getCargoDto());
+		if(!(usuarioDto.getCargo() == null)) {
+			this.cargo = new Cargo(usuarioDto.getCargo());
 		}
 		
 		if(!(usuarioDto.getDocumento()== null)) {
