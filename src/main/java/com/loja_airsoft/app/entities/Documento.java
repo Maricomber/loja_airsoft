@@ -44,7 +44,9 @@ public class Documento {
 		
 		this.idDocumento = documentoDto.getIdDocumento();
 		this.dsDocumento = documentoDto.getDsDocumento();
-		this.usuario = new Usuario(documentoDto.getUsuario());
+		if(!(usuario == null)) {
+			this.usuario = new Usuario(documentoDto.getUsuario());
+		}
 		this.tipoDocumento = new TipoDocumento(documentoDto.getTipoDocumento());
 		
 	}
