@@ -43,11 +43,6 @@ public class LojaAirsoftController {
 		return "funcionarios";
 	}
 	
-	@RequestMapping("/cargos")
-	public String cargos() {
-		return "cargos";
-	}
-	
 	@GetMapping("/images/{urlImagemLocal}")
     @ResponseBody
     public byte[] carregaImagensDinamicas(@PathVariable("urlImagemLocal") String nomeImagem) {
