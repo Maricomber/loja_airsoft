@@ -28,8 +28,8 @@
 				<li class="nav-item">
 					<a class="nav-link" href="vendas">Vendas</a>
 				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="#">Produtos <span class="sr-only">(Página atual)</span></a>
+				<li class="nav-item">
+					<a class="nav-link" href="produtos">Produtos</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="clientes">Clientes</a>
@@ -43,35 +43,31 @@
 				<li class="nav-item">
 					<a class="nav-link" href="cargos">Cargos</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="perfis">Perfis</a>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Perfis <span class="sr-only">(Página atual)</span></a>
 				</li>
 			</ul>
 		</div>
 	</nav>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="px-2 mt-3 mb-3" style="text-align: right;">
-			<form>
-				<button type="submit" class="btn btn-primary btn-dark">Cadastrar Produto</button>
+			<form class="form-inline my-2 my-lg-0">
+				<button type="button" class="btn btn-primary btn-dark">Cadastrar Perfis</button>
 			</form>
 		</div>
 		<table class="table">
 		  <thead>
 			<tr>
 			  <th scope="col">#</th>
-			  <th scope="col">Descrição</th>
-			  <th scope="col">Valor</th>
-			  <th scope="col">Fabricante</th>
+			  <th scope="col">Nome</th>
 			  <th scope="col"></th>
 			</tr>
 		  </thead>
 		  <tbody>
-			<tr>
-			  <th scope="row">1</th>
-			  <td>Arma xyz</td>
-			  <td>209,00</td>
-			  <td>Fab 123</td>
-			  <td><button type="button" class="btn btn-primary btn-dark">Editar</button></td>
+			<tr th:each="p : ${perfis}">
+			  <td th:text="${p.idPerfil}"></td>
+			  <td th:text="${p.dsPerfil}"></td>
+			  <td  style="text-align: right;"><button type="button" class="btn btn-primary btn-dark">Editar</button></td>
 			</tr>
 		  </tbody>
 		</table>

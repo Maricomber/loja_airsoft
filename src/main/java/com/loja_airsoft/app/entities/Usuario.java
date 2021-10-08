@@ -1,5 +1,8 @@
 package com.loja_airsoft.app.entities;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,28 +77,37 @@ public class Usuario {
 	}
 	
 	public Usuario(UsuarioDto usuarioDto) {
-		this.idUsuario = usuarioDto.getIdUsuario();
-		this.dtNascCliente = usuarioDto.getDtNascCliente();
-		this.nmUsuario = usuarioDto.getNmUsuario();
-		this.endereco = new Endereco(usuarioDto.getEndereco());
-		if(!(usuarioDto.getCargo() == null)) {
-			this.cargo = new Cargo(usuarioDto.getCargo());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
+		
+		try {
+			this.idUsuario = usuarioDto.getIdUsuario();
+			this.dtNascCliente = dateFormat.parse(usuarioDto.getDtNascCliente());
+			this.nmUsuario = usuarioDto.getNmUsuario();
+			this.endereco = new Endereco(usuarioDto.getEndereco());
+			if(!(usuarioDto.getCargo() == null)) {
+				this.cargo = new Cargo(usuarioDto.getCargo());
+			}
+			
+			if(!(usuarioDto.getDocumento()== null)) {
+				usuarioDto.getDocumento().forEach(documento -> this.documento.add(new Documento(documento)));
+			}
+			if(!(usuarioDto.getTelefone()== null)) {
+				usuarioDto.getTelefone().forEach(telefone -> this.telefone.add(new Telefone(telefone)));
+			}
+			if(!(usuarioDto.getVendedor()== null)) {
+				usuarioDto.getVendedor().forEach(venda -> this.vendedor.add(new Venda(venda)));	
+			}
+			if(!(usuarioDto.getCliente()== null)) {
+				usuarioDto.getCliente().forEach(venda -> this.cliente.add(new Venda(venda)));	
+			}
+			if(!(usuarioDto.getPerfil()== null)) {
+				usuarioDto.getPerfil().forEach(perfil -> this.perfil.add(new Perfil(perfil)));
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		if(!(usuarioDto.getDocumento()== null)) {
-			usuarioDto.getDocumento().forEach(documento -> this.documento.add(new Documento(documento)));
-		}
-		if(!(usuarioDto.getTelefone()== null)) {
-			usuarioDto.getTelefone().forEach(telefone -> this.telefone.add(new Telefone(telefone)));
-		}
-		if(!(usuarioDto.getVendedor()== null)) {
-			usuarioDto.getVendedor().forEach(venda -> this.vendedor.add(new Venda(venda)));	
-		}
-		if(!(usuarioDto.getCliente()== null)) {
-			usuarioDto.getCliente().forEach(venda -> this.cliente.add(new Venda(venda)));	
-		}
-		if(!(usuarioDto.getPerfil()== null)) {
-			usuarioDto.getPerfil().forEach(perfil -> this.perfil.add(new Perfil(perfil)));
-		}
 	}
 }

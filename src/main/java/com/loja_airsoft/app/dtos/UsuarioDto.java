@@ -1,5 +1,7 @@
 package com.loja_airsoft.app.dtos;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,7 @@ import lombok.Setter;
 public class UsuarioDto {
 	
 	private int idUsuario;
-	private Date dtNascCliente;
+	private String dtNascCliente;
 	private String nmUsuario;
 	private EnderecoDto endereco;
 	private List<DocumentoDto> documento = new ArrayList<DocumentoDto>();
@@ -37,8 +39,10 @@ public class UsuarioDto {
 	}
 	
 	public UsuarioDto(Usuario usuario) {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		
 		this.idUsuario = usuario.getIdUsuario();
-		this.dtNascCliente = usuario.getDtNascCliente();
+		this.dtNascCliente = dateFormat.format(usuario.getDtNascCliente());
 		this.nmUsuario = usuario.getNmUsuario();
 		this.endereco = new EnderecoDto(usuario.getEndereco());
 		if(!(usuario.getCargo() == null)) {
