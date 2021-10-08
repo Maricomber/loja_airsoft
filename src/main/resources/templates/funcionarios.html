@@ -62,15 +62,17 @@
 			  <th scope="col">Nome</th>
 			  <th scope="col">Data de Nasc.</th>
 			  <th scope="col">Endereço</th>
+			  <th scope="col">Cargo</th>
 			  <th scope="col"></th>
 			</tr>
 		  </thead>
 		  <tbody>
-			<tr>
-			  <th scope="row">1</th>
-			  <td>Mariana Comber de Oliveira</td>
-			  <td>08/09/1996</td>
-			  <td>Rua Vale do Cariri, 306</td>
+			<tr th:each="f : ${funcionarios}">
+			  <td th:text="${f.idUsuario}"></td>
+			  <td th:text="${f.nmUsuario}"></td>
+			  <td th:text="${f.dtNascCliente}"></td>
+			  <td th:text="${f.endereco.dsRua} +', ' + ${f.endereco.endNumero} +', ' + ${f.endereco.endBairro} "></td>
+			  <td th:text="${f.cargo.dsCargo}"></td>
 			  <td><button type="button" class="btn btn-primary btn-dark">Abrir</button></td>
 			</tr>
 		  </tbody>

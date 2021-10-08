@@ -60,7 +60,6 @@
 			<tr>
 			  <th scope="col">#</th>
 			  <th scope="col">Nome</th>
-			  <th scope="col">Data de Nasc.</th>
 			  <th scope="col">Endereço</th>
 			  <th scope="col"></th>
 			</tr>
@@ -69,7 +68,6 @@
 			<tr th:each="f : ${fabricantes}">
 			  <td th:text="${f.idUsuario}"></td>
 			  <td th:text="${f.nmUsuario}"></td>
-			  <td th:text="${f.dtNascCliente}"></td>
 			  <td th:text="${f.endereco.dsRua} +', ' + ${f.endereco.endNumero} +', ' + ${f.endereco.endBairro} "></td>
 			  <td><button type="button" class="btn btn-primary btn-dark">Abrir</button></td>
 			</tr>

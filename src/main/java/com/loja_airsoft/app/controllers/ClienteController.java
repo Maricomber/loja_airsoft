@@ -12,14 +12,14 @@ import com.loja_airsoft.app.dtos.UsuarioDto;
 import com.loja_airsoft.app.services.UsuarioService;
 
 @Controller
-@RequestMapping(path = {"/fabricantes"})
-public class FabricanteController {
+@RequestMapping(path = {"/clientes"})
+public class ClienteController {
 
 	@Autowired
 	UsuarioService usuarioService;
 	
 	@GetMapping
-	public String fabricantes(ModelMap model) {
+	public String clientes(ModelMap model) {
         
 		try {
 			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios();
@@ -27,11 +27,12 @@ public class FabricanteController {
 			if(usuariosDto.equals(null)) {
 				throw new Exception("Usuario não encontrado");
 			}
-			model.addAttribute("fabricantes", usuariosDto);
+			model.addAttribute("clientes", usuariosDto);
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
-		return "fabricantes";
+		return "clientes";
 		
 	}
+	
 }

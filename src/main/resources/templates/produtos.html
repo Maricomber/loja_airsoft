@@ -61,16 +61,18 @@
 			  <th scope="col">#</th>
 			  <th scope="col">Descrição</th>
 			  <th scope="col">Valor</th>
+			  <th scope="col">Tipo</th>
 			  <th scope="col">Fabricante</th>
 			  <th scope="col"></th>
 			</tr>
 		  </thead>
 		  <tbody>
-			<tr>
-			  <th scope="row">1</th>
-			  <td>Arma xyz</td>
-			  <td>209,00</td>
-			  <td>Fab 123</td>
+			<tr th:each="p : ${produtos}">
+			  <td th:text="${p.idProduto}"></td>
+			  <td th:text="${p.dsProduto}"></td>
+			  <td th:text="${p.vlPreco}"></td>
+			  <td th:text="${p.produtoTipoDto.dsProdutoTp}"></td>
+			  <td th:text="${p.fabricante.nmUsuario}"></td>
 			  <td><button type="button" class="btn btn-primary btn-dark">Editar</button></td>
 			</tr>
 		  </tbody>
