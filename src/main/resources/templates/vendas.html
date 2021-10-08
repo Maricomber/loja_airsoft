@@ -61,20 +61,20 @@
 			  <th scope="col">#</th>
 			  <th scope="col">Data</th>
 			  <th scope="col">Valor</th>
-			  <th scope="col">Desconto</th>
+			  
 			  <th scope="col">Cliente</th>
 			  <th scope="col">Funcionário</th>
 			  <th scope="col"></th>
 			</tr>
 		  </thead>
 		  <tbody>
-			<tr>
-			  <th scope="row">1</th>
-			  <td>12/01/2021</td>
-			  <td>432,00</td>
-			  <td>0,00</td>
-			  <td>fulaninho</td>
-			  <td>fulaninho func.</td>
+			<tr th:each="v : ${vendas}">
+			  <td th:text="${v.idVenda}"></td>
+			  <td th:text="${v.dtVenda}"></td>
+			  <td th:text="${v.vlTotal}"></td>
+			 
+			  <td th:text="${v.cliente.nmUsuario}"></td>
+			  <td th:text="${v.vendedor.nmUsuario}"></td>
 			  <td><button type="button" class="btn btn-primary btn-dark">Editar</button></td>
 			</tr>
 		  </tbody>
