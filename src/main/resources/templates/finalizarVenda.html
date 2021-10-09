@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<!-- Meta tags Obrigatórias -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<title>Loja Airsoft</title>
+	</head>
+	<body>
+	<!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script src="https://kit.fontawesome.com/23ef0d9750.js" crossorigin="anonymous"></script>
+		
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">Loja Airsoft</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#textoNavbar" aria-controls="textoNavbar" aria-expanded="false" aria-label="Alterna navegação">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			<div class="collapse navbar-collapse" id="textoNavbar">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="/">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="vendas">Vendas</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Produtos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="clientes">Clientes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="funcionarios">Funcionarios</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="fabricantes">Fabricantes</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="cargos">Cargos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="perfis">Perfis</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<form class="ml-3 mr-3 mt-3">
+		  <div class="form-group">
+			<label for="exampleFormControlInput1">Cliente</label>
+			<div class="row">
+				<div class="col-3">
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-7">
+					<input type="text" class="form-control" id="dsCliente" placeholder="Nome Completo">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-light">...</button>
+				</div>
+			</div>
+			<label for="exampleFormControlInput1" class="mt-3">Vendedor</label>
+			<div class="row">
+				<div class="col-3">
+					<input type="text" class="form-control" id="idFuncionario" placeholder="ID">
+				</div>
+				<div class="col-7">
+					<input type="text" class="form-control" id="idFuncionario" placeholder="Nome Completo">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-light">...</button>
+				</div>
+			</div>
+			</div>
+			<div style="margin-top:3%">
+				<div class="">
+					<label for="exampleFormControlSelect1">Produtos</label>
+					<table class="table">
+					  <thead>
+						<tr>
+						  <th scope="col">#</th>
+						  <th scope="col">Descrição</th>
+						  <th scope="col">Valor</th>
+						  <th scope="col">Qtd</th>
+						  <th scope="col"></th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr th:each="p : ${produtos}">
+							<td th:text="${p.idProduto}"></td>
+							<td th:text="${p.dsProduto}"></td>
+							<td th:text="${p.vlPreco}"></td>
+							<td th:text="${p.qtd}"></td>
+							<td>
+								<button type="button" class="btn btn-light"><i class="fas fa-plus"></i></button>
+								<button type="button" class="btn btn-light"><i class="fas fa-minus"></i></button>
+								<button type="button" class="btn btn-light"><i class="fas fa-trash-alt"></i></button>
+							</td>
+						</tr>
+					  </tbody>
+					</table>
+				</div>
+				
+			</div>
+			<label for="exampleFormControlSelect2">Total</label>
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+				<span class="input-group-text">R$</span>
+			  </div>
+			  <input type="text" class="form-control" aria-label="Quantia">
+			  <div class="input-group-append">
+				<span class="input-group-text">.00</span>
+			  </div>
+			</div>
+			<div class="w-50">
+				<label for="exampleFormControlSelect2">Forma de Pagamento</label>
+				<select class="form-control mb-3" id="exampleFormControlSelect1">
+						<option>Dinheiro</option>
+						<option>Crédito</option>
+						<option>Débito</option>
+						<option>Pix</option>
+				</select>
+			</div>
+			<div style="text-align: center;" class="mb-3 mt-3">
+				<a href="produtosVenda" class="btn btn-secondary btn-lg">Voltar</a>
+				<a href="finalizarVenda" class="btn btn-primary btn-dark btn-lg">Finalizar</a>
+			</div>
+		</form>
+		</div>
+	</body>
+</html>
