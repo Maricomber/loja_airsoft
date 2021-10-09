@@ -50,24 +50,33 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div class="px-2 mt-3 mb-3" style="text-align: right;">
-			<form>
-				<button type="button" class="btn btn-primary btn-dark">Cadastrar Cargo</button>
-			</form>
+		<div class="form-group">
+			<div class="row mt-2">
+				<div class="col-sm-2">
+					<label for="exampleFormControlInput1">ID</label>
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-sm-10">
+					<label for="exampleFormControlInput1">Descrição</label>
+					<input type="text" class="form-control" id="idCliente" placeholder="Nome">
+				</div>
+			</div>
+			<div class="mt-3" style="text-align: right;">
+				<button type="submit" class="btn btn-primary btn-dark">Cadastrar Cargo</button>
+				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
+			</div>
 		</div>
 		<table class="table">
 		  <thead>
 			<tr>
 			  <th scope="col">#</th>
 			  <th scope="col">Nome</th>
-			  <th scope="col"></th>
 			</tr>
 		  </thead>
 		  <tbody>
 			<tr th:each="c : ${cargos}">
 			  <td th:text="${c.idCargo}"></td>
 			  <td th:text="${c.dsCargo}"></td>
-			  <td  style="text-align: right;"><button type="button" class="btn btn-primary btn-dark">Editar</button></td>
 			</tr>
 		  </tbody>
 		</table>

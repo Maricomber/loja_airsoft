@@ -50,33 +50,70 @@
 		</div>
 	</nav>
 	<div class="container-fluid">
-		<div class="px-2 mt-3 mb-3" style="text-align: right;">
-			<form>
-				<button type="submit" class="btn btn-primary btn-dark">Cadastrar Funcionário</button>
-			</form>
+		<div class="form-group">
+				<div class="row mt-2">
+					<div class="col-sm-2">
+						<label for="exampleFormControlInput1">ID</label>
+						<input type="text" class="form-control" id="idCliente" placeholder="ID">
+					</div>
+					<div class="col-sm-7">
+						<label for="exampleFormControlInput1">Nome</label>
+						<input type="text" class="form-control" id="idCliente" placeholder="Nome">
+					</div>
+					<div class="col-sm-3">
+						<label for="exampleFormControlInput1">Data de Nasc</label>
+						<input type="Date" class="form-control" id="idCliente" placeholder="Data Nasc.">
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-sm-2">
+						<label for="exampleFormControlInput1">Tipo Doc.</label>
+						<select class="form-control" id="exampleFormControlSelect1">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+					</div>
+					<div class="col-sm-5">
+						<label for="exampleFormControlInput1">Documento</label>
+						<input type="text" class="form-control" id="idCliente" placeholder="Documento">
+					</div>
+					<div class="col-sm-4">
+						<label for="exampleFormControlInput1">Cargo</label>
+						<select class="form-control" id="exampleFormControlSelect1">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="px-2 mt-3 mb-3" style="text-align: right;">
+				<a href="#" class="btn btn-primary btn-dark">Cadastrar Funcionário</a>
+				<a href="#" class="btn btn-primary btn-dark">Pesquisar</a>
+			</div>
+			<table class="table">
+			  <thead>
+				<tr>
+				  <th scope="col">#</th>
+				  <th scope="col">Nome</th>
+				  <th scope="col">Data de Nasc.</th>
+				  <th scope="col">Cargo</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr th:each="f : ${funcionarios}">
+				  <td th:text="${f.idUsuario}"></td>
+				  <td th:text="${f.nmUsuario}"></td>
+				  <td th:text="${f.dtNascCliente}"></td>
+				  <td th:text="${f.cargo.dsCargo}"></td>
+				</tr>
+			  </tbody>
+			</table>
 		</div>
-		<table class="table">
-		  <thead>
-			<tr>
-			  <th scope="col">#</th>
-			  <th scope="col">Nome</th>
-			  <th scope="col">Data de Nasc.</th>
-			  <th scope="col">Endereço</th>
-			  <th scope="col">Cargo</th>
-			  <th scope="col"></th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<tr th:each="f : ${funcionarios}">
-			  <td th:text="${f.idUsuario}"></td>
-			  <td th:text="${f.nmUsuario}"></td>
-			  <td th:text="${f.dtNascCliente}"></td>
-			  <td th:text="${f.endereco.dsRua} +', ' + ${f.endereco.endNumero} +', ' + ${f.endereco.endBairro} "></td>
-			  <td th:text="${f.cargo.dsCargo}"></td>
-			  <td><button type="button" class="btn btn-primary btn-dark">Abrir</button></td>
-			</tr>
-		  </tbody>
-		</table>
-	</div>
 	</body>
 </html>

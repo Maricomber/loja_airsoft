@@ -50,26 +50,41 @@
 		</div>
 	</nav>
 	<div class="container-fluid">
-		<div class="px-2 mt-3 mb-3" style="text-align: right;">
-			<form>
-				<button type="submit" class="btn btn-primary btn-dark">Cadastrar Fabricante</button>
-			</form>
+		<div class="form-group">
+			<div class="row mt-2">
+				<div class="col-sm-2">
+					<label for="exampleFormControlInput1">ID</label>
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-sm-6">
+					<label for="exampleFormControlInput1">Nome</label>
+					<input type="text" class="form-control" id="idCliente" placeholder="Nome">
+				</div>
+				<div class="col-sm-4">
+					<label for="exampleFormControlInput1">CNPJ</label>
+					<input type="text" class="form-control" id="idCliente" placeholder="Documento">
+				</div>
+			</div>
+			<div class="mt-3" style="text-align: right;">
+				<button type="submit" class="btn btn-primary btn-dark">Cadastrar Funcionário</button>
+				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
+			</div>
 		</div>
 		<table class="table">
 		  <thead>
 			<tr>
 			  <th scope="col">#</th>
 			  <th scope="col">Nome</th>
+			  <th scope="col">CNPJ</th>
 			  <th scope="col">Endereço</th>
-			  <th scope="col"></th>
 			</tr>
 		  </thead>
 		  <tbody>
 			<tr th:each="f : ${fabricantes}">
 			  <td th:text="${f.idUsuario}"></td>
 			  <td th:text="${f.nmUsuario}"></td>
+			  <td th:text="${f.nmUsuario}"></td>
 			  <td th:text="${f.endereco.dsRua} +', ' + ${f.endereco.endNumero} +', ' + ${f.endereco.endBairro} "></td>
-			  <td><button type="button" class="btn btn-primary btn-dark">Abrir</button></td>
 			</tr>
 		  </tbody>
 		</table>
