@@ -1,5 +1,7 @@
 package com.loja_airsoft.app.dtos;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,9 +17,10 @@ import lombok.Setter;
 public class VendaDto {
 
 	public Integer idVenda;
-	public Date dtVenda;
+	public String dtVenda;
 	private Float vlDesconto;
 	private Float vlTotal;
+	private int qtd;
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	public UsuarioDto cliente;
@@ -32,14 +35,16 @@ public class VendaDto {
 	}
 	
 	public VendaDto(Venda venda) {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		this.idVenda = venda.getIdVenda();
-		this.dtVenda = venda.getDtVenda();
+		this.dtVenda = dateFormat.format(venda.getDtVenda());
 		this.vlDesconto = venda.getVlDesconto();
 		this.vlTotal = venda.getVlTotal();
 		this.cliente = new UsuarioDto(venda.getCliente());
 		this.vendedor = new UsuarioDto(venda.getVendedor());
 		venda.getProduto().forEach(produto-> this.produtoDto.add(
 				new ProdutoDto(produto)));
+		this.qtd = this.produtoDto.size();
 	}
 	
 }

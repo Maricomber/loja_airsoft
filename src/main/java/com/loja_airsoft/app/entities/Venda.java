@@ -1,5 +1,8 @@
 package com.loja_airsoft.app.entities;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,18 +62,24 @@ public class Venda {
 	}
 	
 	public Venda(VendaDto venda) {
-		this.idVenda = venda.getIdVenda();
-		this.dtVenda = venda.getDtVenda();
-		this.vlDesconto = venda.getVlDesconto();
-		this.vlTotal = venda.getVlTotal();
-		
-		if(!(venda.getCliente()== null)) {
-			this.cliente = new Usuario(venda.getCliente());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			this.dtVenda = dateFormat.parse(venda.getDtVenda());
+			this.idVenda = venda.getIdVenda();
+			this.vlDesconto = venda.getVlDesconto();
+			this.vlTotal = venda.getVlTotal();
+			
+			if(!(venda.getCliente()== null)) {
+				this.cliente = new Usuario(venda.getCliente());
+			}
+			if(!(venda.getVendedor() == null)) {
+				this.vendedor = new Usuario(venda.getVendedor());
+			}
+			venda.getProdutoDto().forEach(produto -> this.produto.add(new Produto(produto)));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		if(!(venda.getVendedor() == null)) {
-			this.vendedor = new Usuario(venda.getVendedor());
-		}
-		venda.getProdutoDto().forEach(produto -> this.produto.add(new Produto(produto)));
 		
 	}
 }

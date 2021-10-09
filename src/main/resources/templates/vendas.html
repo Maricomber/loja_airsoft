@@ -50,8 +50,57 @@
 		</div>
 	</nav>
 	<div class="container-fluid">
-		<div class="px-2 mt-3 mb-3" style="text-align: right;">
-			<a href="produtosVenda" class="btn btn-primary btn-dark">Cadastrar Venda</a>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-3">
+					<label for="exampleFormControlInput1" class="mt-2">ID</label>
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-3">
+					<label for="exampleFormControlInput1" class="mt-2">Data</label>
+					<input type="text" class="form-control" id="dtVenda" placeholder="Data">
+				</div>
+				<div class="col-3">
+					<label for="exampleFormControlInput1" class="mt-2">Itens</label>
+					<input type="text" class="form-control" id="dtVenda" placeholder="Qtd">
+				</div>
+				<div class="col-3">
+					<label for="exampleFormControlInput1" class="mt-2">Valor</label>
+					<input type="text" class="form-control" id="dtVenda" placeholder="0.00">
+				</div>
+			</div>
+			<label for="exampleFormControlInput1">Funcionario</label>
+			<div class="row">
+				<div class="col-3">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-7">
+					<input type="text" class="form-control" id="dsCliente" placeholder="Nome">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-light">...</button>
+				</div>
+			</div>
+			<label for="exampleFormControlInput1" class="mt-1">Cliente</label>
+			<div class="row">
+				<div class="col-3">
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-7">
+					<input type="text" class="form-control" id="dsCliente" placeholder="Nome">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-light">...</button>
+				</div>
+			</div>
+			<div class="px-2 mt-3 mb-3" style="text-align: right;">
+				<button type="submit" class="btn btn-primary btn-dark">Cadastrar Venda</button>
+				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
+			</div>
 		</div>
 		<table class="table">
 		  <thead>
@@ -62,6 +111,7 @@
 			  
 			  <th scope="col">Cliente</th>
 			  <th scope="col">Funcionário</th>
+			  <th scope="col">Itens</th>
 			  <th scope="col"></th>
 			</tr>
 		  </thead>
@@ -69,11 +119,11 @@
 			<tr th:each="v : ${vendas}">
 			  <td th:text="${v.idVenda}"></td>
 			  <td th:text="${v.dtVenda}"></td>
-			  <td th:text="${v.vlTotal}"></td>
-			 
+			  <td th:text="${v.vlTotal}"></td>			 
 			  <td th:text="${v.cliente.nmUsuario}"></td>
 			  <td th:text="${v.vendedor.nmUsuario}"></td>
-			  <td><button type="button" class="btn btn-primary btn-dark">Editar</button></td>
+			  <td th:text="${v.qtd}"></td>
+			  <td><button type="button" class="btn btn-primary btn-dark">Detalhes</button></td>
 			</tr>
 		  </tbody>
 		</table>
