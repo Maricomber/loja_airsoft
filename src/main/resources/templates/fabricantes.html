@@ -66,7 +66,7 @@
 				</div>
 			</div>
 			<div class="mt-3" style="text-align: right;">
-				<button type="submit" class="btn btn-primary btn-dark">Cadastrar Funcionário</button>
+				<button type="submit" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalFabricante">Cadastrar Fabricante</button>
 				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
 			</div>
 		</div>
@@ -88,6 +88,79 @@
 			</tr>
 		  </tbody>
 		</table>
+		<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="modalFabricante"> 
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Cadastrar Fabricante</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+							</div>
+						<div class="modal-body modal-lg">
+							<div class="form-group">
+								<div class="row mt-2">
+									<div class="col-sm-2">
+											<label for="exampleFormControlInput1">ID</label>
+											<input type="text" class="form-control" id="idCliente" placeholder="ID" disabled="">
+										</div>
+										<div class="col-sm-10">
+											<label for="exampleFormControlInput1">Nome Fantasia</label>
+											<input type="text" class="form-control" id="idCliente" placeholder="Nome">
+										</div>
+									</div>
+									<div class="row mt-2">
+										<div class="col-6">
+											<label for="exampleFormControlInput1">CNPJ</label>
+											<input type="text" class="form-control" id="idCliente" placeholder="CNPJ">
+										</div>
+									</div>
+									<label for="exampleFormControlInput1" class="mt-3">Endereco</label>
+									<div class="row">
+										<div class="col-sm-3">
+											<input type="text" class="form-control" id="idCliente" placeholder="CEP">
+										</div>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" id="idCliente" placeholder="Rua">
+										</div>
+										<div class="col-sm-2">
+											<input type="text" class="form-control" id="idCliente" placeholder="N°">
+										</div>
+										<div class="col-sm-3">
+											<input type="text" class="form-control" id="idCliente" placeholder="Bairro">
+										</div>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" id="idCliente" placeholder="Complemento">
+										</div>
+									</div>
+									<label for="exampleFormControlInput1" class="mt-3">Telefone</label>
+									<div class="row">
+										<div class="col-3">
+											<input type="text" class="form-control" id="idCliente" placeholder="DDD">
+										</div>
+										<div class="col-8">
+											<input type="text" class="form-control" id="idCliente" placeholder="N° Telefone">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-3">
+											<input type="text" class="form-control" id="idCliente" placeholder="DDD">
+										</div>
+										<div class="col-8">
+											<input type="text" class="form-control" id="idCliente" placeholder="Residencial">
+										</div>
+									</div>
+									<label for="exampleFormControlInput1" class="mt-3"></label>
+								</div>
+							</div>
+							<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+							<button type="button" class="btn btn-primary btn-dark">Salvar</button>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
 	</div>
 	</body>
 </html>
