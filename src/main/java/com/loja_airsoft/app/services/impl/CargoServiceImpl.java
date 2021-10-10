@@ -30,9 +30,9 @@ public class CargoServiceImpl implements CargoService{
 			throw new Exception("Pesquisa em branco. ");
 		}
 		log.info("Salvando cargo");
-		Cargo cargo = new Cargo();
+		Cargo cargo;
 		try {
-			cargo = this.cargoRepository.save(cargoDto.toEntity());
+			cargo = this.cargoRepository.save(new Cargo(cargoDto));
 			return new CargoDto(cargo);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar cargo. "+e.getMessage();

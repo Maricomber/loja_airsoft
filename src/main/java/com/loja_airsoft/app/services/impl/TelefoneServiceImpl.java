@@ -27,13 +27,13 @@ public class TelefoneServiceImpl implements TelefoneService{
 	public TelefoneDto save(TelefoneDto telefoneDto) throws Exception {
 		
 		log.info("Salvando telefone");
-		Telefone telefone = new Telefone();
+		Telefone telefone;
 		
 		if(telefoneDto.equals(null)) {
 			throw new Exception("Pesquisa em branco. ");
 		}
 		try {
-			telefone = this.telefoneRepository.save(telefoneDto.toEntity());
+			telefone = this.telefoneRepository.save(new Telefone(telefoneDto));
 			return new TelefoneDto(telefone);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar telefone. "+e.getMessage();

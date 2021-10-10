@@ -3,10 +3,10 @@ package com.loja_airsoft.app.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,19 +15,33 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.ProdutoDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.ProdutoService;
 
-@RestController
-@RequestMapping(path = {"/loja_airsoft/produto"})
+@Controller
+@RequestMapping(path = {"/produtos"})
 public class ProdutoController {
 
 	@Autowired
 	ProdutoService produtoService;
 	
+	@GetMapping
+	public String produtos(ModelMap model) {
+        
+		try {
+			List<ProdutoDto>produtoDto = this.produtoService.findProdutos();
+			
+			if(produtoDto.equals(null)) {
+				throw new Exception("Produto não encontrado");
+			}
+			model.addAttribute("produtos", produtoDto);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "produtos";
+	}
 	
 	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<ProdutoDto>> findById(@PathVariable Integer id){
@@ -78,27 +92,27 @@ public class ProdutoController {
 
 	}
 	
-	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<ProdutoDto>>> findProdutos(HttpServletRequest request) {
-		
-		Response<List<ProdutoDto>> response = new Response<List<ProdutoDto>>();
-		List<String>erros = new ArrayList<String>();
-		
-		try{
-			List<ProdutoDto>produtosDto = this.produtoService.findProdutos();
-			
-			if(produtosDto.equals(null)) {
-				throw new Exception("Produto não encontrado");
-			}
-			response.setData(produtosDto);
-			return ResponseEntity.ok(response);
-		}catch (Exception e) {
-			erros.add(e.getMessage());
-			response.setErrors(erros);
-			return ResponseEntity.badRequest().body(response);
-		}
-		
-	}
+//	@GetMapping
+//	public @ResponseBody ResponseEntity<Response<List<ProdutoDto>>> findProdutos(HttpServletRequest request) {
+//		
+//		Response<List<ProdutoDto>> response = new Response<List<ProdutoDto>>();
+//		List<String>erros = new ArrayList<String>();
+//		
+//		try{
+//			List<ProdutoDto>produtosDto = this.produtoService.findProdutos();
+//			
+//			if(produtosDto.equals(null)) {
+//				throw new Exception("Produto não encontrado");
+//			}
+//			response.setData(produtosDto);
+//			return ResponseEntity.ok(response);
+//		}catch (Exception e) {
+//			erros.add(e.getMessage());
+//			response.setErrors(erros);
+//			return ResponseEntity.badRequest().body(response);
+//		}
+//		
+//	}
 	
 	@PostMapping
 	public @ResponseBody ResponseEntity<Response<ProdutoDto>> saveProduto(@RequestBody ProdutoDto produtoDto) {

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<!-- Meta tags Obrigatórias -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<title>Loja Airsoft</title>
+	</head>
+	<body>
+	<!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Loja Airsoft</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#textoNavbar" aria-controls="textoNavbar" aria-expanded="false" aria-label="Alterna navegação">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		<div class="collapse navbar-collapse" id="textoNavbar">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/">Home</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Vendas <span class="sr-only">(Página atual)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="produtos">Produtos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="clientes">Clientes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="funcionarios">Funcionarios</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="fabricantes">Fabricantes</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="cargos">Cargos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="perfis">Perfis</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-sm-3">
+					<label for="exampleFormControlInput1" class="mt-2">ID</label>
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-sm-3">
+					<label for="exampleFormControlInput1" class="mt-2">Data</label>
+					<input type="Date" class="form-control" id="dtVenda" placeholder="Data">
+				</div>
+				<div class="col-sm-3">
+					<label for="exampleFormControlInput1" class="mt-2">Itens</label>
+					<input type="text" class="form-control" id="dtVenda" placeholder="Qtd">
+				</div>
+				<div class="col-sm-3">
+					<label for="exampleFormControlInput1" class="mt-2">Valor</label>
+					<input type="text" class="form-control" id="dtVenda" placeholder="0.00">
+				</div>
+			</div>
+			<label for="exampleFormControlInput1">Funcionario</label>
+			<div class="row">
+				<div class="col-3">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-7">
+					<input type="text" class="form-control" id="dsCliente" placeholder="Nome">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-light">...</button>
+				</div>
+			</div>
+			<label for="exampleFormControlInput1" class="mt-1">Cliente</label>
+			<div class="row">
+				<div class="col-3">
+					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+				</div>
+				<div class="col-7">
+					<input type="text" class="form-control" id="dsCliente" placeholder="Nome">
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-light">...</button>
+				</div>
+			</div>
+			<div class="px-2 mt-3 mb-3" style="text-align: right;">
+				<a href="produtosVenda" class="btn btn-primary btn-dark">Cadastrar Venda</a>
+				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
+			</div>
+		</div>
+		<table class="table">
+		  <thead>
+			<tr>
+			  <th scope="col">#</th>
+			  <th scope="col">Data</th>
+			  <th scope="col">Valor</th>
+			  
+			  <th scope="col">Cliente</th>
+			  <th scope="col">Funcionário</th>
+			  <th scope="col">Itens</th>
+			  <th scope="col"></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr th:each="v : ${vendas}">
+			  <td th:text="${v.idVenda}"></td>
+			  <td th:text="${v.dtVenda}"></td>
+			  <td th:text="${v.vlTotal}"></td>			 
+			  <td th:text="${v.cliente.nmUsuario}"></td>
+			  <td th:text="${v.vendedor.nmUsuario}"></td>
+			  <td th:text="${v.qtd}"></td>
+			  <td><button type="button" class="btn btn-primary btn-dark">Detalhes</button></td>
+			</tr>
+		  </tbody>
+		</table>
+	</div>
+	</body>
+</html>

@@ -3,10 +3,10 @@ package com.loja_airsoft.app.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,19 +15,33 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.loja_airsoft.app.dtos.VendaDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.VendaService;
 
-@RestController
-@RequestMapping(path = {"/loja_airsoft/venda"})
+@Controller
+@RequestMapping(path = {"/vendas"})
 public class VendaController {
 
 	@Autowired
 	VendaService vendaService;
 	
+	@GetMapping
+	public String vendas(ModelMap model) {
+        
+		try {
+			List<VendaDto>vendasDto = this.vendaService.findVendas();
+			
+			if(vendasDto.equals(null)) {
+				throw new Exception("Venda não encontrada");
+			}
+			model.addAttribute("vendas", vendasDto);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "vendas";
+	}
 	
 	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<VendaDto>> findById(@PathVariable Integer id){
@@ -78,27 +92,27 @@ public class VendaController {
 
 	}
 	
-	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<VendaDto>>> findVendas(HttpServletRequest request) {
-		
-		Response<List<VendaDto>> response = new Response<List<VendaDto>>();
-		List<String>erros = new ArrayList<String>();
-		
-		try{
-			List<VendaDto>vendasDto = this.vendaService.findVendas();
-			
-			if(vendasDto.equals(null)) {
-				throw new Exception("Venda não encontrado");
-			}
-			response.setData(vendasDto);
-			return ResponseEntity.ok(response);
-		}catch (Exception e) {
-			erros.add(e.getMessage());
-			response.setErrors(erros);
-			return ResponseEntity.badRequest().body(response);
-		}
-		
-	}
+//	@GetMapping
+//	public @ResponseBody ResponseEntity<Response<List<VendaDto>>> findVendas(HttpServletRequest request) {
+//		
+//		Response<List<VendaDto>> response = new Response<List<VendaDto>>();
+//		List<String>erros = new ArrayList<String>();
+//		
+//		try{
+//			List<VendaDto>vendasDto = this.vendaService.findVendas();
+//			
+//			if(vendasDto.equals(null)) {
+//				throw new Exception("Venda não encontrado");
+//			}
+//			response.setData(vendasDto);
+//			return ResponseEntity.ok(response);
+//		}catch (Exception e) {
+//			erros.add(e.getMessage());
+//			response.setErrors(erros);
+//			return ResponseEntity.badRequest().body(response);
+//		}
+//		
+//	}
 	
 	@PostMapping
 	public @ResponseBody ResponseEntity<Response<VendaDto>> saveVenda(@RequestBody VendaDto vendaDto) {

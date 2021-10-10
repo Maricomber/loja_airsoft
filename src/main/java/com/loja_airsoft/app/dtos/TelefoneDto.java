@@ -1,6 +1,7 @@
 package com.loja_airsoft.app.dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Telefone;
 
 import lombok.Getter;
@@ -14,6 +15,9 @@ public class TelefoneDto {
 	private Integer dddTelefone;
 	private Integer numTelefone;
 	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private UsuarioDto usuario;
+	
 	public TelefoneDto() {
 		
 	}
@@ -23,13 +27,5 @@ public class TelefoneDto {
 		this.dddTelefone = telefone.getDddTelefone();
 		this.numTelefone = telefone.getNumTelefone();
 	}
-	
-	public Telefone toEntity() {
-		Telefone telefone = new Telefone();
-		telefone.setIdTelefone(this.idTelefone);
-		telefone.setDddTelefone(this.dddTelefone);
-		telefone.setNumTelefone(this.numTelefone);
-		
-		return telefone;
-	}
+
 }

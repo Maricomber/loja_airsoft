@@ -1,7 +1,5 @@
 package com.loja_airsoft.app.dtos;
 
-
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.loja_airsoft.app.entities.Produto;
 
@@ -17,12 +15,12 @@ public class ProdutoDto {
 	private float vlPreco;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	private FabricanteDto fabricanteDto;
+	private UsuarioDto fabricante;
 	
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private ProdutoTipoDto produtoTipoDto;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private VendaDto vendaDto;
 	
 	public ProdutoDto() {
@@ -33,20 +31,14 @@ public class ProdutoDto {
 		this.idProduto = produto.getIdProduto();
 		this.dsProduto = produto.getDsProduto();
 		this.vlPreco = produto.getVlPreco();
-		this.fabricanteDto = new FabricanteDto(produto.getFabricante());
+		
+		if(!(produto.getFabProduto()==null)) {
+			this.fabricante = new UsuarioDto(produto.getFabProduto());
+		}
 		this.produtoTipoDto = new ProdutoTipoDto(produto.getProdutoTipo());
-		this.vendaDto = new VendaDto(produto.getVenda());
+//		if(!(produto.getVenda() == null)) {
+//			this.vendaDto = new VendaDto(produto.getVenda());
+//		}
 	}
 	
-	public Produto toEntity() {
-		Produto produto = new Produto();
-		produto.setIdProduto(this.idProduto);
-		produto.setDsProduto(this.dsProduto);
-		produto.setVlPreco(this.vlPreco);
-		produto.setFabricante(this.fabricanteDto.toEntity());
-		produto.setProdutoTipo(this.produtoTipoDto.toEntity());
-		produto.setVenda(this.vendaDto.toEntity());
-		
-		return produto;
-	}
 }
