@@ -15,7 +15,7 @@ public class ProdutoTipoDto {
 	private int idProdutoTp;
 	private String dsProdutoTp;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<ProdutoDto> produtoDto;
 	
 	public ProdutoTipoDto() {
@@ -27,11 +27,4 @@ public class ProdutoTipoDto {
 		this.dsProdutoTp = produtoTipo.getDsProdutoTp();
 	}
 	
-	public ProdutoTipo toEntity() {
-		ProdutoTipo produtoTipo = new ProdutoTipo();
-		produtoTipo.setIdProdutoTp(this.idProdutoTp);
-		produtoTipo.setDsProdutoTp(this.dsProdutoTp);
-		
-		return produtoTipo;
-	}
 }

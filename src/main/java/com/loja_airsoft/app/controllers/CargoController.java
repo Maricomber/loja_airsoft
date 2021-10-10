@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +24,29 @@ import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.CargoService;
 
 
-@RestController
-@RequestMapping(path = {"/loja_airsoft/cargo"})
+@Controller
+@RequestMapping(path = {"/cargos"})
 public class CargoController {
 
 	@Autowired
 	CargoService cargoService;
 	
+	@GetMapping
+	public String cargos(ModelMap model) {
+		
+		try {
+			List<CargoDto>cargosDto = this.cargoService.findCargos();
+			
+			if(cargosDto.equals(null)) {
+				throw new Exception("Cargo não encontrado");
+			}
+			model.addAttribute("cargos", cargosDto);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return "cargos";
+		
+	}
 	
 	@GetMapping(path = {"/{id}"})
 	public @ResponseBody ResponseEntity<Response<CargoDto>> findById(@PathVariable Integer id){
@@ -79,27 +97,27 @@ public class CargoController {
 
 	}
 	
-	@GetMapping
-	public @ResponseBody ResponseEntity<Response<List<CargoDto>>> findCargos(HttpServletRequest request) {
-		
-		Response<List<CargoDto>> response = new Response<List<CargoDto>>();
-		List<String>erros = new ArrayList<String>();
-		
-		try{
-			List<CargoDto>cargosDto = this.cargoService.findCargos();
-			
-			if(cargosDto.equals(null)) {
-				throw new Exception("Cargo não encontrado");
-			}
-			response.setData(cargosDto);
-			return ResponseEntity.ok(response);
-		}catch (Exception e) {
-			erros.add(e.getMessage());
-			response.setErrors(erros);
-			return ResponseEntity.badRequest().body(response);
-		}
-		
-	}
+//	@GetMapping
+//	public @ResponseBody ResponseEntity<Response<List<CargoDto>>> findCargos(HttpServletRequest request) {
+//		
+//		Response<List<CargoDto>> response = new Response<List<CargoDto>>();
+//		List<String>erros = new ArrayList<String>();
+//		
+//		try{
+//			List<CargoDto>cargosDto = this.cargoService.findCargos();
+//			
+//			if(cargosDto.equals(null)) {
+//				throw new Exception("Cargo não encontrado");
+//			}
+//			response.setData(cargosDto);
+//			return ResponseEntity.ok(response);
+//		}catch (Exception e) {
+//			erros.add(e.getMessage());
+//			response.setErrors(erros);
+//			return ResponseEntity.badRequest().body(response);
+//		}
+//		
+//	}
 	
 	@PostMapping
 	public @ResponseBody ResponseEntity<Response<CargoDto>> saveCargo(@RequestBody CargoDto cargoDto) {

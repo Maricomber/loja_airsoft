@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.loja_airsoft.app.dtos.TelefoneDto;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,10 +33,22 @@ public class Telefone {
 	public Integer numTelefone;
 	
 	@ManyToOne(cascade = CascadeType.ALL)  
-    @JoinColumn(name="cli_id_cliente", nullable = true)
-	private Cliente cliente;
+    @JoinColumn(name="usu_id_usuario", nullable = true)
+	private Usuario usuario;
 	
-	@ManyToOne(cascade = CascadeType.ALL)  
-    @JoinColumn(name="fun_cpf_vendedor", nullable = true)
-	private Funcionario funcionario;
+	public Telefone() {
+		
+	}
+	
+	public Telefone(TelefoneDto telefoneDto) {
+		this.idTelefone = telefoneDto.getIdTelefone();
+		this.dddTelefone = telefoneDto.getDddTelefone();
+		this.numTelefone = telefoneDto.getNumTelefone();
+		
+		if(!(telefoneDto.getUsuario() == null)) {
+			this.usuario = new Usuario(telefoneDto.getUsuario());
+		}
+			
+	}
+	
 }

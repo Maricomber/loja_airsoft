@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.loja_airsoft.app.dtos.ProdutoDto;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,15 +32,31 @@ public class Produto {
 	@Column(name = "prd_preco", nullable = false)
 	private float vlPreco;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="fab_id_fabricante")
-	private Fabricante fabricante;
+	@ManyToOne(cascade = CascadeType.MERGE)  
+    @JoinColumn(name="prd_fabricante", nullable = true)
+	private Usuario fabProduto;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
+	private Venda venda;
+
+	@ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="pdt_id_produto_tipo")
 	private ProdutoTipo produtoTipo;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="ven_id_venda")
-	private Venda venda;
+	public Produto() {
+		
+	}
+	
+	public Produto(ProdutoDto produtoDto) {
+		this.idProduto = produtoDto.getIdProduto();
+		this.dsProduto = produtoDto.getDsProduto();
+		this.vlPreco = produtoDto.getVlPreco();
+		this.fabProduto = new Usuario(produtoDto.getFabricante());
+		this.produtoTipo = new ProdutoTipo(produtoDto.getProdutoTipoDto());
+		
+		if(!(produtoDto.getVendaDto() == null)) {
+			this.venda = new Venda(produtoDto.getVendaDto());
+		}
+	}
+	
 }

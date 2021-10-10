@@ -30,9 +30,9 @@ public class ProdutoServiceImpl implements ProdutoService{
 			throw new Exception("Pesquisa em branco. ");
 		}
 		log.info("Salvando produto");
-		Produto produto = new Produto();
+		Produto produto;
 		try {
-			produto = this.produtoRepository.save(produtoDto.toEntity());
+			produto = this.produtoRepository.save(new Produto(produtoDto));
 			return new ProdutoDto(produto);
 		}catch (Exception e) {
 			msgErro = "Erro ao salvar produto. "+e.getMessage();
