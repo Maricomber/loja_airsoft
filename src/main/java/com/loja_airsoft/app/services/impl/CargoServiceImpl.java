@@ -43,16 +43,31 @@ public class CargoServiceImpl implements CargoService{
 	
 
 	@Override
-	public CargoDto findById(Integer id_cargo) throws Exception {
+	public List<CargoDto> findByCargo(CargoDto cargoDto) throws Exception {
 		log.info("Buscando cargo.");
-		Cargo cargo = new Cargo();
+		List<Cargo> cargos = new ArrayList<Cargo>();
+		List<CargoDto> retorno = new ArrayList<CargoDto>();
 		try {
-			cargo = this.cargoRepository.findByIdCargo(id_cargo);
-			if(cargo == null) {
+			
+			if(!(cargoDto.getDsCargo().equals(""))) {
+				cargos = cargoRepository.findByDsCargoIgnoreCaseContaining(cargoDto.getDsCargo());
+			}
+			if(!(cargoDto.getIdCargo()== null)) {
+				Cargo cargo = cargoRepository.findByIdCargo(cargoDto.getIdCargo());
+				if(!cargos.contains(cargo)) {
+					cargos.add(cargo);
+				}
+			}
+			
+			if(cargos.size() == 0) {
 				throw new Exception("Sem resultados.");
 			}
 			log.info("Cargo encontrado.");
-			return new CargoDto(cargo);
+			
+			for(Cargo c : cargos) {
+				retorno.add(new CargoDto(c));
+			}
+			return retorno;
 		}catch (Exception e) {
 			msgErro = "Erro ao buscar cargo. "+e.getMessage();
 			log.info(msgErro);
@@ -61,13 +76,15 @@ public class CargoServiceImpl implements CargoService{
 	}
 
 	@Override
-	public Boolean delete(Integer id_cargo) throws Exception {
+	public Boolean delete(CargoDto cargoDto) throws Exception {
 		
-		Cargo cargo = new Cargo();
 		log.info("Deletando cargo ");
 		
 		try{
-			cargo = this.cargoRepository.findByIdCargo(id_cargo);
+			if(cargoDto.getIdCargo()== null) {
+				throw new Exception();
+			}
+			Cargo cargo = cargoRepository.findByIdCargo(cargoDto.getIdCargo());
 			this.cargoRepository.delete(cargo);
 		}catch (Exception e) {;
 			msgErro = "Erro cargo não pode ser deletado. "+e.getMessage();
@@ -84,7 +101,7 @@ public class CargoServiceImpl implements CargoService{
 		List<CargoDto> cargosRetorno = new ArrayList<CargoDto>();
 		
 		try {
-			cargos = this.cargoRepository.findAll();
+			cargos = this.cargoRepository.findAllByOrderByIdCargo();
 			for(Cargo cargo: cargos) {
 				cargosRetorno.add(new CargoDto(cargo));
 			}
