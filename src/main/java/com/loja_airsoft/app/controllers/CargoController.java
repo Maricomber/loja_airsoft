@@ -70,20 +70,20 @@ public class CargoController {
 		
 	}
 	
-	@PostMapping(path = {"/save"})
-	public String saveCargo(@ModelAttribute CargoDto cargoDto, ModelMap model) {
+	@RequestMapping("/save")
+	public  @ResponseBody ResponseEntity<Response<CargoDto>>  saveCargo(CargoDto cargoDto, ModelMap model) {
 		List<CargoDto>cargos;
+		Response<CargoDto> response = new Response<CargoDto>();
+		List<String>erros = new ArrayList<String>();
 		try {
 			cargoDto = this.cargoService.save(cargoDto);
-			cargos = this.cargoService.findCargos();
-			
-			model.put("cargos", cargos);
-			model.put("cargoDto",new CargoDto());
 			
 		}catch (Exception e) {
-			 
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
 		}
-		return "cargos";
+		return ResponseEntity.ok(response);
 		
 	}
 
