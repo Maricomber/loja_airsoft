@@ -11,9 +11,9 @@ public interface CargoService {
 
 	CargoDto save(CargoDto cargoDto) throws Exception;
 	
-	CargoDto findById(Integer id_cargo) throws Exception;
+	List<CargoDto> findByCargo(CargoDto cargoDto) throws Exception;
 	
-	Boolean delete(Integer id_cargo) throws Exception;
+	Boolean delete(CargoDto cargoDto) throws Exception;
 	
 	List<CargoDto>findCargos() throws Exception;
 	
