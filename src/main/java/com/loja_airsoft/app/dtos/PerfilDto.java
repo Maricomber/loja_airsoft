@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class PerfilDto {
 
-	private int idPerfil;
+	private Integer idPerfil;
 	private String dsPerfil;
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)

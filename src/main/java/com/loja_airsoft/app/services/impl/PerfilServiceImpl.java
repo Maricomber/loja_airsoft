@@ -97,4 +97,39 @@ public class PerfilServiceImpl implements PerfilService {
 			throw new Exception(msgErro);
 		}
 	}
+
+
+	@Override
+	public List<PerfilDto> findByPerfil(PerfilDto perfilDto) throws Exception {
+		log.info("Buscando perfil.");
+		List<Perfil>perfis = new ArrayList<Perfil>();
+		List<PerfilDto> retorno = new ArrayList<PerfilDto>();
+		
+		try {
+			
+			if(!perfilDto.getDsPerfil().equals("")) {
+				perfis = this.perfilRepository.findByDsPerfilIgnoreCaseContaining(perfilDto.getDsPerfil());
+			}
+			if(!(perfilDto.getIdPerfil() == null)) {
+				Perfil perfil = this.perfilRepository.findByIdPerfil(perfilDto.getIdPerfil());
+				if(!(perfis.contains(perfil))) {
+					perfis.add(perfil);
+				}
+			}
+			
+			if(perfis.size() == 0) {
+				throw new Exception("Sem resultados.");
+			}
+			log.info("Perfil encontrado.");
+			
+			for(Perfil p: perfis) {
+				retorno.add(new PerfilDto(p));
+			}
+			return retorno;
+		}catch (Exception e) {
+			msgErro = "Erro ao buscar perfil. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
+		}
+	}
 }

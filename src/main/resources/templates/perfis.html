@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		<title>Loja Airsoft</title>
 	</head>
 	<body>
@@ -14,7 +15,51 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	
+	<script>
+	function deletar(idPerfil){
+	    var resultado = confirm("Deseja mesmo deletar o perfil?");
+	    
+	    var json = {
+	    		"idPerfil":idPerfil.value,
+	    		"dsPerfil":""
+	    }
+	    
+		if(resultado == true){
+			 $.ajax({
+	            cache: false,
+	            url : 'http://localhost:8081/perfil/delete',
+	            type: "DELETE",
+	            dataType : "json",
+	            data : json,
+	            success : function(callback){
+	            	alert("Deletado com sucesso!");
+	            	location.reload();
+	            },
+	            error : function(){
+	            	 alert("Erro");
+	            }
+	        });	
+	     }
+    }
+    
+    function editar(param){
+
+		var params = param.split(";");
+
+		document.getElementById("idModalPerfil").value=params[0];
+
+		document.getElementById("dsModalPerfil").value=params[1];
+
+	}
+
+	function cadastrar(){
+
+		document.getElementById("idModalPerfil").value="";
+
+		document.getElementById("dsModalPerfil").value="";
+
+	}
+	</script>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Loja Airsoft</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#textoNavbar" aria-controls="textoNavbar" aria-expanded="false" aria-label="Alterna navegação">
@@ -50,33 +95,40 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div class="form-group">
-			<div class="row mt-2">
-				<div class="col-sm-2">
-					<label for="exampleFormControlInput1">ID</label>
-					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+		<form class="form-group" th:action="@{/perfis}" th:object="${perfilDto}" method="post">
+			<div class="form-group">
+				<div class="row mt-2">
+					<div class="col-sm-2">
+						<label for="exampleFormControlInput1">ID</label>
+						<input type="text" class="form-control" id="idPerfil" th:field="*{idPerfil}" placeholder="ID">
+					</div>
+					<div class="col-sm-10">
+						<label for="exampleFormControlInput1">Descrição</label>
+						<input type="text" class="form-control" id="dsPerfil" th:field="*{dsPerfil}" placeholder="Nome">
+					</div>
 				</div>
-				<div class="col-sm-10">
-					<label for="exampleFormControlInput1">Descrição</label>
-					<input type="text" class="form-control" id="idCliente" placeholder="Nome">
+				<div class="mt-3" style="text-align: right;">
+					<button type="button" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalPerfil">Cadastrar Perfil</button>
+					<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
 				</div>
 			</div>
-			<div class="mt-3" style="text-align: right;">
-				<button type="submit" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalPerfil">Cadastrar Perfil</button>
-				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
-			</div>
-		</div>
+		</form>
 		<table class="table">
 		  <thead>
 			<tr>
 			  <th scope="col">#</th>
 			  <th scope="col">Nome</th>
+			  <th></th>
 			</tr>
 		  </thead>
 		  <tbody>
 			<tr th:each="p : ${perfis}">
 			  <td th:text="${p.idPerfil}"></td>
 			  <td th:text="${p.dsPerfil}"></td>
+			  <td style="text-align: right;">
+					<button type="button" th:value="${p.idPerfil} + ';' + ${p.dsPerfil}" onclick="editar(this.value)" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalPerfil"><i class="bi bi-pencil-square"></i></button>
+					<button class="btn btn-danger"th:value="${p.idPerfil}" onclick="deletar(this)"><i class="bi bi-trash"></i> </button>
+			  </td>
 			</tr>
 		  </tbody>
 		</table>

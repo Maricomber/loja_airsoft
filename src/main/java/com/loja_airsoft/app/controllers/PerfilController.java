@@ -3,23 +3,20 @@ package com.loja_airsoft.app.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.loja_airsoft.app.dtos.CargoDto;
 import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.PerfilService;
@@ -41,37 +38,30 @@ public class PerfilController {
 				throw new Exception("Perfil não encontrado");
 			}
 			model.addAttribute("perfis", perfilsDto);
+			model.addAttribute("perfilDto", new PerfilDto());
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 		return "perfis";
 		
 	}
-	@GetMapping(path = {"/{id}"})
-	public @ResponseBody ResponseEntity<Response<PerfilDto>> findById(@PathVariable Integer id){
-		
-		List<String>erros = new ArrayList<String>();
-		Response<PerfilDto>response = new Response<PerfilDto>();
-		PerfilDto perfilDto;
-		
+	
+	@PostMapping
+	public String perfilByPerfil(@ModelAttribute PerfilDto perfilDto, ModelMap model) {
+		List<PerfilDto>perfis;
 		try {
-			
-			if(id == null) {
-				throw new Exception("Campos em branco");
+			if(perfilDto.getIdPerfil() == null && perfilDto.getDsPerfil().equals("")) {
+				perfis = this.perfilService.findPerfils();
+				model.put("perfis", perfis);
 			}
 			
-			perfilDto= this.perfilService.findById(id);
-			
-			if(perfilDto.equals(null)) {
-				throw new Exception("Perfil não encontrado. ");
-			}
-			response.setData(perfilDto);
-			return ResponseEntity.ok(response);
+			perfis = this.perfilService.findByPerfil(perfilDto);
+			model.put("perfis", perfis);
+	
 		}catch (Exception e) {
-			erros.add(e.getMessage());
-			response.setErrors(erros);
-			return ResponseEntity.badRequest().body(response);
+			 
 		}
+		return "perfis";
 		
 	}
 	
@@ -117,8 +107,7 @@ public class PerfilController {
 //		}
 //		
 //	}
-	
-	@PostMapping
+	@PostMapping(path = {"/save"})
 	public @ResponseBody ResponseEntity<Response<PerfilDto>> savePerfil(@RequestBody PerfilDto perfilDto) {
 		
 		Response<PerfilDto> response = new Response<PerfilDto>();
