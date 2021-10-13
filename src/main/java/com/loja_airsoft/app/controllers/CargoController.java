@@ -91,6 +91,7 @@ public class CargoController {
 	public @ResponseBody ResponseEntity<Response<CargoDto>>  delete(CargoDto cargoDto, ModelMap model) {
 		List<CargoDto>cargos;
 		Response<CargoDto> response = new Response<CargoDto>();
+		List<String>erros = new ArrayList<String>();
 		
 		try {
 			if(!this.cargoService.delete(cargoDto)) {
@@ -100,7 +101,9 @@ public class CargoController {
 			model.put("cargos", cargos);
 
 		}catch (Exception e) {
-			// TODO: handle exception
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
 		}
 		return ResponseEntity.ok(response);
 	}
