@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.loja_airsoft.app.dtos.CargoDto;
 import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.PerfilService;
@@ -65,69 +66,25 @@ public class PerfilController {
 		
 	}
 	
-	@PutMapping
-	public @ResponseBody ResponseEntity<Response<PerfilDto>> update(@RequestBody PerfilDto perfilDto){
-		
-		List<String>erros = new ArrayList<String>();
-		Response<PerfilDto>response = new Response<PerfilDto>();
-		
-		try {
-			perfilDto = this.perfilService.save(perfilDto);
-			if(perfilDto.equals(null)) {
-				return ResponseEntity.badRequest().body(response);
-			}
-		response.setData(perfilDto);
-		return ResponseEntity.ok(response);
-		}catch (Exception e) {
-			erros.add(e.getMessage());
-			response.setErrors(erros);
-			return ResponseEntity.badRequest().body(response);
-		}
-
-	}
 	
-//	@GetMapping
-//	public @ResponseBody ResponseEntity<Response<List<PerfilDto>>> findPerfils(HttpServletRequest request) {
-//		
-//		Response<List<PerfilDto>> response = new Response<List<PerfilDto>>();
-//		List<String>erros = new ArrayList<String>();
-//		
-//		try{
-//			List<PerfilDto>perfilsDto = this.perfilService.findPerfils();
-//			
-//			if(perfilsDto.equals(null)) {
-//				throw new Exception("Perfil não encontrado");
-//			}
-//			response.setData(perfilsDto);
-//			return ResponseEntity.ok(response);
-//		}catch (Exception e) {
-//			erros.add(e.getMessage());
-//			response.setErrors(erros);
-//			return ResponseEntity.badRequest().body(response);
-//		}
-//		
-//	}
 	@PostMapping(path = {"/save"})
-	public @ResponseBody ResponseEntity<Response<PerfilDto>> savePerfil(@RequestBody PerfilDto perfilDto) {
-		
-		Response<PerfilDto> response = new Response<PerfilDto>();
-		List<String>erros = new ArrayList<String>();
-		
+	public String savePerfil(@ModelAttribute PerfilDto perfilDto, ModelMap model) {
+
+		List<PerfilDto> perfis = new ArrayList<PerfilDto>();
 		try {
 
-			if(perfilDto == null) {
+			if(perfilDto.getDsPerfil() == null) {
 				throw new Exception("Campos vazios. ");
 			}
 			perfilDto = this.perfilService.save(perfilDto);
-			response.setData(perfilDto);
-			return ResponseEntity.ok(response);
+			perfis = this.perfilService.findPerfils();
+			model.put("perfis", perfis);
+			model.put("perfilDto", new PerfilDto());
 			
 		}catch (Exception e) {
-			erros.add(e.getMessage());
-			response.setErrors(erros);
-			return ResponseEntity.badRequest().body(response);
+			
 		}
-		
+		return "perfis";
 	}
 	
 	@DeleteMapping("/{id}")

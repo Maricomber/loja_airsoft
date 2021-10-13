@@ -142,21 +142,23 @@
 						</button>
 						</div>
 					<div class="modal-body modal-lg">
-						<div class="form-group">
-							<label for="exampleFormControlInput1" class="mt-2">Perfil</label>
-							<div class="row">
-								<div class="col-sm-2">
-									<input type="text" class="form-control" id="idPerfil" placeholder="ID">
-								</div>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="dsPerfil" placeholder="Cargo">
+						<form th:action="@{/perfis/save}" th:object="${perfilDto}" method="post">
+							<div class="form-group">
+								<label for="exampleFormControlInput1" class="mt-2">Perfil</label>
+								<div class="row">
+									<div class="col-sm-2">
+										<input type="text" class="form-control" id="idModalPerfil" th:field="*{idPerfil}" placeholder="ID" disabled="">
+									</div>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" id="dsModalPerfil" th:field="*{dsPerfil}" placeholder="Cargo">
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-							<button type="button" class="btn btn-primary">Salvar mudanças</button>
-						</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+								<button type="submit" class="btn btn-primary btn-dark">Salvar mudanças</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

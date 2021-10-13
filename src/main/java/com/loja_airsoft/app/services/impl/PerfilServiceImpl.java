@@ -30,9 +30,9 @@ public class PerfilServiceImpl implements PerfilService {
 			throw new Exception("Pesquisa em branco. ");
 		}
 		log.info("Salvando perfil");
-		Perfil perfil = new Perfil(perfilDto);
 		
 		try {
+			Perfil perfil = new Perfil(perfilDto);
 			perfil = this.perfilRepository.save(perfil);
 			return new PerfilDto(perfil);
 		}catch (Exception e) {
@@ -85,7 +85,7 @@ public class PerfilServiceImpl implements PerfilService {
 		List<PerfilDto> perfilsRetorno = new ArrayList<PerfilDto>();
 		
 		try {
-			perfils = this.perfilRepository.findAll();
+			perfils = this.perfilRepository.findAllByOrderByIdPerfil();
 			for(Perfil perfil: perfils) {
 				perfilsRetorno.add(new PerfilDto(perfil));
 			}
