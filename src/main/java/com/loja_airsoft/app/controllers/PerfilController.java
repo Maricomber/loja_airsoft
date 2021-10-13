@@ -62,9 +62,11 @@ public class PerfilController {
 	}
 	
 	
-	@PostMapping(path = {"/save"})
-	public String savePerfil(@ModelAttribute PerfilDto perfilDto, ModelMap model) {
+	@RequestMapping(path = {"/save"})
+	public @ResponseBody ResponseEntity<Response<PerfilDto>>  savePerfil(PerfilDto perfilDto, ModelMap model) {
 
+		Response<PerfilDto> response = new Response<PerfilDto>();
+		List<String>erros = new ArrayList<String>();
 		List<PerfilDto> perfis = new ArrayList<PerfilDto>();
 		try {
 
@@ -77,9 +79,11 @@ public class PerfilController {
 			model.put("perfilDto", new PerfilDto());
 			
 		}catch (Exception e) {
-			
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
 		}
-		return "perfis";
+		return ResponseEntity.ok(response);
 	}
 	
 	@RequestMapping("/delete")
