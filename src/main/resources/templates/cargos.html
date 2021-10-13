@@ -44,8 +44,22 @@
 	     }
     }
     
-    function editar(idCargo){
-		
+    function editar(param){
+
+		var params = param.split(";");
+
+		document.getElementById("idModalCargo").value=params[0];
+
+		document.getElementById("dsModalCargo").value=params[1];
+
+	}
+
+	function cadastrar(){
+
+		document.getElementById("idModalCargo").value="";
+
+		document.getElementById("dsModalCargo").value="";
+
 	}
  
 	
@@ -97,7 +111,7 @@
 				</div>
 			</div>
 			<div class="mt-3" style="text-align: right;">
-				<button type="button" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalCargo">Cadastrar Cargo</button>
+				<button type="button" onclick="cadastrar();" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalCargo">Cadastrar Cargo</button>
 				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
 			</div>
 		</form>
@@ -113,8 +127,8 @@
 			<tr th:each="c : ${cargos}">
 				<td th:text="${c.idCargo}" th:field="${c.idCargo}" name="idCargo"></td>
 				<td th:text="${c.dsCargo}" th:field="${c.dsCargo}" name="dsCargo"></td>
-				<td style="text-align: right;">	
-					<button class="btn btn-light" th:value="${c.idCargo}" onclick="editar(this)"><i class="bi bi-pencil-square"></i> </button>
+				<td style="text-align: right;">
+					<button type="button" th:value="${c.idCargo} + ';' + ${c.dsCargo}" onclick="editar(this.value)" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalCargo"><i class="bi bi-pencil-square"></i></button>
 					<button class="btn btn-danger"th:value="${c.idCargo}" onclick="deletar(this)"><i class="bi bi-trash"></i> </button>
 				</td>
 			</tr>
@@ -131,7 +145,7 @@
 					</div>
 					<div class="modal-body modal-lg">
 						<div class="form-group">
-							<form th:action="@{/cargos/save}" th:object="${cargoDto}" method="post">
+							<form id="form-insercao" th:action="@{/cargos/save}" th:object="${cargoDto}" method="post">
 								<label for="exampleFormControlInput1" class="mt-2">Cargo</label>
 								<div class="row">
 									<div class="col-sm-2">
@@ -153,5 +167,27 @@
 		</div>
 		
 	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					...
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	</body>
 </html>
