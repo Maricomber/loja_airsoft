@@ -63,11 +63,10 @@ public class CargoController {
 			}
 			cargos = cargoService.findByCargo(cargoDto);
 			model.put("cargos", cargos);
-			
+			return "cargos";
 		}catch (Exception e) {
-			 
+			 return null;
 		}
-		return "cargos";
 		
 	}
 	

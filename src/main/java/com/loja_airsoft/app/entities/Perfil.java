@@ -28,7 +28,7 @@ public class Perfil {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pef_id_perfil", nullable = false)
-	private int idPerfil;
+	private Integer idPerfil;
 	
 	@Column(name = "pef_ds_perfil", nullable = false, length = 100)
 	private String dsPerfil;

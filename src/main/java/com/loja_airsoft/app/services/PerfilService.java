@@ -13,6 +13,8 @@ public interface PerfilService {
 	
 	PerfilDto findById(Integer id_perfil) throws Exception;
 	
+	List<PerfilDto> findByPerfil(PerfilDto perfilDto) throws Exception;
+	
 	Boolean delete(Integer id_perfil) throws Exception;
 	
 	List<PerfilDto>findPerfils() throws Exception;
