@@ -7,17 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.loja_airsoft.app.dtos.CargoDto;
 import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.PerfilService;
@@ -87,17 +82,19 @@ public class PerfilController {
 		return "perfis";
 	}
 	
-	@DeleteMapping("/{id}")
-	public @ResponseBody ResponseEntity<Response<PerfilDto>> deletePerfil(@PathVariable Integer id) {
-		
+	@RequestMapping("/delete")
+	public @ResponseBody ResponseEntity<Response<PerfilDto>> delete(PerfilDto perfilDto, ModelMap model) {
+		List<PerfilDto>perfis = new ArrayList<PerfilDto>();
 		Response<PerfilDto> response = new Response<PerfilDto>();
 		List<String>erros = new ArrayList<String>();
 		
 		try {
-			if(id == null) {
+			if(!this.perfilService.delete(perfilDto.getIdPerfil())) {
 				throw new Exception("Campos em branco. ");
 			}
-			this.perfilService.delete(id);
+			perfis = this.perfilService.findPerfils();
+			model.put("perfis", perfis);
+			
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
