@@ -1,26 +1,19 @@
 package com.loja_airsoft.app.controllers;
 
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.loja_airsoft.app.dtos.CargoDto;
 import com.loja_airsoft.app.response.Response;
@@ -70,9 +63,8 @@ public class CargoController {
 		
 	}
 	
-	@RequestMapping("/save")
+	@PostMapping("/save")
 	public  @ResponseBody ResponseEntity<Response<CargoDto>>  saveCargo(CargoDto cargoDto, ModelMap model) {
-		List<CargoDto>cargos;
 		Response<CargoDto> response = new Response<CargoDto>();
 		List<String>erros = new ArrayList<String>();
 		try {
@@ -87,7 +79,7 @@ public class CargoController {
 		
 	}
 
-	@RequestMapping("/delete")
+	@DeleteMapping("/delete")
 	public @ResponseBody ResponseEntity<Response<CargoDto>>  delete(CargoDto cargoDto, ModelMap model) {
 		List<CargoDto>cargos;
 		Response<CargoDto> response = new Response<CargoDto>();

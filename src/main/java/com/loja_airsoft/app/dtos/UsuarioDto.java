@@ -20,6 +20,8 @@ public class UsuarioDto {
 	private String nmUsuario;
 	private EnderecoDto endereco;
 	private List<DocumentoDto> documento = new ArrayList<DocumentoDto>();
+	
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<TelefoneDto> telefone = new ArrayList<TelefoneDto>();
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)

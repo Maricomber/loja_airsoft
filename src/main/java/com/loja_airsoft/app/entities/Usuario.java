@@ -37,7 +37,7 @@ public class Usuario {
 	@Column(name = "usu_id_usuario", nullable = true)
 	private int idUsuario;
 	
-	@Column(name = "usu_dt_nascimento", nullable = false)
+	@Column(name = "usu_dt_nascimento", nullable = true)
 	private Date dtNascCliente;
 	
 	@Column(name = "usu_nm_usuario", nullable = false)
@@ -82,7 +82,13 @@ public class Usuario {
 		
 		try {
 			this.idUsuario = usuarioDto.getIdUsuario();
-			this.dtNascCliente = dateFormat.parse(usuarioDto.getDtNascCliente());
+			if(!(usuarioDto.getDtNascCliente()==null)) {
+				this.dtNascCliente = dateFormat.parse(usuarioDto.getDtNascCliente());
+			}
+			else {
+				this.dtNascCliente = new Date();
+			}
+			
 			this.nmUsuario = usuarioDto.getNmUsuario();
 			this.endereco = new Endereco(usuarioDto.getEndereco());
 			if(!(usuarioDto.getCargo() == null)) {

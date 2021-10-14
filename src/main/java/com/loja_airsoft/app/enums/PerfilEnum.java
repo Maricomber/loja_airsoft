@@ -5,7 +5,7 @@ public enum PerfilEnum {
 	FUNCIONARIO(2, "Funcionário"),
 	FORNECEDOR(3, "Fornecedor");
 	
-	private int idPerfilEnum;
+	private Integer idPerfilEnum;
 	private String dsPerfilEnum;
 	
 	PerfilEnum(int idPerfilEnum, String dsPerfilEnum) {
@@ -13,6 +13,9 @@ public enum PerfilEnum {
 		this.dsPerfilEnum = dsPerfilEnum;
 	}
 	
+	public Integer getIdPerfil() {
+		return this.idPerfilEnum;
+	}
 	public String getDescricao() {
 		return this.dsPerfilEnum;
 	}

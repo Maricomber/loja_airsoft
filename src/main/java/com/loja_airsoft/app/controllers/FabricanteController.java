@@ -1,14 +1,24 @@
 package com.loja_airsoft.app.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.dtos.UsuarioDto;
+import com.loja_airsoft.app.enums.PerfilEnum;
+import com.loja_airsoft.app.response.Response;
+import com.loja_airsoft.app.services.PerfilService;
 import com.loja_airsoft.app.services.UsuarioService;
 
 @Controller
@@ -17,6 +27,9 @@ public class FabricanteController {
 
 	@Autowired
 	UsuarioService usuarioService;
+	
+	@Autowired
+	PerfilService perfilService;
 	
 	@GetMapping
 	public String fabricantes(ModelMap model) {
@@ -34,4 +47,33 @@ public class FabricanteController {
 		return "fabricantes";
 		
 	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody  ResponseEntity<Response<UsuarioDto>>  savePerfil(@RequestBody UsuarioDto usuarioDto, ModelMap model) {
+
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
+		List<String>erros = new ArrayList<String>();
+		List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
+		List<PerfilDto> perfil = new ArrayList<PerfilDto>();
+		try {
+
+			if(usuarioDto.getNmUsuario() == null) {
+				throw new Exception("Campos vazios. ");
+			}
+			perfil.add(this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
+			usuarioDto.setPerfil(perfil);
+			usuarioDto = this.usuarioService.save(usuarioDto);
+			usuarios = this.usuarioService.findUsuarios();
+
+//			model.put("fabricantes", usuarios);
+//			model.put("usuarioDto", new UsuarioDto());
+			
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
+		}
+		return ResponseEntity.ok(response);
+	}
+	
 }
