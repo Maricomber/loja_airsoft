@@ -35,7 +35,7 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "usu_id_usuario", nullable = true)
-	private int idUsuario;
+	private Integer idUsuario;
 	
 	@Column(name = "usu_dt_nascimento", nullable = true)
 	private Date dtNascCliente;

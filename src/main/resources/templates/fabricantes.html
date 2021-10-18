@@ -64,6 +64,10 @@
 		var cidade = document.getElementById("cidade").value;
 		var bairro = document.getElementById("bairro").value;
 		var complemento = document.getElementById("complemento").value;
+		var ddd1 = document.getElementById("dddtel1").value;
+		var numtel1 =  document.getElementById("numtel1").value;
+		var ddd2 = document.getElementById("dddtel2").value;
+		var numtel2 =  document.getElementById("numtel2").value;
 
 		var json = {
     		"nmUsuario":nmUsuario,
@@ -81,7 +85,15 @@
 		            "idTpDocumento":3,
 		            "dsTpDocumento":"CNPJ"
 		         }
-				}]
+				}],
+			"telefone":[{
+				"dddTelefone":ddd1,
+				"numTelefone":numtel1
+			},
+			{
+				"dddTelefone":ddd2,
+				"numTelefone":numtel2
+			}]
 				
 	    };
         console.log(JSON.stringify(json));
@@ -236,19 +248,19 @@
 									<label for="exampleFormControlInput1" class="mt-3">Telefone</label>		
 									<div class="row">
 										<div class="col-3">
-											<input type="text" class="form-control" id="dddTelefone1" placeholder="DDD" >
+											<input type="text" class="form-control" id="dddtel1" placeholder="DDD" >
 											
 										</div>
 										<div class="col-8">
-											<input type="text" class="form-control" id="idCliente" placeholder="N° Telefone">
+											<input type="text" class="form-control" id="numtel1" placeholder="N° Telefone">
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-3">
-											<input type="text" class="form-control" id="idCliente" placeholder="DDD">
+											<input type="text" class="form-control" id="dddtel2" placeholder="DDD">
 										</div>
 										<div class="col-8">
-											<input type="text" class="form-control" id="idCliente" placeholder="Residencial">
+											<input type="text" class="form-control" id="numtel2" placeholder="Residencial">
 										</div>
 									</div>
 									<label for="exampleFormControlInput1" class="mt-3"></label>
