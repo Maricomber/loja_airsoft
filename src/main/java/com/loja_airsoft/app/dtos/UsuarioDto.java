@@ -19,6 +19,8 @@ public class UsuarioDto {
 	private String dtNascCliente;
 	private String nmUsuario;
 	private EnderecoDto endereco;
+	private String numDocumento;
+	
 	private List<DocumentoDto> documento = new ArrayList<DocumentoDto>();
 	
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)

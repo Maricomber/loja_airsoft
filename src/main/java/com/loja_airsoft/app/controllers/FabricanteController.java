@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.loja_airsoft.app.dtos.DocumentoDto;
 import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.dtos.UsuarioDto;
 import com.loja_airsoft.app.enums.PerfilEnum;
+import com.loja_airsoft.app.enums.TipoDocumentoEnum;
 import com.loja_airsoft.app.response.Response;
 import com.loja_airsoft.app.services.PerfilService;
 import com.loja_airsoft.app.services.UsuarioService;
@@ -40,6 +42,15 @@ public class FabricanteController {
 			if(usuariosDto.equals(null)) {
 				throw new Exception("Usuario não encontrado");
 			}
+			
+			for(UsuarioDto usu: usuariosDto) {
+				for(DocumentoDto doc : usu.getDocumento()) {
+					if(doc.getTipoDocumento().getIdTpDocumento() == TipoDocumentoEnum.CNPJ.getId()) {
+						usu.setNumDocumento(doc.getDsDocumento());
+					}
+				}
+			}
+			
 			model.addAttribute("fabricantes", usuariosDto);
 			model.addAttribute("usuarioDto", new UsuarioDto());
 		}catch (Exception e) {
@@ -62,9 +73,10 @@ public class FabricanteController {
 				throw new Exception("Campos vazios. ");
 			}
 			perfil.add(this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
+			
 			usuarioDto.setPerfil(perfil);
 			usuarioDto = this.usuarioService.save(usuarioDto);
-			
+
 			return ResponseEntity.ok(response);
 		}catch (Exception e) {
 			erros.add(e.getMessage());

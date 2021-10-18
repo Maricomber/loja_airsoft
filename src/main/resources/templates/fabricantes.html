@@ -186,10 +186,10 @@
 			<tr th:each="f : ${fabricantes}">
 			  <td th:text="${f.idUsuario}"></td>
 			  <td th:text="${f.nmUsuario}"></td>
-			  <td th:text="${f.nmUsuario}"></td>
+			  <td th:text="${f.numDocumento}"></td>
 			  <td th:text="${f.endereco.dsRua} +', ' + ${f.endereco.endNumero} +', ' + ${f.endereco.endBairro} "></td>
 			  <td style="text-align: right;">
-					<button type="button" th:value="${f.idUsuario}" onclick="editar(this.value)" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalCargo"><i class="bi bi-pencil-square"></i></button>
+					<button type="button" th:value="${f.idUsuario} + ';' + ${f.nmUsuario} + ';' +  ${f.nmUsuario}" onclick="editar(this.value)" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalFabricante"><i class="bi bi-pencil-square"></i></button>
 					<button class="btn btn-danger"th:value="${f.idUsuario}" onclick="deletar(this)"><i class="bi bi-trash"></i> </button>
 				</td>
 			</tr>
