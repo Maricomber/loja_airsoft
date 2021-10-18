@@ -60,21 +60,21 @@ public class FabricanteController {
 		
 	}
 	
-	
 	@PostMapping("/save")
 	public @ResponseBody ResponseEntity<Response<UsuarioDto>> save(@RequestBody UsuarioDto usuarioDto, ModelMap model) {
 
 		Response<UsuarioDto> response = new Response<UsuarioDto>();
 		List<String>erros = new ArrayList<String>();
 		List<PerfilDto> perfil = new ArrayList<PerfilDto>();
+		
 		try {
 
 			if(usuarioDto.getNmUsuario() == null) {
 				throw new Exception("Campos vazios. ");
 			}
 			perfil.add(this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
-			
 			usuarioDto.setPerfil(perfil);
+			
 			usuarioDto = this.usuarioService.save(usuarioDto);
 
 			return ResponseEntity.ok(response);
