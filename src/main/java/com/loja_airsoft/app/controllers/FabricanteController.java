@@ -4,19 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.loja_airsoft.app.dtos.PerfilDto;
-import com.loja_airsoft.app.dtos.TelefoneDto;
 import com.loja_airsoft.app.dtos.UsuarioDto;
 import com.loja_airsoft.app.enums.PerfilEnum;
 import com.loja_airsoft.app.response.Response;
@@ -35,20 +32,15 @@ public class FabricanteController {
 	
 	@GetMapping
 	public String fabricantes(ModelMap model) {
-		TelefoneDto telefoneDto = new TelefoneDto();
-		telefoneDto.setIdTelefone(1);
-		
-        UsuarioDto usuarioDto = new UsuarioDto();
-        usuarioDto.getTelefone().add(telefoneDto);
         
 		try {
-			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios();
+			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios(this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
 			
 			if(usuariosDto.equals(null)) {
 				throw new Exception("Usuario não encontrado");
 			}
 			model.addAttribute("fabricantes", usuariosDto);
-			model.addAttribute("usuarioDto", usuarioDto);
+			model.addAttribute("usuarioDto", new UsuarioDto());
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -58,11 +50,10 @@ public class FabricanteController {
 	
 	
 	@PostMapping("/save")
-	public @ResponseBody String save(@RequestBody UsuarioDto usuarioDto, ModelMap model) {
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> save(@RequestBody UsuarioDto usuarioDto, ModelMap model) {
 
 		Response<UsuarioDto> response = new Response<UsuarioDto>();
 		List<String>erros = new ArrayList<String>();
-		List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
 		List<PerfilDto> perfil = new ArrayList<PerfilDto>();
 		try {
 
@@ -73,11 +64,12 @@ public class FabricanteController {
 			usuarioDto.setPerfil(perfil);
 			usuarioDto = this.usuarioService.save(usuarioDto);
 			
-			
+			return ResponseEntity.ok(response);
 		}catch (Exception e) {
-
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
 		}
-		return fabricantes(model);
 	}
 	
 }

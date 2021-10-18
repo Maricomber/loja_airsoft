@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.dtos.UsuarioDto;
 import com.loja_airsoft.app.entities.Documento;
+import com.loja_airsoft.app.entities.Perfil;
 import com.loja_airsoft.app.entities.Telefone;
 import com.loja_airsoft.app.entities.Usuario;
 import com.loja_airsoft.app.repositories.UsuarioRepository;
@@ -94,6 +96,26 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 		try {
 			usuarios = this.usuarioRepository.findAll();
+			for(Usuario usuario: usuarios) {
+				usuariosRetorno.add(new UsuarioDto(usuario));
+			}
+			log.info("Busca realizada com sucesso");
+			return usuariosRetorno;
+		}catch (Exception e) {
+			msgErro = "Erro ao buscar usuarios. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
+		}
+	}
+
+	@Override
+	public List<UsuarioDto> findUsuarios(PerfilDto perfilDto) throws Exception {
+		log.info("Buscando todos os usuarios");
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		List<UsuarioDto> usuariosRetorno = new ArrayList<UsuarioDto>();
+		
+		try {
+			usuarios = this.usuarioRepository.findByPerfil(new Perfil(perfilDto));
 			for(Usuario usuario: usuarios) {
 				usuariosRetorno.add(new UsuarioDto(usuario));
 			}
