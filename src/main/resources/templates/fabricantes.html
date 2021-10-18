@@ -64,8 +64,7 @@
 		var cidade = document.getElementById("cidade").value;
 		var bairro = document.getElementById("bairro").value;
 		var complemento = document.getElementById("complemento").value;
-	
-		
+
 		var json = {
     		"nmUsuario":nmUsuario,
     		"endereco": {
@@ -76,28 +75,28 @@
 	            "endComplemento": complemento,
 	            "endCep": cep
 	        	},
-	        "documento":[
-		      {
-		         "dsDocumento":cnpj,
-		         "tipoDocumento":{
+	        "documento":[{
+				"dsDocumento":cnpj,
+				"tipoDocumento":{
 		            "idTpDocumento":3,
 		            "dsTpDocumento":"CNPJ"
 		         }
-		      }],
-		      "perfil":[{
+				}],
+			"perfil":[{
 				"idPerfil":3,
 				"dsPerfil":"cnpj"}]
-	    }
-	    
-	 	console.log(JSON.stringify(json))
+				
+	    };
+        console.log(JSON.stringify(json));
+        console.log(json);
         
         $.ajax({
-            cache: false,
+			type: "POST",
+			contentType : 'application/json; charset=utf-8',
             url : 'http://localhost:8081/fabricantes/save',
-            type: "POST",
-            dataType : "json",
-            contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+            cache: false,
             data : JSON.stringify(json),
+            dataType : "json",
             success : function(callback){
             	alert("Salvo com sucesso!");
             	location.reload();
@@ -196,7 +195,7 @@
 							</button>
 							</div>
 						<div class="modal-body modal-lg">
-							<form id="form-insercao" th:action="@{/fabricantes}" th:object="${usuarioDto}" method="post" th:method="POST">
+							<form id="form-insercao">
 							<div class="form-group">
 								<div class="row mt-2">
 									<div class="col-sm-2">
@@ -205,7 +204,7 @@
 										</div>
 										<div class="col-sm-10">
 											<label for="exampleFormControlInput1">Nome Fantasia</label>
-											<input type="text" class="form-control" id="nmUsuario"  placeholder="Nome" th:field="*{nmUsuario}" >
+											<input type="text" class="form-control" id="nmUsuario"  placeholder="Nome" >
 										</div>
 									</div>
 									<div class="row mt-2">
@@ -217,23 +216,23 @@
 									<label for="exampleFormControlInput1" class="mt-3">Endereco</label>
 									<div class="row">
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="cep" placeholder="CEP" th:field="*{endereco.endCep}" >
+											<input type="text" class="form-control" id="cep" placeholder="CEP">
 										</div>
 										<div class="col-sm-7">
-											<input type="text" class="form-control" id="rua" placeholder="Rua" th:field="*{endereco.dsRua}">
+											<input type="text" class="form-control" id="rua" placeholder="Rua">
 										</div>
 										<div class="col-sm-2">
-											<input type="text" class="form-control" id="numero" placeholder="N°" th:field="*{endereco.endNumero}">
+											<input type="text" class="form-control" id="numero" placeholder="N°">
 										</div>
 										
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="bairro" placeholder="Bairro" th:field="*{endereco.endBairro}">
+											<input type="text" class="form-control" id="bairro" placeholder="Bairro">
 										</div>
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="cidade" placeholder="Cidade" th:field="*{endereco.endCidade}">
+											<input type="text" class="form-control" id="cidade" placeholder="Cidade">
 										</div>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="complemento" placeholder="Complemento"  th:field="*{endereco.endComplemento}">
+											<input type="text" class="form-control" id="complemento" placeholder="Complemento">
 										</div>
 									</div>
 									<label for="exampleFormControlInput1" class="mt-3">Telefone</label>		
@@ -258,7 +257,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-									<button type="submit" class="btn btn-primary btn-dark">Salvar</button>
+									<button type="button" class="btn btn-primary btn-dark" onclick="salvar()">Salvar</button>
 								</div>
 							</form>
 							</div>

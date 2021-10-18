@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loja_airsoft.app.dtos.UsuarioDto;
+import com.loja_airsoft.app.entities.Documento;
+import com.loja_airsoft.app.entities.Telefone;
 import com.loja_airsoft.app.entities.Usuario;
 import com.loja_airsoft.app.repositories.UsuarioRepository;
 import com.loja_airsoft.app.services.UsuarioService;
@@ -30,9 +32,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new Exception("Pesquisa em branco. ");
 		}
 		log.info("Salvando usuario");
-		Usuario usuario = new Usuario(usuarioDto);
 		
 		try {
+			
+			Usuario usuario = new Usuario(usuarioDto);
+			for(Documento documento : usuario.getDocumento()) {
+				documento.setUsuario(usuario);
+			}
+			for(Telefone telefone: usuario.getTelefone()) {
+				telefone.setUsuario(usuario);
+			}
 			usuario = this.usuarioRepository.save(usuario);
 			return new UsuarioDto(usuario);
 		}catch (Exception e) {
