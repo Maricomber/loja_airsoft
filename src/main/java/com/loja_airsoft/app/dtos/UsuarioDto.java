@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class UsuarioDto {
 	
-	private int idUsuario;
+	private Integer idUsuario;
 	private String dtNascCliente;
 	private String nmUsuario;
 	private EnderecoDto endereco;

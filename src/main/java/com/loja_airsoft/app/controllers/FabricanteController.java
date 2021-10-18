@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,6 +66,31 @@ public class FabricanteController {
 			usuarioDto = this.usuarioService.save(usuarioDto);
 			
 			return ResponseEntity.ok(response);
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
+	
+	@DeleteMapping("/delete")
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> delete(UsuarioDto usuarioDto, ModelMap model) {
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
+		List<String>erros = new ArrayList<String>();
+		
+		try {
+
+			if(usuarioDto.getIdUsuario() == null) {
+				throw new Exception("Campos vazios. ");
+			}
+			if(this.usuarioService.delete(usuarioDto.getIdUsuario())) {
+				return ResponseEntity.ok(response);
+			}
+			else {
+				throw new Exception("Erro ao deletar campo");
+			}
+			
+			
 		}catch (Exception e) {
 			erros.add(e.getMessage());
 			response.setErrors(erros);
