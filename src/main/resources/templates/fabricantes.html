@@ -44,28 +44,38 @@
 	     }
     }
     
-    function editar2(idUsuario){
+    function filtrar(){
 	    
+	    var id = document.getElementById("idUsuarioFiltro").value;
+		var nmUsuario = document.getElementById("nmUsuFiltro").value;
+		var cnpj = document.getElementById("cnpjFiltro").value;
+		
 	    var json = {
-	    		"idUsuario":idUsuario.value,
-	    }
+	    		"idUsuario":id,
+	    		"nmUsuario":nmUsuario,
+	    		"documento":[{
+					"dsDocumento":cnpj,
+					"tipoDocumento":{
+			            "idTpDocumento":3,
+			            "dsTpDocumento":"CNPJ"
+			         }
+					}]
+	    	}
+	    	
+	      $.ajax({
+			type: "POST",
+			contentType : 'application/json; charset=utf-8',
+            url : 'http://localhost:8081/fabricantes/filtrar',
+            cache: false,
+            data : JSON.stringify(json),
+            dataType : "json",
+            success : function(callback){
+            },
+            error : function(){
+            	 alert("Erro");
+            }
+        });	
 	    
-		if(resultado == true){
-			 $.ajax({
-	            cache: false,
-	            url : 'http://localhost:8081/fabricantes/editar',
-	            type: "GET",
-	            dataType : "json",
-	            data : json,
-	            success : function(callback){
-	            	alert("Deletado com sucesso!");
-	            	location.reload();
-	            },
-	            error : function(){
-	            	 alert("Erro");
-	            }
-	        });	
-	     }
     }
     
     function editar(param){
@@ -196,24 +206,26 @@
 	</nav>
 	<div class="container-fluid">
 		<div class="form-group">
-			<div class="row mt-2">
-				<div class="col-sm-2">
-					<label for="exampleFormControlInput1">ID</label>
-					<input type="text" class="form-control" id="idCliente" placeholder="ID">
+			<form th:action="@{/fabricantes}" th:object="${usuarioDto}" method="post">
+				<div class="row mt-2">
+					<div class="col-sm-2">
+						<label for="exampleFormControlInput1">ID</label>
+						<input type="text" class="form-control" id="idUsuarioFiltro" th:field="*{idUsuario}" placeholder="ID">
+					</div>
+					<div class="col-sm-6">
+						<label for="exampleFormControlInput1">Nome</label>
+						<input type="text" class="form-control" id="nmUsuFiltro" th:field="*{nmUsuario}" placeholder="Nome">
+					</div>
+					<div class="col-sm-4">
+						<label for="exampleFormControlInput1">CNPJ</label>
+						<input type="text" class="form-control" id="cnpjFiltro" th:field="*{numDocumento}" placeholder="Documento">
+					</div>
 				</div>
-				<div class="col-sm-6">
-					<label for="exampleFormControlInput1">Nome</label>
-					<input type="text" class="form-control" id="idCliente" placeholder="Nome">
+				<div class="mt-3" style="text-align: right;">
+					<button type="button" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalFabricante">Cadastrar Fabricante</button>
+					<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
 				</div>
-				<div class="col-sm-4">
-					<label for="exampleFormControlInput1">CNPJ</label>
-					<input type="text" class="form-control" id="idCliente" placeholder="Documento">
-				</div>
-			</div>
-			<div class="mt-3" style="text-align: right;">
-				<button type="submit" class="btn btn-primary btn-dark" data-toggle="modal" data-target="#modalFabricante">Cadastrar Fabricante</button>
-				<button type="submit" class="btn btn-primary btn-dark">Pesquisar</button>
-			</div>
+			</form>
 		</div>
 		<table class="table">
 		  <thead>

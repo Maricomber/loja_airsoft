@@ -1,6 +1,7 @@
 package com.loja_airsoft.app.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +52,6 @@ public class FabricanteController {
 					}
 				}
 			}
-			
 			model.addAttribute("fabricantes", usuariosDto);
 			model.addAttribute("usuarioDto", new UsuarioDto());
 		}catch (Exception e) {
@@ -58,6 +59,25 @@ public class FabricanteController {
 		}
 		return "fabricantes";
 		
+	}
+	
+	@PostMapping
+	public String fabricantesByFiltro(@ModelAttribute UsuarioDto usuarioDtoFiltro, ModelMap model) {
+
+		try {
+			
+			if(usuarioDtoFiltro.getIdUsuario() == null && usuarioDtoFiltro.getNmUsuario()=="" && usuarioDtoFiltro.getNumDocumento()== "") {
+				return fabricantes(model);
+			}
+			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios(usuarioDtoFiltro, this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
+			
+			model.put("fabricantes", usuariosDto);
+			
+			
+		}catch (Exception e) {
+			
+		}
+		return "fabricantes";
 	}
 	
 	@PostMapping("/save")

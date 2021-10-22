@@ -20,4 +20,6 @@ public interface UsuarioService {
 	
 	List<UsuarioDto>findUsuarios(PerfilDto perfilDto) throws Exception;
 	
+	List<UsuarioDto>findUsuarios(UsuarioDto usuarioDto, PerfilDto perfilDto) throws Exception;
+	
 }
