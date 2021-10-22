@@ -2,9 +2,9 @@ package com.loja_airsoft.app.enums;
 
 public enum TipoDocumentoEnum {
 
-	CLIENTE(1, "Cliente"),
-	FUNCIONARIO(2, "Funcionário"),
-	FORNECEDOR(3, "Fornecedor");
+	RG(1, "Cliente"),
+	CPF(2, "Funcionário"),
+	CNPJ(3, "CNPJ");
 	
 	private int idTipoDocumentoEnum;
 	private String dsTipoDocumentoEnum;
@@ -14,6 +14,9 @@ public enum TipoDocumentoEnum {
 		this.dsTipoDocumentoEnum = dsTipoDocumentoEnum;
 	}
 	
+	public Integer getId() {
+		return this.idTipoDocumentoEnum;
+	}
 	public String getDescricao() {
 		return this.dsTipoDocumentoEnum;
 	}

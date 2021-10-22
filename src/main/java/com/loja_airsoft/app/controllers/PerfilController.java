@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +63,7 @@ public class PerfilController {
 	}
 	
 	
-	@RequestMapping(path = {"/save"})
+	@PostMapping(path = {"/save"})
 	public @ResponseBody ResponseEntity<Response<PerfilDto>>  savePerfil(PerfilDto perfilDto, ModelMap model) {
 
 		Response<PerfilDto> response = new Response<PerfilDto>();
@@ -86,7 +87,7 @@ public class PerfilController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@RequestMapping("/delete")
+	@DeleteMapping("/delete")
 	public @ResponseBody ResponseEntity<Response<PerfilDto>> delete(PerfilDto perfilDto, ModelMap model) {
 		List<PerfilDto>perfis = new ArrayList<PerfilDto>();
 		Response<PerfilDto> response = new Response<PerfilDto>();

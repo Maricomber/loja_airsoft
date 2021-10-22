@@ -43,7 +43,7 @@ public class Documento {
 	public Documento (DocumentoDto documentoDto) {
 		
 		this.idDocumento = documentoDto.getIdDocumento();
-		this.dsDocumento = documentoDto.getDsDocumento();
+		this.dsDocumento = documentoDto.getDsDocumento().toString();
 		if(!(usuario == null)) {
 			this.usuario = new Usuario(documentoDto.getUsuario());
 		}

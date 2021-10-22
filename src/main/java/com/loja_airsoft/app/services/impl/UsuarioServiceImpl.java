@@ -8,8 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.dtos.UsuarioDto;
+import com.loja_airsoft.app.entities.Documento;
+import com.loja_airsoft.app.entities.Perfil;
+import com.loja_airsoft.app.entities.Telefone;
 import com.loja_airsoft.app.entities.Usuario;
+import com.loja_airsoft.app.repositories.DocumentoRepository;
 import com.loja_airsoft.app.repositories.UsuarioRepository;
 import com.loja_airsoft.app.services.UsuarioService;
 
@@ -18,6 +23,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	DocumentoRepository documentoRepository;
 	
 	private String msgErro;
 	
@@ -30,9 +38,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new Exception("Pesquisa em branco. ");
 		}
 		log.info("Salvando usuario");
-		Usuario usuario = new Usuario(usuarioDto);
 		
 		try {
+			
+			Usuario usuario = new Usuario(usuarioDto);
+			for(Documento documento : usuario.getDocumento()) {
+				documento.setUsuario(usuario);
+			}
+			for(Telefone telefone: usuario.getTelefone()) {
+				telefone.setUsuario(usuario);
+			}
 			usuario = this.usuarioRepository.save(usuario);
 			return new UsuarioDto(usuario);
 		}catch (Exception e) {
@@ -85,6 +100,55 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 		try {
 			usuarios = this.usuarioRepository.findAll();
+			for(Usuario usuario: usuarios) {
+				usuariosRetorno.add(new UsuarioDto(usuario));
+			}
+			log.info("Busca realizada com sucesso");
+			return usuariosRetorno;
+		}catch (Exception e) {
+			msgErro = "Erro ao buscar usuarios. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
+		}
+	}
+
+	@Override
+	public List<UsuarioDto> findUsuarios(PerfilDto perfilDto) throws Exception {
+		log.info("Buscando todos os usuarios");
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		List<UsuarioDto> usuariosRetorno = new ArrayList<UsuarioDto>();
+		
+		try {
+			usuarios = this.usuarioRepository.findByPerfilOrderByIdUsuario(new Perfil(perfilDto));
+			for(Usuario usuario: usuarios) {
+				usuariosRetorno.add(new UsuarioDto(usuario));
+			}
+			log.info("Busca realizada com sucesso");
+			return usuariosRetorno;
+		}catch (Exception e) {
+			msgErro = "Erro ao buscar usuarios. "+e.getMessage();
+			log.info(msgErro);
+			throw new Exception(msgErro);
+		}
+	}
+	
+	@Override
+	public List<UsuarioDto> findUsuarios(UsuarioDto usuarioDto, PerfilDto perfilDto) throws Exception {
+		log.info("Buscando todos os usuarios");
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		List<UsuarioDto> usuariosRetorno = new ArrayList<UsuarioDto>();
+		Documento documento = this.documentoRepository.findByDsDocumento(usuarioDto.getNumDocumento());
+		try {
+			if(!(usuarioDto.getNmUsuario() == "")) {
+				usuarios = this.usuarioRepository.findByNmUsuarioIgnoreCaseContainingAndPerfilOrderByIdUsuario(usuarioDto.getNmUsuario(),  new Perfil(perfilDto));
+			}
+			if(!(usuarioDto.getIdUsuario() == null)) {
+				usuarios.add(this.usuarioRepository.findByIdUsuarioAndPerfilOrderByIdUsuario(usuarioDto.getIdUsuario(), new Perfil(perfilDto)));
+			}
+			if(!(usuarioDto.getNumDocumento() == "")) {
+				usuarios.add(this.usuarioRepository.findByDocumento(documento));
+			}
+			
 			for(Usuario usuario: usuarios) {
 				usuariosRetorno.add(new UsuarioDto(usuario));
 			}

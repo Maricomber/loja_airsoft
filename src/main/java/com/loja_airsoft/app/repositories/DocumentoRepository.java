@@ -11,4 +11,5 @@ import com.loja_airsoft.app.entities.Documento;
 public interface DocumentoRepository extends JpaRepository<Documento, Integer>  {
 
 	Documento findByIdDocumento(Integer id_documento);
+	Documento findByDsDocumento(String ds_documento);
 }

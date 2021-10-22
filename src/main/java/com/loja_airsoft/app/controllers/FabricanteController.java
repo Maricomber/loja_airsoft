@@ -1,14 +1,28 @@
 package com.loja_airsoft.app.controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.loja_airsoft.app.dtos.DocumentoDto;
+import com.loja_airsoft.app.dtos.PerfilDto;
 import com.loja_airsoft.app.dtos.UsuarioDto;
+import com.loja_airsoft.app.enums.PerfilEnum;
+import com.loja_airsoft.app.enums.TipoDocumentoEnum;
+import com.loja_airsoft.app.response.Response;
+import com.loja_airsoft.app.services.PerfilService;
 import com.loja_airsoft.app.services.UsuarioService;
 
 @Controller
@@ -18,20 +32,102 @@ public class FabricanteController {
 	@Autowired
 	UsuarioService usuarioService;
 	
+	@Autowired
+	PerfilService perfilService;
+	
 	@GetMapping
 	public String fabricantes(ModelMap model) {
         
 		try {
-			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios();
+			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios(this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
 			
 			if(usuariosDto.equals(null)) {
 				throw new Exception("Usuario não encontrado");
 			}
+			
+			for(UsuarioDto usu: usuariosDto) {
+				for(DocumentoDto doc : usu.getDocumento()) {
+					if(doc.getTipoDocumento().getIdTpDocumento() == TipoDocumentoEnum.CNPJ.getId()) {
+						usu.setNumDocumento(doc.getDsDocumento());
+					}
+				}
+			}
 			model.addAttribute("fabricantes", usuariosDto);
+			model.addAttribute("usuarioDto", new UsuarioDto());
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 		return "fabricantes";
 		
 	}
+	
+	@PostMapping
+	public String fabricantesByFiltro(@ModelAttribute UsuarioDto usuarioDtoFiltro, ModelMap model) {
+
+		try {
+			
+			if(usuarioDtoFiltro.getIdUsuario() == null && usuarioDtoFiltro.getNmUsuario()=="" && usuarioDtoFiltro.getNumDocumento()== "") {
+				return fabricantes(model);
+			}
+			List<UsuarioDto>usuariosDto = this.usuarioService.findUsuarios(usuarioDtoFiltro, this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
+			
+			model.put("fabricantes", usuariosDto);
+			
+			
+		}catch (Exception e) {
+			
+		}
+		return "fabricantes";
+	}
+	
+	@PostMapping("/save")
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> save(@RequestBody UsuarioDto usuarioDto, ModelMap model) {
+
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
+		List<String>erros = new ArrayList<String>();
+		List<PerfilDto> perfil = new ArrayList<PerfilDto>();
+		
+		try {
+
+			if(usuarioDto.getNmUsuario() == null) {
+				throw new Exception("Campos vazios. ");
+			}
+			perfil.add(this.perfilService.findById(PerfilEnum.FORNECEDOR.getIdPerfil()));
+			usuarioDto.setPerfil(perfil);
+			
+			usuarioDto = this.usuarioService.save(usuarioDto);
+
+			return ResponseEntity.ok(response);
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
+	
+	@DeleteMapping("/delete")
+	public @ResponseBody ResponseEntity<Response<UsuarioDto>> delete(UsuarioDto usuarioDto, ModelMap model) {
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
+		List<String>erros = new ArrayList<String>();
+		
+		try {
+
+			if(usuarioDto.getIdUsuario() == null) {
+				throw new Exception("Campos vazios. ");
+			}
+			if(this.usuarioService.delete(usuarioDto.getIdUsuario())) {
+				return ResponseEntity.ok(response);
+			}
+			else {
+				throw new Exception("Erro ao deletar campo");
+			}
+			
+			
+		}catch (Exception e) {
+			erros.add(e.getMessage());
+			response.setErrors(erros);
+			return ResponseEntity.badRequest().body(response);
+		}
+	}
+	
 }
